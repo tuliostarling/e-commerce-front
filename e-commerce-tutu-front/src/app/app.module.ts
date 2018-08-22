@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { ROUTES } from './app.routes';
 
 import { HeaderComponent } from './component/header/header/header.component';
-import { CarouselComponent } from './component/carousel/carousel.component';
 import { HomeComponent } from './view/home/home.component';
 import { ModalLoginComponent } from './component/modal-login/modal-login.component';
 
@@ -16,7 +15,6 @@ import { ModalLoginComponent } from './component/modal-login/modal-login.compone
   declarations: [
     AppComponent,
     HeaderComponent,
-    CarouselComponent,
     HomeComponent,
     ModalLoginComponent
   ],
