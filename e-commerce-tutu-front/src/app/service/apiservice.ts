@@ -9,13 +9,14 @@ import { UserLoginModel } from '../model/user/userLogin';
 @Injectable()
 export class ApiService {
 
-    API_URL: string = AppSettings.API_ENDPOINT + '/user/';
+    API_URL: string = AppSettings.API_ENDPOINT + 'user/';
+    API_AUTH_URL: string = AppSettings.API_ENDPOINT + 'auth/';
 
     constructor(
         private http: HttpClient
     ) { }
 
     postUser(dadosForm: UserLoginModel) {
-        return this.http.post<UserLoginModel>(this.API_URL + 'authlogin/', dadosForm);
+        return this.http.post<UserLoginModel>(this.API_AUTH_URL + 'authlogin/', dadosForm);
     }
 }

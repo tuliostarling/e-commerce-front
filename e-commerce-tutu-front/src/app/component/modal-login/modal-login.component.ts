@@ -33,7 +33,7 @@ export class ModalLoginComponent implements OnInit{
   ngOnInit() { 
     this.formulario = this.form.group({
       email: [null],
-      senha: [null]
+      password: [null]
     });
   }
 
@@ -49,6 +49,7 @@ export class ModalLoginComponent implements OnInit{
         if (res == null) {
           return alert('Erro ao cadastrar Usuário');
         } else {
+          console.log(res);
           return alert('Usuário cadastrado com sucesso!');
         }
       });
