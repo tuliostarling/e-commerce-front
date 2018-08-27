@@ -18,7 +18,7 @@ import { UserLoginModel } from '../../model/user/userLogin';
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./modal-login.component.css']
 })
-export class ModalLoginComponent implements OnInit{
+export class ModalLoginComponent implements OnInit {
   @Input() classes: string;
 
   formulario: FormGroup;
@@ -30,7 +30,7 @@ export class ModalLoginComponent implements OnInit{
     private form: FormBuilder
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.formulario = this.form.group({
       email: [null],
       password: [null]
@@ -46,13 +46,22 @@ export class ModalLoginComponent implements OnInit{
 
     this.service.postUser(this.createLoginUser)
       .subscribe(res => {
-        if (res == null) {
-          return alert('Erro ao entrar');
-        } else {
-          console.log(res);
-          return alert('Usuário logado com sucesso!');
+        if (res == null) return alert('Erro ao entrar');
+
+        if (res.token != null) {
+          localStorage.setItem('token', res.token);
+          let toot = this.jwtDecode(res.token);
+          if (toot != null) return alert('Usuário logado com sucesso!');
         }
+
       });
   }
 
+
+  jwtDecode(token) {
+
+    let base64Url = token.split('.')[1];
+    let base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64))
+  }
 }
