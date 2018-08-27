@@ -47,10 +47,10 @@ export class ModalLoginComponent implements OnInit{
     this.service.postUser(this.createLoginUser)
       .subscribe(res => {
         if (res == null) {
-          return alert('Erro ao cadastrar Usuário');
+          return alert('Erro ao entrar');
         } else {
           console.log(res);
-          return alert('Usuário cadastrado com sucesso!');
+          return alert('Usuário logado com sucesso!');
         }
       });
   }

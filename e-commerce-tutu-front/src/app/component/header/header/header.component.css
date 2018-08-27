@@ -1,0 +1,8 @@
+#btn_nav {
+    text-decoration: none;
+    color: #333
+}
+
+#btn_nav:hover {
+    color: #FE980F;
+}

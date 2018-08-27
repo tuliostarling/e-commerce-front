@@ -13,13 +13,19 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './component/header/header/header.component';
 import { HomeComponent } from './view/home/home.component';
 import { ModalLoginComponent } from './component/modal-login/modal-login.component';
+import { TopSellingProductsComponent } from './component/top-selling-products/top-selling-products.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { ModalRegisterComponent } from './component/modal-register/modal-register.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     HomeComponent,
-    ModalLoginComponent
+    ModalLoginComponent,
+    TopSellingProductsComponent,
+    FooterComponent,
+    ModalRegisterComponent
   ],
   imports: [
     BrowserModule,
