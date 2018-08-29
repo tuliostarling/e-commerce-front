@@ -7,3 +7,11 @@
     background-color: #FE980F;
     color: #fff;
 }
+
+.modal-header {
+    background-color: #FE980F;
+}
+
+.modal-title {
+    color: #fff
+}

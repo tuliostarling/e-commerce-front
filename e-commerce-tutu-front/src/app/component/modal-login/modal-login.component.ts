@@ -6,6 +6,7 @@ import {
   Validators,
   AbstractControl
 } from '@angular/forms';
+import { Location } from '@angular/common';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -22,12 +23,13 @@ export class ModalLoginComponent implements OnInit {
   @Input() classes: string;
 
   formulario: FormGroup;
-  createLoginUser: UserLoginModel;
+  loginUserModel: UserLoginModel;
 
   constructor(
     private service: ApiService,
     private modalService: NgbModal,
-    private form: FormBuilder
+    private form: FormBuilder,
+    private location: Location
   ) { }
 
   ngOnInit() {
@@ -38,28 +40,26 @@ export class ModalLoginComponent implements OnInit {
   }
 
   openModal(content) {
-    this.modalService.open(content, { centered: true, size: 'lg' });
+    this.modalService.open(content, { centered: true });
   }
 
   onSubmit(form) {
-    this.createLoginUser = form.value;
+    this.loginUserModel = form.value;
 
-    this.service.postUser(this.createLoginUser)
+    this.service.loginUser(this.loginUserModel)
       .subscribe(res => {
         if (res == null) return alert('Erro ao entrar');
 
         if (res.token != null) {
           localStorage.setItem('token', res.token);
-          let toot = this.jwtDecode(res.token);
-          if (toot != null) return alert('Usuário logado com sucesso!');
+          let t = this.jwtDecode(res.token);
+          if (t != null) location.reload();
         }
 
       });
   }
 
-
   jwtDecode(token) {
-
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64))

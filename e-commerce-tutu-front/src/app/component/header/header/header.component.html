@@ -12,9 +12,39 @@
             <line x1="21" y1="21" x2="15.8" y2="15.8"></line>
           </svg>
         </a>
-        <a class="btn btn-sm btn-outline-secondary" href="#" style="margin-right: 40px">Carrinho</a>
-        <modal-login classes="btn btn-sm btn-outline" style="margin-right: 10px"></modal-login>
-        <modal-register classes="btn btn-sm"></modal-register>
+
+        <ng-container *ngIf="logged == true && admin == true">
+          <a class="btn btn-sm btn-outline-secondary" href="#" style="margin-right: 2%">Carrinho</a>
+
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, Túlio</button>
+            <div ngbDropdownMenu aria-labelledby="dropdown-btn">
+              <button class="dropdown-item">Meu perfil</button>
+              <button class="dropdown-item">Cadastrar categoria</button>
+              <button class="dropdown-item">Cadastrar produto</button>
+              <button class="dropdown-item">Cadastrar cupom desconto</button>
+              <button class="dropdown-item">Atualizações</button>
+              <button class="dropdown-item" (click)="logout()">Sair</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="logged == true && admin == false">
+          <a class="btn btn-sm btn-outline-secondary" href="#" style="margin-right: 2%">Carrinho</a>
+
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, Túlio</button>
+            <div ngbDropdownMenu aria-labelledby="dropdown-btn">
+              <button class="dropdown-item">Meu perfil</button>
+              <button class="dropdown-item" (click)="logout()">Sair</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="logged == false">
+          <modal-login classes="btn btn-sm btn-outline" style="margin-right: 10px"></modal-login>
+          <modal-register classes="btn btn-sm"></modal-register>
+        </ng-container>
       </div>
     </div>
   </header>

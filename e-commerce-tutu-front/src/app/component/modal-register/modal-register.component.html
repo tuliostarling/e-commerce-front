@@ -1,16 +1,32 @@
 <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title">Modal title</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
+  <div class="modal-header">
+    <h4 class="modal-title">Cadastrar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
     <div class="modal-body">
-      <p>One fine body&hellip;</p>
+      <div class="form-group">
+        <label for="name">Nome</label>
+        <input type="name" class="form-control" formControlName="name" id="name" placeholder="Digite seu nome">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" formControlName="email" id="email" aria-describedby="emailHelp" placeholder="exemplo@exemplo.com">
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Crie uma senha">
+      </div>
     </div>
+
     <div class="modal-footer">
-      <button type="button" class="btn btn-light" (click)="c('Close click')">Close</button>
+      <button type="button" class="btn btn-danger" (click)="c('Close click')">Cancelar</button>
+      <button type="submit" class="btn btn-success">Cadastrar</button>
     </div>
-  </ng-template>
-  
-  <button id="principal-btn" class="{{ classes }}" (click)="openModal(content)">Cadastrar</button>
+  </form>
+</ng-template>
+
+<button id="principal-btn" class="{{ classes }}" (click)="openModal(content)">Cadastrar</button>

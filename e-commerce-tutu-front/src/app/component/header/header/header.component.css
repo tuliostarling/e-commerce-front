@@ -6,3 +6,13 @@
 #btn_nav:hover {
     color: #FE980F;
 }
+
+#dropdown-btn {
+    border-color: #FE980F;
+    color: #FE980F;
+}
+
+#dropdown-btn:hover {
+    background-color: #FE980F;
+    color: #fff;
+}
