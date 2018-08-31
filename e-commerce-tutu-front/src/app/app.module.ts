@@ -4,37 +4,27 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { ROUTES } from './app.routes';
-import { ApiService } from './service';
+import { UserApiService } from './service';
+import { CategoryService } from './service/category/category-api.service';
+
+import { ViewModule } from './view/view.module';
+import { ComponentModule } from './component/component.module';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './component/header/header/header.component';
-import { HomeComponent } from './view/home/home.component';
-import { ModalLoginComponent } from './component/modal-login/modal-login.component';
-import { TopSellingProductsComponent } from './component/top-selling-products/top-selling-products.component';
-import { FooterComponent } from './component/footer/footer.component';
-import { ModalRegisterComponent } from './component/modal-register/modal-register.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    HomeComponent,
-    ModalLoginComponent,
-    TopSellingProductsComponent,
-    FooterComponent,
-    ModalRegisterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    NgbModule.forRoot(),
-    FormsModule, ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ViewModule,
+    ComponentModule
   ],
-  providers: [ApiService, HttpClientModule],
+  providers: [UserApiService, HttpClientModule, CategoryService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

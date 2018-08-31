@@ -1,6 +1,11 @@
+.logo {
+    width: 350px;
+    height: 100px;
+}
+
 #btn_nav {
     text-decoration: none;
-    color: #333
+    color: #333;
 }
 
 #btn_nav:hover {

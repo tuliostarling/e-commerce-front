@@ -2,7 +2,7 @@
   <header class="blog-header py-3">
     <div class="row flex justify-content-between align-items-center">
       <div class="col-sm-6 pt-1">
-        <img src='../../../../assets/images/project_1507733529688.png' style="width: 350px; height: 100px;">
+        <img class="logo" src='../../../../assets/images/project_1507733529688.png' href="javascript:void(0);" (click)="home()">
       </div>
       <div class="col-sm-6 d-flex justify-content-end align-items-center">
         <a class="text-muted" href="#">
@@ -20,7 +20,7 @@
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, Túlio</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item">Meu perfil</button>
-              <button class="dropdown-item">Cadastrar categoria</button>
+              <button class="dropdown-item" (click)="registerCategory()">Cadastrar categoria</button>
               <button class="dropdown-item">Cadastrar produto</button>
               <button class="dropdown-item">Cadastrar cupom desconto</button>
               <button class="dropdown-item">Atualizações</button>
@@ -51,7 +51,7 @@
   <hr>
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-      <a id="btn_nav" class="p-2" href="#">Pagina Inicial</a>
+      <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="home()">Pagina Inicial</a>
       <a id="btn_nav" class="p-2" href="#">Sapatos</a>
       <a id="btn_nav" class="p-2" href="#">Bolsas</a>
       <a id="btn_nav" class="p-2" href="#">Cintos</a>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
+import { CategoryListComponent } from '../../../view/admin-user/category/category-list/category-list.component';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -39,5 +41,13 @@ export class HeaderComponent implements OnInit {
     let base64Url = token.split('.')[1];
     let base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64))
+  }
+
+  home() {
+    this.router.navigateByUrl('/home');
+  }
+
+  registerCategory() {
+    this.router.navigateByUrl('/category_list');
   }
 }

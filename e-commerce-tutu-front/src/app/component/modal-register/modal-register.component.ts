@@ -9,7 +9,7 @@ import {
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
-import { ApiService } from '../../service';
+import { UserApiService } from '../../service';
 import { UserCreateModel } from '../../model/user/userCreate';
 
 @Component({
@@ -25,7 +25,7 @@ export class ModalRegisterComponent implements OnInit {
   createUserModel: UserCreateModel;
 
   constructor(
-    private service: ApiService,
+    private service: UserApiService,
     private modalService: NgbModal,
     private form: FormBuilder
   ) { }

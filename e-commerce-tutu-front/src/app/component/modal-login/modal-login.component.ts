@@ -10,7 +10,7 @@ import { Location } from '@angular/common';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
-import { ApiService } from '../../service'
+import { UserApiService } from '../../service'
 import { UserLoginModel } from '../../model/user/userLogin';
 
 @Component({
@@ -26,7 +26,7 @@ export class ModalLoginComponent implements OnInit {
   loginUserModel: UserLoginModel;
 
   constructor(
-    private service: ApiService,
+    private service: UserApiService,
     private modalService: NgbModal,
     private form: FormBuilder,
     private location: Location
