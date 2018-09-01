@@ -22,8 +22,16 @@ export class CategoryListComponent implements OnInit {
   ngOnInit() {
     this.apiService.getListAll().subscribe((data) => {
       this.rowsCategory = data;
-      console.log(this.rowsCategory);
     });
   }
 
+  navToRegsCat() {
+    this.router.navigateByUrl('category_register');
+  }
+
+  delete(id: number) {
+    this.apiService.delete(id).subscribe((res) => {
+      if (res) { this.ngOnInit(); }
+    });
+  }
 }

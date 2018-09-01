@@ -18,4 +18,12 @@ export class CategoryService {
   getListAll() {
     return this.http.get<CategoryModel>(this.API_URL + 'listall/');
   }
+
+  create(dadosForm: CategoryModel) {
+    return this.http.post<CategoryModel>(this.API_URL + 'add/', dadosForm);
+  }
+
+  delete(id: number) {
+    return this.http.delete<CategoryModel>(this.API_URL + 'del/' + id);
+  }
 }

@@ -1,22 +1,24 @@
 <div class="container">
   <div class="jumbotron">
-    <h2 class="h2-text">Listagem de Categoria</h2>
+    <h2 class="h2-text">Listagem de Cupom de desconto</h2>
   </div>
 
-  <button id="btn-add" class="btn btn-success" (click)="navToRegsCat()">Adicionar nova Categoria</button>
+  <button id="btn-add" class="btn btn-success" (click)="navToRegsCat()">Adicionar novo Cupom</button>
 
   <table id="table-list" class="table table-hover">
     <thead>
       <tr>
-        <th scope="col">Categoria</th>
-        <th scope="col">Tipo</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Valor</th>
+        <th scope="col">Data expira</th>
         <th scope="col" class="title-table">Ação</th>
       </tr>
     </thead>
-    <tbody *ngFor="let i of rowsCategory">
-      <tr>
-        <td>{{ i.category }}</td>
-        <td>{{ i.type }}</td>
+    <tbody>
+      <tr *ngFor="let i of rowsCoupon">
+        <td>{{ i.name }}</td>
+        <td>{{ i.value }}</td>
+        <td>{{ i.expire_at | date: 'dd/MM/yyyy'}}</td>
         <td class="action">
           <button type="button" class="btn btn-primary btn-md">
             <i class="fa fa-pencil-square-o"></i>

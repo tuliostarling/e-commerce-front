@@ -1,3 +1,37 @@
-<p>
-  category-register works!
-</p>
+<div class="container">
+  <nav id="breadc" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="category_list">Listagem de Categoria</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Cadastro de Categoria</li>
+    </ol>
+  </nav>
+
+  <div class="jumbotron">
+    <h2 class="h2-text">Cadastro de Categoria</h2>
+  </div>
+
+  <div class="container">
+    <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="category">Categoria</label>
+            <input type="category" class="form-control" formControlName="category" id="category" placeholder="Digite a categoria">
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label for="type">Tipo</label>
+            <input type="type" class="form-control" formControlName="type" id="type" placeholder="Digite o tipo">
+          </div>
+        </div>
+      </div>
+
+      <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
+      <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCat()">Cancelar</button>
+    </form>
+  </div>
+
+</div>

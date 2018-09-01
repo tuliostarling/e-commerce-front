@@ -1,0 +1,57 @@
+<div class="container">
+  <nav id="breadc" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="product_list">Listagem de Produtos</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Cadastro de Produto</li>
+    </ol>
+  </nav>
+
+  <div class="jumbotron">
+    <h2 class="h2-text">Cadastro de Produto</h2>
+  </div>
+
+  <div class="container">
+    <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Digite o nome">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="size">Tamanho</label>
+            <input type="number" class="form-control" formControlName="size" id="size" placeholder="Digite o tamanho">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="price">Preco</label>
+            <input type="number" class="form-control" formControlName="price" id="price" placeholder="Digite o preço">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-9">
+          <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description" placeholder="Digite a descrição"></textarea>
+          </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+              <label for="color">Cor</label>
+              <input type="text" class="form-control" formControlName="color" id="color" placeholder="Digite a cor">
+            </div>
+          </div>
+      </div>
+
+      <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
+      <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
+    </form>
+  </div>
+
+</div>

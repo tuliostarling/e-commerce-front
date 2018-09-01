@@ -20,9 +20,10 @@
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, Túlio</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item">Meu perfil</button>
+              <button class="dropdown-item">Dashboard</button>
               <button class="dropdown-item" (click)="registerCategory()">Cadastrar categoria</button>
-              <button class="dropdown-item">Cadastrar produto</button>
-              <button class="dropdown-item">Cadastrar cupom desconto</button>
+              <button class="dropdown-item" (click)="registerProduct()">Cadastrar produto</button>
+              <button class="dropdown-item" (click)="registerCoupon()">Cadastrar cupom desconto</button>
               <button class="dropdown-item">Atualizações</button>
               <button class="dropdown-item" (click)="logout()">Sair</button>
             </div>
