@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { CouponService } from '../../../../service/discount-coupon/coupon-api.service';
 import { CouponModel } from '../../../../model/discount-coupon/coupon';
@@ -13,20 +13,23 @@ export class DiscountCouponListComponent implements OnInit {
 
   constructor(
     public apiService: CouponService,
-    public acRoute: ActivatedRoute,
     public router: Router
   ) { }
 
   public rowsCoupon: CouponModel;
 
   ngOnInit() {
-    this.apiService.getAll().subscribe((data) => {
+    this.apiService.getListAll().subscribe((data) => {
       this.rowsCoupon = data;
     });
   }
 
   navToRegsCat() {
     this.router.navigateByUrl('coupon_register');
+  }
+
+  update(id: number) {
+    this.router.navigateByUrl('coupon_edit/' + id);
   }
 
   delete(id: number) {

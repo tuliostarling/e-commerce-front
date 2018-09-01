@@ -48,7 +48,7 @@ export class ProductRegisterComponent implements OnInit {
 
     this.apiService.create(this.createProductModel)
       .subscribe(res => {
-        if (res == null) return alert('Erro ao cadastrar');
+        if (res == null) { return alert('Erro ao cadastrar'); }
 
         this.navToListCoup();
       });

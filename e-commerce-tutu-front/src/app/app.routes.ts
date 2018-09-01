@@ -13,8 +13,11 @@ export const ROUTES: Routes = [
     { path: 'home', component: HomeComponent },
     { path: 'category_list', component: CategoryListComponent },
     { path: 'category_register', component: CategoryRegisterComponent },
+    { path: 'category_edit/:id', component: CategoryRegisterComponent },
     { path: 'coupon_list', component: DiscountCouponListComponent },
     { path: 'coupon_register', component: DiscountCouponRegisterComponent },
+    { path: 'coupon_edit/:id', component: DiscountCouponRegisterComponent },
     { path: 'product_list', component: ProductListComponent },
-    { path: 'product_register', component: ProductRegisterComponent }
+    { path: 'product_register', component: ProductRegisterComponent },
+    { path: 'product_edit/:id', component: ProductRegisterComponent }
 ]

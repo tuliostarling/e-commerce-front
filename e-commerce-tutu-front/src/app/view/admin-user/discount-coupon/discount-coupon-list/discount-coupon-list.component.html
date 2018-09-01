@@ -10,7 +10,7 @@
       <tr>
         <th scope="col">Nome</th>
         <th scope="col">Valor</th>
-        <th scope="col">Data expira</th>
+        <th scope="col">Expira</th>
         <th scope="col" class="title-table">Ação</th>
       </tr>
     </thead>
@@ -20,7 +20,7 @@
         <td>{{ i.value }}</td>
         <td>{{ i.expire_at | date: 'dd/MM/yyyy'}}</td>
         <td class="action">
-          <button type="button" class="btn btn-primary btn-md">
+          <button type="button" class="btn btn-primary btn-md" (click)="update(i.id)">
             <i class="fa fa-pencil-square-o"></i>
           </button>
           <button type="button" class="btn btn-danger btn-md" (click)="delete(i.id)">

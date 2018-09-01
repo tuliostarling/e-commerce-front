@@ -18,7 +18,7 @@
         <td>{{ i.category }}</td>
         <td>{{ i.type }}</td>
         <td class="action">
-          <button type="button" class="btn btn-primary btn-md">
+          <button type="button" class="btn btn-primary btn-md" (click)="update(i.id)">
             <i class="fa fa-pencil-square-o"></i>
           </button>
           <button type="button" class="btn btn-danger btn-md" (click)="delete(i.id)">

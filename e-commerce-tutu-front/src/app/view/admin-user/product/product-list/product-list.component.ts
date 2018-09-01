@@ -29,6 +29,10 @@ export class ProductListComponent implements OnInit {
     this.router.navigateByUrl('product_register');
   }
 
+  update(id: number) {
+    this.router.navigateByUrl('product_edit/' + id);
+  }
+
   // delete(id: number) {
   //   this.apiService.delete(id).subscribe((res) => {
   //     if (res) { this.ngOnInit(); }

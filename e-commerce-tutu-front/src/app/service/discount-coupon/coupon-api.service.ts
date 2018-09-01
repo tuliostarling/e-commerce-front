@@ -15,12 +15,20 @@ export class CouponService {
         private http: HttpClient
     ) { }
 
-    getAll() {
+    getListAll() {
         return this.http.get<CouponModel>(this.API_URL + 'getall');
+    }
+
+    getListOne(id: number) {
+        return this.http.get<CouponModel>(this.API_URL + 'get/' + id);
     }
 
     create(dadosForm: CouponModel) {
         return this.http.post<CouponModel>(this.API_URL + 'add/', dadosForm);
+    }
+
+    update(dadosForm: CouponModel) {
+        return this.http.put<CouponModel>(this.API_URL + 'put/', dadosForm);
     }
 
     delete(id: number) {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { CategoryService } from '../../../../service/category/category-api.service';
 import { CategoryModel } from '../../../../model/category/category';
@@ -13,7 +13,6 @@ export class CategoryListComponent implements OnInit {
 
   constructor(
     public apiService: CategoryService,
-    public acRoute: ActivatedRoute,
     public router: Router
   ) { }
 
@@ -27,6 +26,10 @@ export class CategoryListComponent implements OnInit {
 
   navToRegsCat() {
     this.router.navigateByUrl('category_register');
+  }
+
+  update(id: number) {
+    this.router.navigateByUrl('category_edit/' + id);
   }
 
   delete(id: number) {
