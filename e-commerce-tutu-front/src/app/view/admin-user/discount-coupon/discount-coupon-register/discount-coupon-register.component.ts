@@ -56,8 +56,9 @@ export class DiscountCouponRegisterComponent implements OnInit {
       this.apiService.getListOne(this.idCoupon).subscribe((data) => {
         if (data) {
 
-          const formattedDate = new DatePipe('en-US').transform(data[0].expire_at, 'dd/MM/yyyy');
+          const formattedDate = new DatePipe('en-US').transform(data[0].expire_at, 'yyyy-MM-dd');
           this.formulario = this.form.group({
+            id: [data[0].id],
             name: [data[0].name, Validators.required],
             value: [data[0].value, Validators.required],
             expire_at: [formattedDate, Validators.required],

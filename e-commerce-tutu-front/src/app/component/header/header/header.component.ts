@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   logged = false;
   decodedToken: any;
   admin = false;
+  userName: string;
 
   constructor(
     public router: Router,
@@ -20,13 +21,14 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let t = localStorage.getItem('token');
+    const t = localStorage.getItem('token');
 
     if (t != null) {
       this.decodedToken = this.jwtDecode(t);
       this.logged = true;
+      this.userName = this.decodedToken.name;
 
-      if (this.decodedToken.admin == true) {
+      if (this.decodedToken.admin === true) {
         this.admin = true;
       }
     }
@@ -38,9 +40,9 @@ export class HeaderComponent implements OnInit {
   }
 
   jwtDecode(token) {
-    let base64Url = token.split('.')[1];
-    let base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64))
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   }
 
   home() {
@@ -57,5 +59,9 @@ export class HeaderComponent implements OnInit {
 
   registerProduct() {
     this.router.navigateByUrl('/product_list');
+  }
+
+  shoeList() {
+    this.router.navigateByUrl('/shoe_list');
   }
 }

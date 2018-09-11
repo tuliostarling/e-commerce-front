@@ -34,7 +34,7 @@
           <a class="btn btn-sm btn-outline-secondary" href="#" style="margin-right: 2%">Carrinho</a>
 
           <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, Túlio</button>
+            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userName }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item">Meu perfil</button>
               <button class="dropdown-item" (click)="logout()">Sair</button>
@@ -43,7 +43,7 @@
         </ng-container>
 
         <ng-container *ngIf="logged == false">
-          <modal-login classes="btn btn-sm btn-outline" style="margin-right: 10px"></modal-login>
+          <app-modal-login classes="btn btn-sm btn-outline" style="margin-right: 10px"></app-modal-login>
           <modal-register classes="btn btn-sm"></modal-register>
         </ng-container>
       </div>
@@ -53,7 +53,7 @@
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
       <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="home()">Pagina Inicial</a>
-      <a id="btn_nav" class="p-2" href="#">Sapatos</a>
+      <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="shoeList()">Sapatos</a>
       <a id="btn_nav" class="p-2" href="#">Bolsas</a>
       <a id="btn_nav" class="p-2" href="#">Cintos</a>
       <a id="btn_nav" class="p-2" href="#">Sobre</a>

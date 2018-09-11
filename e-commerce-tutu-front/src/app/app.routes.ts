@@ -7,6 +7,7 @@ import { DiscountCouponListComponent } from './view/admin-user/discount-coupon/d
 import { DiscountCouponRegisterComponent } from './view/admin-user/discount-coupon/discount-coupon-register/discount-coupon-register.component';
 import { ProductListComponent } from './view/admin-user/product/product-list/product-list.component';
 import { ProductRegisterComponent } from './view/admin-user/product/product-register/product-register.component';
+import { ShoeListComponent } from './view/common-user/shoe-list/shoe-list.component';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -19,5 +20,6 @@ export const ROUTES: Routes = [
     { path: 'coupon_edit/:id', component: DiscountCouponRegisterComponent },
     { path: 'product_list', component: ProductListComponent },
     { path: 'product_register', component: ProductRegisterComponent },
-    { path: 'product_edit/:id', component: ProductRegisterComponent }
+    { path: 'product_edit/:id', component: ProductRegisterComponent },
+    { path: 'shoe_list', component: ShoeListComponent },
 ]
