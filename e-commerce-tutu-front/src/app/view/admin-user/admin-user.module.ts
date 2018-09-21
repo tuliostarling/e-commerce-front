@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ngfModule } from 'angular-file';
 
 import { CategoryRegisterComponent } from './category/category-register/category-register.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
@@ -17,7 +18,8 @@ import { ProductRegisterComponent } from './product/product-register/product-reg
     CommonModule,
     NgbModule.forRoot(),
     FormsModule, ReactiveFormsModule,
-    AngularFontAwesomeModule
+    AngularFontAwesomeModule,
+    ngfModule
   ],
   declarations: [
     CategoryRegisterComponent,

@@ -15,10 +15,20 @@
   <div class="container">
     <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
       <div class="row">
-        <div class="col-6">
+        <div class="col-3">
           <div class="form-group">
             <label for="name">Nome</label>
             <input type="text" class="form-control" formControlName="name" id="name" placeholder="Digite o nome">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="id_category">Categoria</label>
+            <select class="form-control" formControlName="id_category" id="category">
+              <ng-container *ngFor="let i of rowsCategory">
+                <option value="{{i.id}}">{{i.category}}</option>
+              </ng-container>
+            </select>
           </div>
         </div>
         <div class="col-3">
@@ -35,18 +45,113 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-9">
+        <div class="col-6">
           <div class="form-group">
             <label for="description">Descrição</label>
             <textarea type="text" class="form-control" formControlName="description" rows="3" id="description" placeholder="Digite a descrição"></textarea>
           </div>
         </div>
         <div class="col-3">
-            <div class="form-group">
-              <label for="color">Cor</label>
-              <input type="text" class="form-control" formControlName="color" id="color" placeholder="Digite a cor">
+          <div class="form-group">
+            <label for="color">Cor</label>
+            <input type="text" class="form-control" formControlName="color" id="color" placeholder="Digite a cor">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="amount">Quatidade</label>
+            <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Digite a quantidade">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="inline-block">
+            <div ngfSelect accept="image/*" multiple="1" [maxSize]="maxSize" [(files)]="files" class="well my-drop-zone" style="border-style:groove;padding:0.5em;text-align:center;width:200px;"
+              [(lastInvalids)]="lastInvalids" (filesChange)="lastFileAt=getDate()">
+              Selecione uma imagem
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+            <h3 style="color:red;">Last {{ lastInvalids.length }} Invalid Selected Files</h3>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Erro</th>
+                  <th>Tipo</th>
+                  <th>Tamanho</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of lastInvalids;let i=index">
+                  <td>
+                    <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.file.type)>=0">
+                      <div class="previewIcon" [ngfBackground]="item.File"></div>
+                    </div>
+                    <strong>{{ item.file.name }}</strong>
+                  </td>
+                  <td nowrap>
+                    {{ item.type }}
+                  </td>
+                  <td nowrap>
+                    {{ item.file.type }}
+                  </td>
+                  <td nowrap>
+                    {{ item.file.size/1024/1024 | number:'.2' }} MB
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="lastInvalids.splice(i,1)">
+                      <span class="fa fa-trash"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-bottom: 40px">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Tipo</th>
+                  <th>Tamanho</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of files;let i=index">
+                  <td>
+                    <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                      <div class="previewIcon" [ngfBackground]="item"></div>
+                    </div>
+                    <strong>{{ item.name }}</strong>
+                  </td>
+                  <td nowrap>
+                    {{ item.type }}
+                  </td>
+                  <td nowrap>
+                    {{ item.size/1024/1024 | number:'.2' }} MB
+                  </td>
+                  <td nowrap>
+                    <button type="button" class="btn btn-danger btn-xs" (click)="files.splice(i,1)">
+                      <span class="fa fa-trash"></span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
 
       <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
