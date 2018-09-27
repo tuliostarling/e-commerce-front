@@ -27,8 +27,15 @@ export class ProductRegisterComponent implements OnInit {
   rowsCategory: CategoryModel;
 
   accept = '*';
-  files: File[] = [];
+  filesToUpload: File[] = [];
   lastFileAt: Date;
+  base64textString = String[''];
+
+  imgNameAux: string;
+  imgTypeAux: string;
+  imgAux: any;
+
+  imagesFile: AbstractControl;
 
   constructor(
     private apiService: ProductService,
@@ -49,7 +56,10 @@ export class ProductRegisterComponent implements OnInit {
       discount: [null, Validators.required],
       description: [null, Validators.required],
       color: [null, Validators.required],
+      files: [null, Validators.required]
     });
+
+    this.imagesFile = this.formulario.controls['imagesFile'];
   }
 
   getCategory() {
@@ -64,6 +74,7 @@ export class ProductRegisterComponent implements OnInit {
 
   onSubmit(form) {
     this.createProductModel = form.value;
+    this.formImg();
 
     this.apiService.create(this.createProductModel)
       .subscribe(res => {
@@ -71,6 +82,41 @@ export class ProductRegisterComponent implements OnInit {
 
         this.navToListCoup();
       });
+  }
+
+  formImg() {
+    const reader = new FileReader();
+    reader.onload = this._handleReaderLoaded.bind(this);
+    reader.readAsBinaryString(this.imgAux);
+  }
+
+  _handleReaderLoaded(readerEvt) {
+    const binaryString = readerEvt.target.result;
+    this.base64textString = btoa(binaryString);
+    this.formulario.value.files = this.base64textString;
+  }
+
+  getImgValues(name: string, type: string, image: string) {
+    this.imgNameAux = name;
+    this.imgTypeAux = type;
+    this.imgAux = image;
+  }
+
+  upload() {
+    const formData: any = new FormData();
+    const files: File[] = this.filesToUpload;
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('uploads[]', files[i], files[i]['name']);
+    }
+    console.log('form data variable :   ' + formData.toString());
+    this.apiService.create(formData)
+      .subscribe(filesUp => console.log('files', filesUp));
+  }
+
+  fileChangeEvent(fileInput: any) {
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+    // this.product.photo = fileInput.target.files[0]['name'];
   }
 
   getDate() {

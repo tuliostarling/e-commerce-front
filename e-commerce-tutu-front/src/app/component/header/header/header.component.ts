@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   decodedToken: any;
   admin = false;
   userName: string;
+  userNameEncoded: string;
 
   constructor(
     public router: Router,
@@ -63,5 +64,9 @@ export class HeaderComponent implements OnInit {
 
   shoeList() {
     this.router.navigateByUrl('/shoe_list');
+  }
+
+  cart() {
+    this.router.navigateByUrl('/cart');
   }
 }

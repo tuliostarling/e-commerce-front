@@ -1,0 +1,99 @@
+<div class="container">
+  <div class="content" style="margin-top: 2%">
+    <p>Carrinho</p>
+    <hr style="border-bottom-width: 50px;">
+  </div>
+
+  <div class="row" style="margin-top: 5%; margin-bottom: 2%">
+    <div class="col-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Produto</th>
+            <th scope="col">Quantidade</th>
+            <th scope="col">Preço</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td scope="row">
+              <div id="leftsidemenu">
+                <img src="../../../../assets/images/04(3)" style="width: 80px; height: 80px;">
+              </div>
+              <div id="rigthsidemenu">
+                <p>Salto alto - 34</p>
+              </div>
+            </td>
+            <td>
+              <select>
+                <option>0</option>
+                <option selected>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
+            </td>
+            <td>R$ 150,00</td>
+            <td>
+              <button class="btn btn-danger btn-sm">
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <form class="form-inline">
+        <div class="form-group" style="width: 30%">
+          <label style="color: #949494; font-size: 15px" for="cep">Calcule frete e prazo</label>
+          <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP">
+        </div>
+        <button type="submit" class="btn btn-success" style="margin-top: 3%">OK</button>
+      </form>
+
+    </div>
+    <div class="col-4" style="background-color:#f7f7f7">
+      <h5 style="margin-top:5%">Resumo do pedido</h5>
+
+      <div class="row" style="margin-top: 5%">
+        <div class="col-6">
+          <p style="color: #949494; font-size: 15px">Subtotal (1 produto)</p>
+        </div>
+        <div class="col-6">
+          <p style="float: right; color: #949494; font-size: 15px">R$ 150,00</p>
+        </div>
+      </div>
+      <div class="row" style="margin-bottom: -5%">
+        <div class="col-6">
+          <p style="font-size: 15px">Frete</p>
+        </div>
+        <div class="col-6">
+          <p style="float: right; font-size: 15px">R$ 20,00</p>
+        </div>
+      </div>
+      <hr>
+      <div class="row" style="margin-bottom: -5%">
+        <div class="col-6">
+          <p style="font-size: 15px">
+            <b>Total</b>
+          </p>
+        </div>
+        <div class="col-6">
+          <p style="float: right; font-size: 15px">
+            <b>R$ 170,00</b>
+          </p>
+        </div>
+      </div>
+
+      <hr>
+      <div style="text-align: center">
+        <button class="btn btn-success" style="float: center">Continuar</button>
+        <p style="color: #949494; font-size: 12px; margin-top: 3%">Possui cupom? Você poderá usá-lo na etapa de pagamento.</p>
+      </div>
+    </div>
+  </div>
+
+</div>

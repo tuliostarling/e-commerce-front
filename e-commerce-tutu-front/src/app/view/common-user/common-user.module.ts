@@ -6,6 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { TopSellingProductsComponent } from '../../component/top-selling-products/top-selling-products.component';
 import { ShoeListComponent } from './shoe-list/shoe-list.component';
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ShoeListComponent } from './shoe-list/shoe-list.component';
     HomeComponent,
     TopSellingProductsComponent,
     ShoeListComponent,
+    CartComponent,
   ],
   exports: [
     HomeComponent,

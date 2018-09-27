@@ -1,4 +1,5 @@
 export interface ProductModel {
+    id: number;
     id_category: number;
     name: string;
     size: number;
@@ -7,4 +8,13 @@ export interface ProductModel {
     discount: boolean;
     description: string;
     color: string;
+    // images: Array<ImageModel>;
+    files: string;
 }
+
+// export interface ImageModel {
+//     id: number;
+//     image_type: string;
+//     image_name: string;
+//     image: string;
+// }
