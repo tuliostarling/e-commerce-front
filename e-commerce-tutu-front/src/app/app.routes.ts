@@ -12,6 +12,7 @@ import { ProductRegisterComponent } from './view/admin-user/product/product-regi
 import { ShoeListComponent } from './view/common-user/shoe-list/shoe-list.component';
 import { CartComponent } from './view/common-user/cart/cart.component';
 import { CountdownComponent } from './countdown/countdown.component';
+import { ListOneProductComponent } from './view/common-user/list-one-product/list-one-product.component';
 
 
 
@@ -30,4 +31,5 @@ export const ROUTES: Routes = [
     { path: 'shoe_list', component: ShoeListComponent },
     { path: 'cart', component: CartComponent },
     { path: 'countdown', component: CountdownComponent },
+    { path: 'product/:id', component: ListOneProductComponent },
 ];
