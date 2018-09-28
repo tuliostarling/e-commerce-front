@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { ProductModel } from '../../model/product/product';
+import { ProductModel, ImageModel } from '../../model/product/product';
 
 @Injectable()
 export class ProductService {
@@ -23,6 +23,10 @@ export class ProductService {
 
     create(dadosForm: ProductModel) {
         return this.http.post<ProductModel>(this.API_URL + 'add/', dadosForm);
+    }
+
+    addImage(dadosForm: FormData, id: number) {
+        return this.http.post(this.API_URL + 'addImages/' + id, dadosForm);
     }
 
     // update(dadosForm: ProductModel){

@@ -23,24 +23,30 @@
         </div>
         <div class="col-3">
           <div class="form-group">
-            <label for="id_category">Categoria</label>
-            <select class="form-control" formControlName="id_category" id="category">
+            <label for="id_fk">Categoria</label>
+            <select class="form-control" formControlName="id_fk" id="category">
               <ng-container *ngFor="let i of rowsCategory">
                 <option value="{{i.id}}">{{i.category}}</option>
               </ng-container>
             </select>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <div class="form-group">
             <label for="size">Tamanho</label>
             <input type="number" class="form-control" formControlName="size" id="size" placeholder="Digite o tamanho">
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <div class="form-group">
             <label for="price">Preco</label>
             <input type="number" class="form-control" formControlName="price" id="price" placeholder="Digite o preço">
+          </div>
+        </div>
+        <div class="col-2" style="margin-top: 3%;">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="discount" (change)="changeDiscount($event.target)">
+            <label class="form-check-label" for="discount">Desconto?</label>
           </div>
         </div>
       </div>
@@ -57,10 +63,16 @@
             <input type="text" class="form-control" formControlName="color" id="color" placeholder="Digite a cor">
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-2">
           <div class="form-group">
             <label for="amount">Quatidade</label>
             <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Digite a quantidade">
+          </div>
+        </div>
+        <div class="col-1" style="margin-top: 3%;">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+            <label class="form-check-label" for="defaultProduct">Produto default</label>
           </div>
         </div>
       </div>
@@ -69,10 +81,11 @@
         <div class="col-12">
           <div class="form-group">
             <div class="inline-block">
-              <div ngfSelect accept="image/*" multiple="1" [maxSize]="maxSize" [(files)]="filesToUpload" class="well my-drop-zone" style="border-style:groove;padding:0.5em;text-align:center;width:200px;"
-                [(lastInvalids)]="lastInvalids" (filesChange)="lastFileAt=getDate()">
+              <!--div ngfSelect accept="image/*" multiple="1" [maxSize]="maxSize" [(files)]="filesToUpload" class="well my-drop-zone" style="border-style:groove;padding:0.5em;text-align:center;width:200px;"
+                [(lastInvalids)]="lastInvalids" (change)="handleFileSelect($event)" (filesChange)="lastFileAt=getDate()">
                 Selecione uma imagem
-              </div>
+              </div-->
+              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)">
             </div>
           </div>
         </div>
@@ -148,7 +161,7 @@
                     <button type="button" class="btn btn-danger btn-xs" (click)="filesToUpload.splice(i,1)">
                       <span class="fa fa-trash"></span>
                     </button>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="getImgValues(item.name, item.type, item)">
+                    <button type="button" class="btn btn-danger btn-xs" (click)="getImgValues(item)">
                       <span class="fa fa-edit"></span>
                     </button>
                   </td>

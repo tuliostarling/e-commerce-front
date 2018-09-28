@@ -1,6 +1,7 @@
 export interface ProductModel {
     id: number;
-    id_category: number;
+    id_fk: number;
+    defaultProduct: boolean;
     name: string;
     size: number;
     amount: number;
@@ -8,13 +9,9 @@ export interface ProductModel {
     discount: boolean;
     description: string;
     color: string;
-    // images: Array<ImageModel>;
-    files: string;
+    image: Array<ImageModel>;
 }
 
-// export interface ImageModel {
-//     id: number;
-//     image_type: string;
-//     image_name: string;
-//     image: string;
-// }
+export interface ImageModel {
+    image: string;
+}

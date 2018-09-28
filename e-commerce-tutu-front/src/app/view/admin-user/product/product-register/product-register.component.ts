@@ -7,6 +7,7 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 import { ngf } from 'angular-file';
 
@@ -22,44 +23,52 @@ import { CategoryModel } from '../../../../model/category/category';
 })
 export class ProductRegisterComponent implements OnInit {
 
+  idRegistry: number;
   formulario: FormGroup;
+  formImages: AbstractControl;
   createProductModel: ProductModel;
   rowsCategory: CategoryModel;
 
   accept = '*';
   filesToUpload: File[] = [];
   lastFileAt: Date;
-  base64textString = String[''];
-
-  imgNameAux: string;
-  imgTypeAux: string;
+  base64textString: String = '';
+  selectedFile: File = null;
   imgAux: any;
+  formData: FormData = new FormData();
 
-  imagesFile: AbstractControl;
+  imagem: any;
+
+  defaultProduct: boolean;
+  discount: boolean;
 
   constructor(
     private apiService: ProductService,
     private apiCategoryService: CategoryService,
     private form: FormBuilder,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
     this.getCategory();
 
     this.formulario = this.form.group({
-      id_category: [null, Validators.required],
+      id_fk: [null],
+      defaultProduct: [null, Validators.required],
       name: [null, Validators.required],
       size: [null],
       amount: [null, Validators.required],
       price: [null, Validators.required],
-      discount: [null, Validators.required],
+      discount: [null],
       description: [null, Validators.required],
       color: [null, Validators.required],
-      files: [null, Validators.required]
+      images: this.form.group({
+        imagem: [null]
+      })
     });
 
-    this.imagesFile = this.formulario.controls['imagesFile'];
+    this.formImages = this.formulario.controls['images'];
   }
 
   getCategory() {
@@ -74,52 +83,123 @@ export class ProductRegisterComponent implements OnInit {
 
   onSubmit(form) {
     this.createProductModel = form.value;
-    this.formImg();
 
-    this.apiService.create(this.createProductModel)
-      .subscribe(res => {
-        if (res == null) { return alert('Erro ao cadastrar'); }
+    // this.formImg();
+    // const formModel = this.prepareSave();
 
-        this.navToListCoup();
+    this.createProduct(this.createProductModel).then((res => {
+      this.imagem = this.formData.get('imagem');
+      this.idRegistry = res[0].product_id;
+
+      this.apiService.addImage(this.imagem, this.idRegistry).subscribe((resImg) => {
+        if (resImg != null) {
+          return alert('Sucesso ao cadastrar Imagem');
+        } else {
+          return alert('Erro ao cadastrar Imagem');
+        }
       });
+      this.navToListCoup();
+    }));
+
+    // return new Promise(resolve => {
+    //   this.apiService.create(this.createProductModel)
+    //     .subscribe(res => {
+    //       this.idRegistry = res[0].product_id;
+
+    //       this.apiService.addImage(formModel, this.idRegistry).subscribe((resImg) => {
+    //         if (resImg != null) {
+    //           return alert('Sucesso ao cadastrar Imagem');
+    //         } else {
+    //           return alert('Erro ao cadastrar Imagem');
+    //         }
+
+    //       });
+
+    //       this.navToListCoup();
+    //     });
+    // });
   }
 
-  formImg() {
+  createProduct<T>(productModel: ProductModel) {
+    return new Promise((resolve, reject) => {
+      this.apiService.create(productModel)
+        .subscribe(res => {
+          if (res == null) { return reject(res); }
+          resolve(res);
+        });
+    });
+  }
+
+  // formImg() {
+  //   const reader = new FileReader();
+  //   reader.onload = this._handleReaderLoaded.bind(this);
+  //   reader.readAsBinaryString(this.imgAux);
+  // }
+
+  handleFileSelect(evt) {
+    const files = evt.target.files;
+    const file = files[0];
+
+    if (files && file) {
+      this.selectImg(file, files);
+    }
+  }
+
+  selectImg(file, files) {
     const reader = new FileReader();
+    this.selectedFile = <File>file;
+
+    this.formData.append('imagem', this.selectedFile, this.selectedFile.name);
+
     reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsBinaryString(this.imgAux);
+    reader.readAsBinaryString(file);
   }
 
   _handleReaderLoaded(readerEvt) {
     const binaryString = readerEvt.target.result;
     this.base64textString = btoa(binaryString);
-    this.formulario.value.files = this.base64textString;
   }
 
-  getImgValues(name: string, type: string, image: string) {
-    this.imgNameAux = name;
-    this.imgTypeAux = type;
-    this.imgAux = image;
-  }
+  // getImgValues(image: string) {
+  //   this.imgAux = image;
+  // }
 
-  upload() {
-    const formData: any = new FormData();
-    const files: File[] = this.filesToUpload;
+  // onFileChange(event) {
+  //   if (event.target.files.length > 0) {
+  //     const file = event.target.files[0];
+  //   }
+  // }
 
-    for (let i = 0; i < files.length; i++) {
-      formData.append('uploads[]', files[i], files[i]['name']);
-    }
-    console.log('form data variable :   ' + formData.toString());
-    this.apiService.create(formData)
-      .subscribe(filesUp => console.log('files', filesUp));
-  }
+  // private prepareSave(): any {
+  //   const input = new FormData();
 
-  fileChangeEvent(fileInput: any) {
-    this.filesToUpload = <Array<File>>fileInput.target.files;
-    // this.product.photo = fileInput.target.files[0]['name'];
-  }
+  //   input.append('images', this.selectedFile, this.selectedFile.name);
+
+  //   return input;
+  // }
 
   getDate() {
     return new Date();
   }
+
+  changeDefaultProduct(evt) {
+    if (evt.checked === true) {
+      this.defaultProduct = true;
+      this.formulario.get('defaultProduct').setValue(this.defaultProduct);
+    } else {
+      this.defaultProduct = false;
+      this.formulario.get('defaultProduct').setValue(this.defaultProduct);
+    }
+  }
+
+  changeDiscount(evt) {
+    if (evt.checked === true) {
+      this.discount = true;
+      this.formulario.get('discount').setValue(this.discount);
+    } else {
+      this.discount = false;
+      this.formulario.get('discount').setValue(this.discount);
+    }
+  }
+
 }
