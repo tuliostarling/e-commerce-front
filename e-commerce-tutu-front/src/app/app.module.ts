@@ -14,17 +14,21 @@ import { ViewModule } from './view/view.module';
 import { ComponentModule } from './component/component.module';
 
 import { AppComponent } from './app.component';
+import { CountdownComponent } from './countdown/countdown.component';
+import { CountdownTimerModule } from 'ngx-countdown-timer';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CountdownComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
     HttpClientModule,
     ViewModule,
-    ComponentModule
+    ComponentModule,
+    CountdownTimerModule
   ],
   providers: [UserApiService, HttpClientModule, CategoryService, CouponService, ProductService],
   bootstrap: [AppComponent]

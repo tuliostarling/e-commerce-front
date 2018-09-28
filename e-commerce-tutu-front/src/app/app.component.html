@@ -1,6 +1,6 @@
 <div class="wrapper">
   <!-- Main Header -->
-  <app-header></app-header>
+  <app-header *ngIf="urlCheck == false"></app-header>
   
   <!-- Content Wrapper. Contains page content -->
   <!--app-starter-content></app-starter-content-->
@@ -13,7 +13,7 @@
   </div>
 
   <!-- Main Footer -->
-  <app-footer></app-footer>
+  <app-footer *ngIf="urlCheck == false"></app-footer>
   
   <!-- Add the sidebar's background. This div must be placed
         immediately after the control sidebar -->

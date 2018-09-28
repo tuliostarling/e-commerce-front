@@ -1,0 +1,13 @@
+.container h1 {
+    color: #FE980F;
+    text-align: center;
+    margin-top: 20%;
+}
+
+.content {
+    text-align: center;
+}
+
+#countdown {
+    font-size: 100px;
+}

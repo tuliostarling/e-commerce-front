@@ -11,9 +11,12 @@ import { ProductListComponent } from './view/admin-user/product/product-list/pro
 import { ProductRegisterComponent } from './view/admin-user/product/product-register/product-register.component';
 import { ShoeListComponent } from './view/common-user/shoe-list/shoe-list.component';
 import { CartComponent } from './view/common-user/cart/cart.component';
+import { CountdownComponent } from './countdown/countdown.component';
+
+
 
 export const ROUTES: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full' },
+    { path: '', redirectTo: 'countdown', pathMatch: 'full' },
     { path: 'home', component: HomeComponent },
     { path: 'category_list', component: CategoryListComponent },
     { path: 'category_register', component: CategoryRegisterComponent },
@@ -26,4 +29,5 @@ export const ROUTES: Routes = [
     { path: 'product_edit/:id', component: ProductRegisterComponent },
     { path: 'shoe_list', component: ShoeListComponent },
     { path: 'cart', component: CartComponent },
+    { path: 'countdown', component: CountdownComponent },
 ];

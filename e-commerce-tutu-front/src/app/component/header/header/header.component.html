@@ -2,6 +2,7 @@
   <header class="blog-header py-3">
     <div class="row flex justify-content-between align-items-center">
       <div class="col-sm-6 pt-1">
+        <!--img class="logo" src='../../../../assets/images/logoTutuGuerra.jpeg' href="javascript:void(0);" (click)="home()"-->
         <img class="logo" src='../../../../assets/images/project_1507733529688.png' href="javascript:void(0);" (click)="home()">
       </div>
       <div class="col-sm-6 d-flex justify-content-end align-items-center">
@@ -17,7 +18,7 @@
           <a class="btn btn-sm btn-outline-secondary" href="javascript:void(0);" (click)="cart()" style="margin-right: 2%">Carrinho</a>
 
           <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userName }}</button>
+            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item">Meu perfil</button>
               <button class="dropdown-item">Dashboard</button>
@@ -34,7 +35,7 @@
           <a class="btn btn-sm btn-outline-secondary" style="margin-right: 2%" href="javascript:void(0);" (click)="cart()">Carrinho</a>
 
           <div ngbDropdown class="d-inline-block">
-            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userName }}</button>
+            <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item">Meu perfil</button>
               <button class="dropdown-item" (click)="logout()">Sair</button>

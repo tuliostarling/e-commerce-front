@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   decodedToken: any;
   admin = false;
   userName: string;
-  userNameEncoded: string;
+  userNameDecoded: string;
 
   constructor(
     public router: Router,
@@ -28,6 +28,7 @@ export class HeaderComponent implements OnInit {
       this.decodedToken = this.jwtDecode(t);
       this.logged = true;
       this.userName = this.decodedToken.name;
+      this.userNameDecoded = decodeURIComponent(escape(this.userName));
 
       if (this.decodedToken.admin === true) {
         this.admin = true;
