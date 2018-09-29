@@ -84,14 +84,16 @@ export class ProductRegisterComponent implements OnInit {
   onSubmit(form) {
     this.createProductModel = form.value;
 
-    // this.formImg();
-    // const formModel = this.prepareSave();
+
 
     this.createProduct(this.createProductModel).then((res => {
       this.imagem = this.formData.get('imagem');
       this.idRegistry = res[0].product_id;
 
-      this.apiService.addImage(this.imagem, this.idRegistry).subscribe((resImg) => {
+      let formImage = new FormData();
+      formImage.append('file', this.imagem);
+      console.log(formImage);
+      this.apiService.addImage(formImage, this.idRegistry).subscribe((resImg) => {
         if (resImg != null) {
           return alert('Sucesso ao cadastrar Imagem');
         } else {
