@@ -5,7 +5,7 @@
       <p>Sapatos</p>
     </div>
 
-    <img src="../../../../assets/images/iStock-493862590-1110x400.jpg" />
+    <img src="../../../../assets/images/iStock-493862590-1110x400.jpg" class="img-fluid"/>
   </div>
 
   <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FE980F;">
@@ -54,11 +54,11 @@
 
         <div class="middle">
           <img src="https://www.converse.com/on/demandware.static/-/Sites-ConverseMaster/default/dw48f5fc3c/images/hi-res/M9621C_standard.png?sw=580&sh=580&sm=fit"
-            alt="pic" />
+            alt="pic" (click)="listOneProduct(1)"/>
         </div>
 
         <div class="bottom">
-          <div class="heading">Chuck Taylor All Star Classic Colours</div>
+          <div class="heading" (click)="listOneProduct(1)"><a href="javascript:void(0);">Chuck Taylor All Star Classic Colours</a></div>
           <div class="info">Classic red converse edition</div>
           <div class="price">$50.00
             <span class="old-price">$75.00</span>

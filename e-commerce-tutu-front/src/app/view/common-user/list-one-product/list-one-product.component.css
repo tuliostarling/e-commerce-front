@@ -1,0 +1,63 @@
+.fa-star-o,
+.fa-star {
+    color: gold
+}
+
+p {
+    font-size: 14px;
+}
+
+.aval,
+.info,
+.end,
+.buy {
+    margin-top: 2%;
+    padding: 4%;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 2px solid #CCCCCC;
+    border-left: 2px solid #e1e1e1;
+    border-right: 2px solid #e1e1e1;
+}
+
+.end {
+    padding: 2%;
+}
+
+.info {
+    padding: 2%;
+}
+
+.aval {
+    padding: 2%;
+}
+
+#iconCredit {
+    color: #FE980F;
+}
+
+#iconCart {
+    color: #fff;
+    margin-right: 4%;
+}
+
+a {
+    color:#FE980F; 
+    text-decoration: none;
+}
+  
+a:hover {
+    color:#000; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
+
+#imgThumb {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #e1e1e1;
+    margin: 1%
+}
+
+tr {
+    text-align: center;
+}

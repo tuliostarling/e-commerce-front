@@ -4,12 +4,7 @@
     letter-spacing: 1px;
     box-sizing: border-box;
 }
-.content-title {
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 77%;
-  height: 48.5%;
-}
+
 .content-title p {
   text-align: center;
   margin-top: 15%;
@@ -94,4 +89,27 @@
 .old-price {
   color: #f00;
   text-decoration: line-through;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+a:hover 
+{
+   color:#FE980F; 
+   text-decoration:none; 
+   cursor:pointer;  
+}
+
+img {
+  background: 'linear-gradient(rgba(255,0,0,0.5),rgba(255,0,0,0.5))'
+}
+
+.content-title {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 77%;
+  height: 50%;
 }
