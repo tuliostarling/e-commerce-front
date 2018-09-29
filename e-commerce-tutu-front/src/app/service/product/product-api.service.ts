@@ -17,9 +17,13 @@ export class ProductService {
         return this.http.get<ProductModel>(this.API_URL + 'listall/');
     }
 
-    // geOne(id: number) {
-    //     return this.http.post<ProductModel>(this.API_URL + 'get/', id);
-    // }
+    getAllByCategory(id: number) {
+        return this.http.post<ProductModel>(this.API_URL + 'listByCategory/', id);
+    }
+
+    getOne(id: number) {
+        return this.http.post<ProductModel>(this.API_URL + 'get/', id);
+    }
 
     create(dadosForm: ProductModel) {
         return this.http.post<ProductModel>(this.API_URL + 'add/', dadosForm);
@@ -29,11 +33,11 @@ export class ProductService {
         return this.http.post(this.API_URL + 'addImages/' + id, dadosForm);
     }
 
-    // update(dadosForm: ProductModel){
-    //     return this.http.put<ProductModel>(this.API_URL + 'update/', dadosForm);
-    // }
+    update(dadosForm: ProductModel){
+        return this.http.put<ProductModel>(this.API_URL + 'update/', dadosForm);
+    }
 
-    // delete(id: number) {
-    //     return this.http.delete<ProductModel>(this.API_URL + 'del/' + id);
-    // }
+    delete(id: number) {
+        return this.http.delete<ProductModel>(this.API_URL + 'del/' + id);
+    }
 }

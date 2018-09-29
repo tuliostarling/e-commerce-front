@@ -54,7 +54,8 @@
         <div class="col-6">
           <div class="form-group">
             <label for="description">Descrição</label>
-            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description" placeholder="Digite a descrição"></textarea>
+            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description"
+              placeholder="Digite a descrição"></textarea>
           </div>
         </div>
         <div class="col-3">
@@ -81,11 +82,8 @@
         <div class="col-12">
           <div class="form-group">
             <div class="inline-block">
-              <!--div ngfSelect accept="image/*" multiple="1" [maxSize]="maxSize" [(files)]="filesToUpload" class="well my-drop-zone" style="border-style:groove;padding:0.5em;text-align:center;width:200px;"
-                [(lastInvalids)]="lastInvalids" (change)="handleFileSelect($event)" (filesChange)="lastFileAt=getDate()">
-                Selecione uma imagem
-              </div-->
-              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)">
+              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)"
+                multiple />
             </div>
           </div>
         </div>
@@ -93,8 +91,8 @@
 
       <div class="row">
         <div class="col-12">
-          <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
-            <h3 style="color:red;">Último tamanho {{ lastInvalids.length }} inválido!</h3>
+          <!--div class="bg-warning" *ngIf="imagesToUpload?.length" style="margin-bottom: 40px">
+            <h3 style="color:red;">Último tamanho {{ imagesToUpload.length }} inválido!</h3>
 
             <table class="table">
               <thead>
@@ -107,7 +105,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of lastInvalids;let i=index">
+                <tr *ngFor="let item of imagesToUpload;let i=index">
                   <td>
                     <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.file.type)>=0">
                       <div class="previewIcon" [ngfBackground]="item.File"></div>
@@ -124,14 +122,14 @@
                     {{ item.file.size/1024/1024 | number:'.2' }} MB
                   </td>
                   <td nowrap>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="lastInvalids.splice(i,1)">
+                    <button type="button" class="btn btn-danger btn-xs" (click)="imagesToUpload.splice(i,1)">
                       <span class="fa fa-trash"></span>
                     </button>
                   </td>
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div-->
 
           <div style="margin-bottom: 40px">
             <table class="table">
@@ -144,7 +142,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of filesToUpload;let i=index">
+                <tr *ngFor="let item of imagesToUpload;let i=index">
                   <td>
                     <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
                       <div class="previewIcon" [ngfBackground]="item"></div>
@@ -158,11 +156,8 @@
                     {{ item.size/1024/1024 | number:'.2' }} MB
                   </td>
                   <td nowrap>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="filesToUpload.splice(i,1)">
+                    <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
                       <span class="fa fa-trash"></span>
-                    </button>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="getImgValues(item)">
-                      <span class="fa fa-edit"></span>
                     </button>
                   </td>
                 </tr>

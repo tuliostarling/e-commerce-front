@@ -7,9 +7,6 @@ import {
   AbstractControl
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-
-import { ngf } from 'angular-file';
 
 import { ProductModel } from '../../../../model/product/product';
 import { ProductService } from '../../../../service/product/product-api.service';
@@ -29,25 +26,16 @@ export class ProductRegisterComponent implements OnInit {
   createProductModel: ProductModel;
   rowsCategory: CategoryModel;
 
-  accept = '*';
-  filesToUpload: File[] = [];
-  lastFileAt: Date;
-  base64textString: String = '';
-  selectedFile: File = null;
-  imgAux: any;
   formData: FormData = new FormData();
-
-  imagem: any;
-
   defaultProduct: boolean;
   discount: boolean;
+  imagesToUpload: any;
 
   constructor(
     private apiService: ProductService,
     private apiCategoryService: CategoryService,
     private form: FormBuilder,
     private router: Router,
-    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -62,10 +50,7 @@ export class ProductRegisterComponent implements OnInit {
       price: [null, Validators.required],
       discount: [null],
       description: [null, Validators.required],
-      color: [null, Validators.required],
-      images: this.form.group({
-        imagem: [null]
-      })
+      color: [null, Validators.required]
     });
 
     this.formImages = this.formulario.controls['images'];
@@ -84,42 +69,26 @@ export class ProductRegisterComponent implements OnInit {
   onSubmit(form) {
     this.createProductModel = form.value;
 
-
-
     this.createProduct(this.createProductModel).then((res => {
-      this.imagem = this.formData.get('imagem');
       this.idRegistry = res[0].product_id;
 
       let formImage = new FormData();
-      formImage.append('file', this.imagem);
-      console.log(formImage);
+      const files: Array<File> = this.imagesToUpload;
+
+      for (let i = 0; i < files.length; i++) {
+        formImage.append("file", files[i]);
+      }
+
       this.apiService.addImage(formImage, this.idRegistry).subscribe((resImg) => {
         if (resImg != null) {
-          return alert('Sucesso ao cadastrar Imagem');
+          alert('Sucesso ao cadastrar Imagem');
+          return this.navToListCoup();
         } else {
           return alert('Erro ao cadastrar Imagem');
         }
       });
-      this.navToListCoup();
     }));
 
-    // return new Promise(resolve => {
-    //   this.apiService.create(this.createProductModel)
-    //     .subscribe(res => {
-    //       this.idRegistry = res[0].product_id;
-
-    //       this.apiService.addImage(formModel, this.idRegistry).subscribe((resImg) => {
-    //         if (resImg != null) {
-    //           return alert('Sucesso ao cadastrar Imagem');
-    //         } else {
-    //           return alert('Erro ao cadastrar Imagem');
-    //         }
-
-    //       });
-
-    //       this.navToListCoup();
-    //     });
-    // });
   }
 
   createProduct<T>(productModel: ProductModel) {
@@ -132,53 +101,15 @@ export class ProductRegisterComponent implements OnInit {
     });
   }
 
-  // formImg() {
-  //   const reader = new FileReader();
-  //   reader.onload = this._handleReaderLoaded.bind(this);
-  //   reader.readAsBinaryString(this.imgAux);
-  // }
-
-  handleFileSelect(evt) {
-    const files = evt.target.files;
-    const file = files[0];
-
-    if (files && file) {
-      this.selectImg(file, files);
-    }
+  handleFileSelect(fileInput: any) {
+    this.imagesToUpload = <any>fileInput.target.files;
+    console.log(this.imagesToUpload);
   }
 
-  selectImg(file, files) {
-    const reader = new FileReader();
-    this.selectedFile = <File>file;
-
-    this.formData.append('imagem', this.selectedFile, this.selectedFile.name);
-
-    reader.onload = this._handleReaderLoaded.bind(this);
-    reader.readAsBinaryString(file);
+  removeFile(indexe) {
+    delete this.imagesToUpload[indexe]
+    console.log(this.imagesToUpload);
   }
-
-  _handleReaderLoaded(readerEvt) {
-    const binaryString = readerEvt.target.result;
-    this.base64textString = btoa(binaryString);
-  }
-
-  // getImgValues(image: string) {
-  //   this.imgAux = image;
-  // }
-
-  // onFileChange(event) {
-  //   if (event.target.files.length > 0) {
-  //     const file = event.target.files[0];
-  //   }
-  // }
-
-  // private prepareSave(): any {
-  //   const input = new FormData();
-
-  //   input.append('images', this.selectedFile, this.selectedFile.name);
-
-  //   return input;
-  // }
 
   getDate() {
     return new Date();
