@@ -22,7 +22,6 @@ export class ProductRegisterComponent implements OnInit {
 
   idRegistry: number;
   formulario: FormGroup;
-  formImages: AbstractControl;
   createProductModel: ProductModel;
   rowsCategory: CategoryModel;
 
@@ -52,8 +51,6 @@ export class ProductRegisterComponent implements OnInit {
       description: [null, Validators.required],
       color: [null, Validators.required]
     });
-
-    this.formImages = this.formulario.controls['images'];
   }
 
   getCategory() {
@@ -88,7 +85,6 @@ export class ProductRegisterComponent implements OnInit {
         }
       });
     }));
-
   }
 
   createProduct<T>(productModel: ProductModel) {
@@ -103,12 +99,10 @@ export class ProductRegisterComponent implements OnInit {
 
   handleFileSelect(fileInput: any) {
     this.imagesToUpload = <any>fileInput.target.files;
-    console.log(this.imagesToUpload);
   }
 
   removeFile(indexe) {
     delete this.imagesToUpload[indexe]
-    console.log(this.imagesToUpload);
   }
 
   getDate() {

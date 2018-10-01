@@ -9,9 +9,12 @@ export interface ProductModel {
     discount: boolean;
     description: string;
     color: string;
-    image: Array<ImageModel>;
 }
 
-export interface ImageModel {
-    image: string;
+export interface ProductListModel {
+    id_subproduct: number;
+    name: string;
+    id_product: number;
+    price: string;
+    location_aws: string;
 }

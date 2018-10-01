@@ -9,14 +9,12 @@
     <thead>
       <tr>
         <th scope="col">Categoria</th>
-        <th scope="col">Tipo</th>
         <th scope="col" class="title-table">Ação</th>
       </tr>
     </thead>
     <tbody *ngFor="let i of rowsCategory">
       <tr>
         <td>{{ i.category }}</td>
-        <td>{{ i.type }}</td>
         <td class="action">
           <button type="button" class="btn btn-primary btn-md" (click)="update(i.id)">
             <i class="fa fa-pencil-square-o"></i>

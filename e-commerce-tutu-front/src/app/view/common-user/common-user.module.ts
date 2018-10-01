@@ -8,6 +8,7 @@ import { TopSellingProductsComponent } from '../../component/top-selling-product
 import { ShoeListComponent } from './shoe-list/shoe-list.component';
 import { CartComponent } from './cart/cart.component';
 import { ListOneProductComponent } from './list-one-product/list-one-product.component';
+import { ProductCategoryListComponent } from './product-category-list/product-category-list.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ListOneProductComponent } from './list-one-product/list-one-product.com
     ShoeListComponent,
     CartComponent,
     ListOneProductComponent,
+    ProductCategoryListComponent,
   ],
   exports: [
     HomeComponent,

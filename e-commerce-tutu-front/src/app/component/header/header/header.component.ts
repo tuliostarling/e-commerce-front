@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { CategoryService } from '../../../service/category/category-api.service';
 import { CategoryListComponent } from '../../../view/admin-user/category/category-list/category-list.component';
+import { CategoryModel } from '../../../model/category/category';
 
 @Component({
   selector: 'app-header',
@@ -15,9 +16,11 @@ export class HeaderComponent implements OnInit {
   admin = false;
   userName: string;
   userNameDecoded: string;
+  categoryList: CategoryModel;
 
   constructor(
     public router: Router,
+    private categoryService: CategoryService,
     private location: Location
   ) { }
 
@@ -34,6 +37,8 @@ export class HeaderComponent implements OnInit {
         this.admin = true;
       }
     }
+
+    this.getCategorys()
   }
 
   logout() {
@@ -63,11 +68,23 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/product_list');
   }
 
-  shoeList() {
-    this.router.navigateByUrl('/shoe_list');
+  categoryListLoad(id: number) {
+    console.log(id);
+    //this.router.navigateByUrl('/');
   }
 
   cart() {
     this.router.navigateByUrl('/cart');
   }
+
+  getCategorys() {
+    // this.categoryService.getListAll().subscribe((res) => {
+    //   if (res != null) {
+    //     this.categoryList = res;
+    //     console.log(this.categoryList);
+    //   }
+    // })
+  }
+
+
 }

@@ -23,6 +23,10 @@ export class CategoryRegisterComponent implements OnInit {
   idCategory: number;
   mode: string;
   rowsCategory: CategoryModel;
+  imagesToUpload: any;
+  LoadCurrentImg: boolean;
+  imgSRC: string;
+
 
   constructor(
     private apiService: CategoryService,
@@ -37,15 +41,18 @@ export class CategoryRegisterComponent implements OnInit {
         if (params.hasOwnProperty('id')) {
           this.idCategory = params.id;
           this.mode = 'Editar';
+          this.LoadCurrentImg = true;
           this.recoverRegistry();
         } else {
           this.mode = 'Cadastrar';
+          this.LoadCurrentImg = false;
         }
       });
 
     this.formulario = this.form.group({
       category: [null, Validators.required],
-      type: [null, Validators.required],
+      location_aws: [null, Validators.required],
+      key_aws: [null, Validators.required]
     });
   }
 
@@ -53,16 +60,27 @@ export class CategoryRegisterComponent implements OnInit {
     if (this.idCategory !== undefined) {
       this.apiService.getListOne(this.idCategory).subscribe((data) => {
         if (data) {
+          this.imgSRC = data[0].location_aws;
           this.formulario = this.form.group({
             id: [data[0].id],
             category: [data[0].category, Validators.required],
-            type: [data[0].type, Validators.required],
+            location_aws: [data[0].location_aws, Validators.required],
+            key_aws: [data[0].key_aws, Validators.required]
           });
         } else {
-          alert('erro');
+          alert('DOOT ERRO');
         }
       });
     }
+  }
+
+
+  handleFileSelect(fileInput: any) {
+    this.imagesToUpload = <any>fileInput.target.files;
+  }
+
+  removeFile(indexe) {
+    delete this.imagesToUpload[indexe]
   }
 
   navToListCat() {
@@ -71,20 +89,54 @@ export class CategoryRegisterComponent implements OnInit {
 
   onSubmit(form) {
     this.createCategoryModel = form.value;
+    let formImage = new FormData();
+    const files: Array<File> = this.imagesToUpload;
+
+    for (let i = 0; i < files.length; i++) {
+      formImage.append("file", files[i]);
+    }
 
     if (this.idCategory === undefined) {
-      this.apiService.create(this.createCategoryModel).subscribe(res => {
-        if (res == null) { return alert('Erro ao cadastrar'); }
+      if(files.length > 1 ) return alert('O Banner aceita apenas uma imagem.');
 
-        this.navToListCat();
-      });
+      this.createProduct(formImage).then(resImg => {
+        if (resImg == null) return alert('Erro ao cadastrar Imagem');
+        this.createCategoryModel.location_aws = resImg[0].Location;
+        this.createCategoryModel.key_aws = resImg[0].Key;
+
+        this.apiService.create(this.createCategoryModel).subscribe((res) => {
+          if (res != null) {
+            alert('Sucesso ao cadastrar Imagem');
+            return this.navToListCat();
+          }
+          return alert('Erro ao cadastrar Imagem');
+        });
+      })
+
     } else {
-      this.apiService.update(this.createCategoryModel).subscribe((res) => {
+      if(formImage != null){
+        this.createProduct(formImage).then(resImg => {
+
+        });
+      }
+      this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
         if (res == null) { return alert('Erro ao cadastrar'); }
 
         this.navToListCat();
       });
     }
   }
+
+
+  createProduct<T>(formImage: FormData) {
+    return new Promise((resolve, reject) => {
+      this.apiService.addImage(formImage)
+        .subscribe(res => {
+          if (res == null) { return reject(res); }
+          resolve(res);
+        });
+    });
+  }
+
 
 }

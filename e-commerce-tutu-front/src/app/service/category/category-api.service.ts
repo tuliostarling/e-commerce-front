@@ -27,8 +27,12 @@ export class CategoryService {
     return this.http.post<CategoryModel>(this.API_URL + 'add/', dadosForm);
   }
 
-  update(dadosForm: CategoryModel) {
-    return this.http.put<CategoryModel>(this.API_URL + 'put/', dadosForm);
+  update(dadosForm: CategoryModel, id: number) {
+    return this.http.put<CategoryModel>(this.API_URL + 'put/' + id, dadosForm);
+  }
+
+  addImage(dadosForm: FormData) {
+    return this.http.post(this.API_URL + 'addImages/', dadosForm);
   }
 
   delete(id: number) {

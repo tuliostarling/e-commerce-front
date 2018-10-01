@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { ProductModel, ImageModel } from '../../model/product/product';
+import { ProductModel } from '../../model/product/product';
 
 @Injectable()
 export class ProductService {
