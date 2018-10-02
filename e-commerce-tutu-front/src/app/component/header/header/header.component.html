@@ -15,7 +15,7 @@
         </a>
 
         <ng-container *ngIf="logged == true && admin == true">
-          <a class="btn btn-sm btn-outline-secondary" href="javascript:void(0);" (click)="cart()" style="margin-right: 2%">Carrinho</a>
+          <a class="btn btn-sm btn-outline-secondary" href="javascript:void(0);" (click)="cart()" style="margin-right: 2%"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
 
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
@@ -29,7 +29,7 @@
         </ng-container>
 
         <ng-container *ngIf="logged == true && admin == false">
-          <a class="btn btn-sm btn-outline-secondary" style="margin-right: 2%" href="javascript:void(0);" (click)="cart()">Carrinho</a>
+          <a class="btn btn-sm btn-outline-secondary" style="margin-right: 2%" href="javascript:void(0);" (click)="cart()"><i class="fa fa-shopping-basket" aria-hidden="true"></i></a>
 
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
