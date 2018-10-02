@@ -12,17 +12,4 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  registerCategory() {
-    this.router.navigateByUrl('/category_list');
-  }
-
-  registerCoupon() {
-    this.router.navigateByUrl('/coupon_list');
-  }
-
-  registerProduct() {
-    this.router.navigateByUrl('/product_list');
-  }
-
 }
