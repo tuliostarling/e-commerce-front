@@ -20,11 +20,8 @@
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
-              <button class="dropdown-item">Meu perfil</button>
-              <button class="dropdown-item">Dashboard</button>
-              <button class="dropdown-item" (click)="registerCategory()">Cadastrar categoria</button>
-              <button class="dropdown-item" (click)="registerProduct()">Cadastrar produto</button>
-              <button class="dropdown-item" (click)="registerCoupon()">Cadastrar cupom desconto</button>
+              <button class="dropdown-item" href="javascript:void(0);" (click)="profile()">Meu perfil</button>
+              <button class="dropdown-item" (click)="dashboard()">Dashboard</button>
               <button class="dropdown-item">Atualizações</button>
               <button class="dropdown-item" (click)="logout()">Sair</button>
             </div>
@@ -37,7 +34,7 @@
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
-              <button class="dropdown-item">Meu perfil</button>
+              <button class="dropdown-item" href="javascript:void(0);" (click)="profile()">Meu perfil</button>
               <button class="dropdown-item" (click)="logout()">Sair</button>
             </div>
           </div>
@@ -45,7 +42,7 @@
 
         <ng-container *ngIf="logged == false">
           <app-modal-login classes="btn btn-sm btn-outline" style="margin-right: 10px"></app-modal-login>
-          <modal-register classes="btn btn-sm"></modal-register>
+          <app-modal-register classes="btn btn-sm"></app-modal-register>
         </ng-container>
       </div>
     </div>
@@ -54,9 +51,11 @@
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
       <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="home()">Pagina Inicial</a>
-      <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="shoeList()">Sapatos</a>
-      <a id="btn_nav" class="p-2" href="#">Bolsas</a>
-      <a id="btn_nav" class="p-2" href="#">Cintos</a>
+      <ng-container *ngFor="let i of categoryList">
+        <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="categoryListLoad(i.category)">{{ i.category }}</a>
+      </ng-container>
+      <!--a id="btn_nav" class="p-2" href="#">Bolsas</a>
+      <a id="btn_nav" class="p-2" href="#">Cintos</a-->
       <a id="btn_nav" class="p-2" href="#">Sobre</a>
       <a id="btn_nav" class="p-2" href="#">Contate-nos</a>
     </nav>

@@ -37,8 +37,7 @@ export class HeaderComponent implements OnInit {
         this.admin = true;
       }
     }
-
-    this.getCategorys()
+    this.getCategory();
   }
 
   logout() {
@@ -56,34 +55,30 @@ export class HeaderComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
-  registerCategory() {
-    this.router.navigateByUrl('/category_list');
-  }
-
-  registerCoupon() {
-    this.router.navigateByUrl('/coupon_list');
-  }
-
-  registerProduct() {
-    this.router.navigateByUrl('/product_list');
-  }
-
-  categoryListLoad(id: number) {
-    console.log(id);
-    //this.router.navigateByUrl('/');
+  categoryListLoad(category: any) {
+    // if (category.indexOf(this.categoryList) < 0) {
+    //   this.router.navigateByUrl('');
+    // }
   }
 
   cart() {
     this.router.navigateByUrl('/cart');
   }
 
-  getCategorys() {
-    // this.categoryService.getListAll().subscribe((res) => {
-    //   if (res != null) {
-    //     this.categoryList = res;
-    //     console.log(this.categoryList);
-    //   }
-    // })
+  profile() {
+    this.router.navigateByUrl('/profile/' + this.decodedToken.id);
+  }
+
+  dashboard() {
+    this.router.navigateByUrl('/dashboard');
+  }
+
+  getCategory() {
+    this.categoryService.getListAll().subscribe((res) => {
+      if (res != null) {
+        this.categoryList = res;
+      }
+    });
   }
 
 

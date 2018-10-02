@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, ViewChild, ElementRef } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -13,7 +13,7 @@ import { UserApiService } from '../../service';
 import { UserCreateModel } from '../../model/user/userCreate';
 
 @Component({
-  selector: 'modal-register',
+  selector: 'app-modal-register',
   templateUrl: './modal-register.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./modal-register.component.css']
@@ -21,8 +21,11 @@ import { UserCreateModel } from '../../model/user/userCreate';
 export class ModalRegisterComponent implements OnInit {
   @Input() classes: string;
 
+  // @ViewChild('modalBtn') modalBtn: ElementRef;
+
   formulario: FormGroup;
   createUserModel: UserCreateModel;
+  closeModal: string;
 
   constructor(
     private service: UserApiService,
@@ -32,9 +35,9 @@ export class ModalRegisterComponent implements OnInit {
 
   ngOnInit() {
     this.formulario = this.form.group({
-      name: [null ,Validators.required],
-      email: [null ,Validators.required],
-      password: [null ,Validators.required],
+      name: [null, Validators.required],
+      email: [null, Validators.required],
+      password: [null, Validators.required],
       admin: false
     });
   }
@@ -48,8 +51,12 @@ export class ModalRegisterComponent implements OnInit {
 
     this.service.createUser(this.createUserModel)
       .subscribe(res => {
-        if (res == null) return alert('Erro ao cadastrar');
-        return alert('Usuário cadastrado com sucesso!');
+        if (res == null) {
+          return alert('Erro ao cadastrar');
+        } else {
+          // (this.modalBtn.nativeElement).modal('hide');
+          return alert('Usuário cadastrado com sucesso!');
+        }
       });
   }
 

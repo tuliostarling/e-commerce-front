@@ -12,6 +12,7 @@ import { DiscountCouponListComponent } from './discount-coupon/discount-coupon-l
 import { DiscountCouponRegisterComponent } from './discount-coupon/discount-coupon-register/discount-coupon-register.component';
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductRegisterComponent } from './product/product-register/product-register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { ProductRegisterComponent } from './product/product-register/product-reg
     DiscountCouponListComponent,
     DiscountCouponRegisterComponent,
     ProductListComponent,
-    ProductRegisterComponent
+    ProductRegisterComponent,
+    DashboardComponent
   ],
   exports: [
     CategoryRegisterComponent,
