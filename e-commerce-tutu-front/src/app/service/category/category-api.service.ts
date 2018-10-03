@@ -31,6 +31,10 @@ export class CategoryService {
     return this.http.put<CategoryModel>(this.API_URL + 'put/' + id, dadosForm);
   }
 
+  putImage(dadosForm: FormData){
+    return this.http.put(this.API_URL + 'putImages/', dadosForm);
+  }
+
   addImage(dadosForm: FormData) {
     return this.http.post(this.API_URL + 'addImages/', dadosForm);
   }

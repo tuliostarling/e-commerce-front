@@ -97,9 +97,9 @@ export class CategoryRegisterComponent implements OnInit {
     }
 
     if (this.idCategory === undefined) {
-      if(files.length > 1 ) return alert('O Banner aceita apenas uma imagem.');
+      if (files.length > 1) return alert('O Banner aceita apenas uma imagem.');
 
-      this.createProduct(formImage).then(resImg => {
+      this.insertCategoryImage(formImage).then(resImg => {
         if (resImg == null) return alert('Erro ao cadastrar Imagem');
         this.createCategoryModel.location_aws = resImg[0].Location;
         this.createCategoryModel.key_aws = resImg[0].Key;
@@ -111,24 +111,37 @@ export class CategoryRegisterComponent implements OnInit {
           }
           return alert('Erro ao cadastrar Imagem');
         });
-      })
+      });
 
     } else {
-      if(formImage != null){
-        this.createProduct(formImage).then(resImg => {
 
+      if (formImage != null) {
+        if (files.length > 1) return alert('O Banner aceita apenas uma imagem.');
+        
+        formImage.append("key_aws", this.createCategoryModel.key_aws);
+        this.updateCategoryImage(formImage).then(resImg => {
+          if (resImg == null) return alert('Erro ao atualizar Imagem');
+          this.createCategoryModel.location_aws = resImg[0].Location;
+          this.createCategoryModel.key_aws = resImg[0].Key;
+
+          this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
+            if (res == null) return alert('Erro Ao Atualizar a Categoria');
+            return this.navToListCat();
+          });
         });
-      }
-      this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
-        if (res == null) { return alert('Erro ao cadastrar'); }
 
-        this.navToListCat();
-      });
+      } else {
+        this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
+          if (res == null) { return alert('Erro ao cadastrar'); }
+          return this.navToListCat();
+        })
+      }
+
     }
   }
 
 
-  createProduct<T>(formImage: FormData) {
+  insertCategoryImage<T>(formImage: FormData) {
     return new Promise((resolve, reject) => {
       this.apiService.addImage(formImage)
         .subscribe(res => {
@@ -138,5 +151,13 @@ export class CategoryRegisterComponent implements OnInit {
     });
   }
 
-
+  updateCategoryImage<T>(formImage: FormData) {
+    return new Promise((resolve, reject) => {
+      this.apiService.putImage(formImage)
+        .subscribe(res => {
+          if (res == null) { return reject(res); }
+          resolve(res);
+        });
+    });
+  }
 }
