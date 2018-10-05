@@ -15,11 +15,19 @@ export class UserApiService {
         private http: HttpClient
     ) { }
 
+    getListOne(id: number) {
+        return this.http.get<UserCreateModel>(this.API_URL + 'listone/' + id);
+    }
+
     loginUser(dadosForm: UserLoginModel) {
         return this.http.post<UserLoginModel>(this.API_AUTH_URL + 'authlogin/', dadosForm);
     }
 
     createUser(dadosForm: UserCreateModel) {
         return this.http.post<UserCreateModel>(this.API_URL + 'add/', dadosForm);
+    }
+
+    update(dadosForm: UserCreateModel) {
+        return this.http.put<UserCreateModel>(this.API_URL + 'put/', dadosForm);
     }
 }

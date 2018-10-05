@@ -1,0 +1,62 @@
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-signin .checkbox {
+    font-weight: 400;
+  }
+  .form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .content p {
+    font-size: 32px;
+    margin-left: 2%;
+    margin-bottom: -1%;
+}
+
+.content hr {
+    width: 15%;
+    float: left;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+#forgot_pass {
+  text-decoration: none;
+  color: #333;
+}
+
+#forgot_pass:hover {
+  color: #FE980F;
+  cursor: pointer
+}
+
+#form {
+  margin-top: 8%; 
+  margin-left: 1px; 
+  margin-bottom: 8%
+}

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -15,6 +16,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
   imports: [
     CommonModule,
     NgbModule.forRoot(),
+    FormsModule, ReactiveFormsModule,
   ],
   declarations: [
     HomeComponent,

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { UserApiService } from '../../../service';
+import { UserCreateModel } from '../../../model/user/userCreate';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,9 +12,59 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  formulario: FormGroup;
+  id: number;
+  pass: string;
+  name: string;
+  email: string;
+
+  update = false;
+
+  constructor(
+    public apiService: UserApiService,
+    private form: FormBuilder,
+    public router: Router,
+    private acRoute: ActivatedRoute
+  ) { }
+
+  public rowsCategory: UserCreateModel;
 
   ngOnInit() {
+    this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
+
+    this.apiService.getListOne(this.id).subscribe((data) => {
+      this.rowsCategory = data;
+      this.name = this.rowsCategory[0].name;
+      this.email = this.rowsCategory[0].email;
+    });
+
+    this.formulario = this.form.group({
+      id: [null],
+      name: [null, Validators.required],
+      email: [null],
+    });
   }
 
+  onSubmit(form) {
+    this.attForm();
+    this.rowsCategory = form.value;
+
+    this.apiService.update(this.rowsCategory).subscribe((res) => {
+      if (res === null) { return alert('Erro ao cadastrar'); }
+
+      this.update = false;
+    });
+
+  }
+
+  attForm() {
+    this.formulario.patchValue({
+      id: this.id,
+      email: this.email,
+    });
+  }
+
+  clickUpdate() {
+    this.update = !this.update;
+  }
 }
