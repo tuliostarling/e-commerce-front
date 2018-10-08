@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { CategoryService } from '../../../service/category/category-api.service';
 import { CategoryListComponent } from '../../../view/admin-user/category/category-list/category-list.component';
 import { CategoryModel } from '../../../model/category/category';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -17,6 +18,7 @@ export class HeaderComponent implements OnInit {
   userName: string;
   userNameDecoded: string;
   categoryList: CategoryModel;
+  newCategoryList: CategoryModel;
 
   constructor(
     public router: Router,
@@ -40,25 +42,53 @@ export class HeaderComponent implements OnInit {
     this.getCategory();
   }
 
-  logout() {
-    localStorage.clear();
-    location.reload();
-  }
-
   jwtDecode(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   }
 
+  // getCategory() {
+  //   this.categoryService.getListAll().subscribe((res) => {
+  //     if (res != null) {
+  //       this.categoryList = res;
+  //     }
+  //   });
+  // }
+
+  getListCategory(): Observable<CategoryModel> {
+    return new Observable((observer) => {
+      if (this.categoryList == null) {
+        this.categoryService.getListAll().subscribe((res) => {
+          if (res != null) {
+            this.categoryList = res;
+            observer.next(this.categoryList);
+          }
+        });
+      } else {
+        observer.next(this.categoryList);
+      }
+    });
+  }
+
+  getCategory() {
+    this.getListCategory()
+      .subscribe(res => {
+        this.newCategoryList = res;
+      });
+  }
+
+  logout() {
+    localStorage.clear();
+    location.reload();
+  }
+
   home() {
     this.router.navigateByUrl('/home');
   }
 
-  categoryListLoad(category: any) {
-    // if (category.indexOf(this.categoryList) < 0) {
-    //   this.router.navigateByUrl('');
-    // }
+  categoryListLoad(category_id: number) {
+    this.router.navigateByUrl('/category_list/' + category_id);
   }
 
   registerCategory() {
@@ -84,14 +114,4 @@ export class HeaderComponent implements OnInit {
   dashboard() {
     this.router.navigateByUrl('/dashboard');
   }
-
-  getCategory() {
-    this.categoryService.getListAll().subscribe((res) => {
-      if (res != null) {
-        this.categoryList = res;
-      }
-    });
-  }
-
-
 }

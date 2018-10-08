@@ -14,30 +14,30 @@ export class ProductService {
     ) { }
 
     getAll() {
-        return this.http.get<ProductModel>(this.API_URL + 'listall/');
+        return this.http.get<ProductModel>(`${this.API_URL}listall/`);
     }
 
     getAllByCategory(id: number) {
-        return this.http.post<ProductModel>(this.API_URL + 'listByCategory/', id);
+        return this.http.get<ProductModel>(`${this.API_URL}listBycategory/${id}`);
     }
 
     getOne(id: number) {
-        return this.http.post<ProductModel>(this.API_URL + 'get/', id);
+        return this.http.post<ProductModel>(`${this.API_URL}get/`, id);
     }
 
     create(dadosForm: ProductModel) {
-        return this.http.post<ProductModel>(this.API_URL + 'add/', dadosForm);
+        return this.http.post<ProductModel>(`${this.API_URL}add/`, dadosForm);
     }
 
     addImage(dadosForm: FormData, id: number) {
-        return this.http.post(this.API_URL + 'addImages/' + id, dadosForm);
+        return this.http.post(`${this.API_URL}addImages/${id}`, dadosForm);
     }
 
-    update(dadosForm: ProductModel){
-        return this.http.put<ProductModel>(this.API_URL + 'update/', dadosForm);
+    update(dadosForm: ProductModel) {
+        return this.http.put<ProductModel>(`${this.API_URL}update/`, dadosForm);
     }
 
     delete(id: number) {
-        return this.http.delete<ProductModel>(this.API_URL + 'del/' + id);
+        return this.http.delete<ProductModel>(`${this.API_URL}del/${id}`);
     }
 }
