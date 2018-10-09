@@ -34,7 +34,7 @@ export class CategoryListComponent implements OnInit {
 
   delete(id: number) {
     this.apiService.delete(id).subscribe((res) => {
-      if (res) { this.ngOnInit(); }
+      if (res) console.log(res);//{ this.ngOnInit(); }
     });
   }
 }

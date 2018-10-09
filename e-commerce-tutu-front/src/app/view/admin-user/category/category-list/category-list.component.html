@@ -12,14 +12,14 @@
         <th scope="col" class="title-table">Ação</th>
       </tr>
     </thead>
-    <tbody *ngFor="let i of rowsCategory">
+    <tbody *ngFor="let i of rowsCategory;">
       <tr>
         <td>{{ i.category }}</td>
         <td class="action">
           <button type="button" class="btn btn-primary btn-md" (click)="update(i.id)">
             <i class="fa fa-pencil-square-o"></i>
           </button>
-          <button type="button" class="btn btn-danger btn-md" (click)="delete(i.id)">
+          <button type="button" class="btn btn-danger btn-md" (click)="delete(i.id, i.key_aws)">
             <i class="fa fa-trash"></i>
           </button>
         </td>
