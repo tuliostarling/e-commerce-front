@@ -16,30 +16,30 @@ export class CategoryService {
   ) { }
 
   getListAll() {
-    return this.http.get<CategoryModel>(this.API_URL + 'listall/');
+    return this.http.get<CategoryModel>(`${this.API_URL}listall/`);
   }
 
   getListOne(id: number) {
-    return this.http.get<CategoryModel>(this.API_URL + 'listone/' + id);
+    return this.http.get<CategoryModel>(`${this.API_URL}listone/${id}`);
   }
 
   create(dadosForm: CategoryModel) {
-    return this.http.post<CategoryModel>(this.API_URL + 'add/', dadosForm);
+    return this.http.post<CategoryModel>(`${this.API_URL}add/`, dadosForm);
   }
 
   update(dadosForm: CategoryModel, id: number) {
-    return this.http.put<CategoryModel>(this.API_URL + 'put/' + id, dadosForm);
+    return this.http.put<CategoryModel>(`${this.API_URL}put/${id}`, dadosForm);
   }
 
   putImage(dadosForm: FormData) {
-    return this.http.put(this.API_URL + 'putImages/', dadosForm);
+    return this.http.put(`${this.API_URL}putImages/`, dadosForm);
   }
 
   addImage(dadosForm: FormData) {
-    return this.http.post(this.API_URL + 'addImages/', dadosForm);
+    return this.http.post(`${this.API_URL}addImages/`, dadosForm);
   }
 
   delete(id: number) {
-    return this.http.delete<CategoryModel>(this.API_URL + 'del/' + id);
+    return this.http.delete<CategoryModel>(`${this.API_URL}del/${id}`);
   }
 }

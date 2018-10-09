@@ -4,13 +4,6 @@
     letter-spacing: 1px;
     box-sizing: border-box;
 }
-
-.content-title p {
-  text-align: center;
-  margin-top: 15%;
-  color: #FE980F;
-  font-size: 50px;
-}
 .block {
     margin: 35px;
     border-radius: 4px;
@@ -107,9 +100,18 @@ img {
   background: 'linear-gradient(rgba(255,0,0,0.5),rgba(255,0,0,0.5))'
 }
 
-.content-title {
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.6);
-  width: 77%;
-  height: 50%;
+.bg-overlay {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  color: #fff;
+  height: 450px;
+  padding-top: 50px;
+}
+
+.bg-overlay p {
+  text-align: center;
+  margin-top: 15%;
+  color: #FE980F;
+  font-size: 50px;
 }

@@ -16,23 +16,23 @@ export class CouponService {
     ) { }
 
     getListAll() {
-        return this.http.get<CouponModel>(this.API_URL + 'getall');
+        return this.http.get<CouponModel>(`${this.API_URL}getall/`);
     }
 
     getListOne(id: number) {
-        return this.http.get<CouponModel>(this.API_URL + 'get/' + id);
+        return this.http.get<CouponModel>(`${this.API_URL}get/${id}`);
     }
 
     create(dadosForm: CouponModel) {
-        return this.http.post<CouponModel>(this.API_URL + 'add/', dadosForm);
+        return this.http.post<CouponModel>(`${this.API_URL}add/`, dadosForm);
     }
 
     update(dadosForm: CouponModel) {
-        return this.http.put<CouponModel>(this.API_URL + 'put/', dadosForm);
+        return this.http.put<CouponModel>(`${this.API_URL}put/`, dadosForm);
     }
 
     delete(id: number) {
-        return this.http.delete<CouponModel>(this.API_URL + 'del/' + id);
+        return this.http.delete<CouponModel>(`${this.API_URL}del/${id}`);
     }
 
 }

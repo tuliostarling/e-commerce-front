@@ -34,7 +34,8 @@ export class CategoryListComponent implements OnInit {
 
   delete(id: number) {
     this.apiService.delete(id).subscribe((res) => {
-      if (res) console.log(res);//{ this.ngOnInit(); }
+      if (res) return this.ngOnInit();
+      return alert('Erro ao deletar categoria');
     });
   }
 }
