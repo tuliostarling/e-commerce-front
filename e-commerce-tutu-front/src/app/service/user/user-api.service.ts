@@ -20,7 +20,7 @@ export class UserApiService {
     }
 
     loginUser(dadosForm: UserLoginModel) {
-        return this.http.post<UserLoginModel>(`${this.API_URL}authlogin/`, dadosForm);
+        return this.http.post<UserLoginModel>(`${this.API_AUTH_URL}authlogin/`, dadosForm);
     }
 
     createUser(dadosForm: UserCreateModel) {
