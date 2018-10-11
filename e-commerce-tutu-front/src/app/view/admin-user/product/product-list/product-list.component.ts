@@ -29,8 +29,8 @@ export class ProductListComponent implements OnInit {
     this.router.navigateByUrl('product_register');
   }
 
-  update(id: number) {
-    this.router.navigateByUrl('product_edit/' + id);
+  addSubProduct(id: number) {
+    this.router.navigateByUrl('product_register/' + id);
   }
 
   // delete(id: number) {

@@ -22,56 +22,95 @@
           </div>
         </div>
         <div class="col-6" *ngIf="LoadCurrentImg">
-            <div class="form-group">
-              <label for="type">Banner Atual</label>
-                <br><img src="{{imgSRC}}" width="200" height="100"  />
-            </div>
+          <div class="form-group">
+            <label for="type">Banner Atual</label>
+            <br>
+            <img src="{{imgSRC}}" width="200" height="100" />
           </div>
+        </div>
         <div class="col-6">
           <div class="form-group">
             <label for="type">Banner da Categoria</label>
             <div class="inline-block">
-                <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)"
-                  multiple />
-              </div>
+              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)" multiple />
+            </div>
           </div>
         </div>
       </div>
 
+      <!--div class="bg-warning" *ngIf="imagesToUpload?.length" style="margin-bottom: 40px">
+        <h3 style="color:red;">Último tamanho {{ imagesToUpload.length }} inválido!</h3>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Erro</th>
+              <th>Tipo</th>
+              <th>Tamanho</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of imagesToUpload;let i=index">
+              <td>
+                <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.file.type)>=0">
+                  <div class="previewIcon" [ngfBackground]="item.File"></div>
+                </div>
+                <strong>{{ item.file.name }}</strong>
+              </td>
+              <td nowrap>
+                {{ item.type }}
+              </td>
+              <td nowrap>
+                {{ item.file.type }}
+              </td>
+              <td nowrap>
+                {{ item.file.size/1024/1024 | number:'.2' }} MB
+              </td>
+              <td nowrap>
+                <button type="button" class="btn btn-danger btn-xs" (click)="imagesToUpload.splice(i,1)">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div-->
 
       <div style="margin-bottom: 40px">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Tipo</th>
-                <th>Tamanho</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of imagesToUpload;let i=index">
-                <td>
-                  <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
-                    <div class="previewIcon" [ngfBackground]="item"></div>
-                  </div>
-                  <strong>{{ item.name }}</strong>
-                </td>
-                <td nowrap>
-                  {{ item.type }}
-                </td>
-                <td nowrap>
-                  {{ item.size/1024/1024 | number:'.2' }} MB
-                </td>
-                <td nowrap>
-                  <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
-                    <span class="fa fa-trash"></span>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Tamanho</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of imagesToUpload;let i=index">
+              <td>
+                <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                  <div class="previewIcon" [ngfBackground]="item"></div>
+                </div>
+                <strong>{{ item.name }}</strong>
+              </td>
+              <td nowrap>
+                {{ item.type }}
+              </td>
+              <td nowrap>
+                {{ item.size/1024/1024 | number:'.2' }} MB
+              </td>
+              <td nowrap>
+                <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
       <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCat()">Cancelar</button>

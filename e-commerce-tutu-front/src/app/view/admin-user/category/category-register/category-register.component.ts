@@ -80,7 +80,7 @@ export class CategoryRegisterComponent implements OnInit {
   }
 
   removeFile(indexe) {
-    delete this.imagesToUpload[indexe]
+    delete this.imagesToUpload[indexe];
   }
 
   navToListCat() {
@@ -89,18 +89,18 @@ export class CategoryRegisterComponent implements OnInit {
 
   onSubmit(form) {
     this.createCategoryModel = form.value;
-    let formImage = new FormData();
+    const formImage = new FormData();
     const files: Array<File> = this.imagesToUpload;
 
     for (let i = 0; i < files.length; i++) {
-      formImage.append("file", files[i]);
+      formImage.append('file', files[i]);
     }
 
     if (this.idCategory === undefined) {
-      if (files.length > 1) return alert('O Banner aceita apenas uma imagem.');
+      if (files.length > 1) { return alert('O Banner aceita apenas uma imagem.'); }
 
       this.insertCategoryImage(formImage).then(resImg => {
-        if (resImg == null) return alert('Erro ao cadastrar Imagem');
+        if (resImg == null) { return alert('Erro ao cadastrar Imagem'); }
         this.createCategoryModel.location_aws = resImg[0].Location;
         this.createCategoryModel.key_aws = resImg[0].Key;
 
@@ -116,16 +116,16 @@ export class CategoryRegisterComponent implements OnInit {
     } else {
 
       if (formImage != null) {
-        if (files.length > 1) return alert('O Banner aceita apenas uma imagem.');
-        
-        formImage.append("key_aws", this.createCategoryModel.key_aws);
+        if (files.length > 1) { return alert('O Banner aceita apenas uma imagem.'); }
+
+        formImage.append('key_aws', this.createCategoryModel.key_aws);
         this.updateCategoryImage(formImage).then(resImg => {
-          if (resImg == null) return alert('Erro ao atualizar Imagem');
+          if (resImg == null) { return alert('Erro ao atualizar Imagem'); }
           this.createCategoryModel.location_aws = resImg[0].Location;
           this.createCategoryModel.key_aws = resImg[0].Key;
 
           this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
-            if (res == null) return alert('Erro Ao Atualizar a Categoria');
+            if (res == null) { return alert('Erro Ao Atualizar a Categoria'); }
             return this.navToListCat();
           });
         });
@@ -134,7 +134,7 @@ export class CategoryRegisterComponent implements OnInit {
         this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
           if (res == null) { return alert('Erro ao cadastrar'); }
           return this.navToListCat();
-        })
+        });
       }
 
     }

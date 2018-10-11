@@ -9,10 +9,10 @@
   </nav>
 
   <div class="jumbotron">
-    <h2 class="h2-text">Cadastro de Produto</h2>
+    <h2 class="h2-text">{{mode}}</h2>
   </div>
 
-  <div class="container">
+  <div class="container" *ngIf="mode == 'Cadastrar'">
     <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
       <div class="row">
         <div class="col-3">
@@ -31,144 +31,369 @@
             </select>
           </div>
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <div class="form-group">
-            <label for="size">Tamanho</label>
-            <input type="number" class="form-control" formControlName="size" id="size" placeholder="Digite o tamanho">
-          </div>
-        </div>
-        <div class="col-2">
-          <div class="form-group">
-            <label for="price">Preco</label>
-            <input type="number" class="form-control" formControlName="price" id="price" placeholder="Digite o preço">
-          </div>
-        </div>
-        <div class="col-2" style="margin-top: 3%;">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="discount" (change)="changeDiscount($event.target)">
-            <label class="form-check-label" for="discount">Desconto?</label>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <div class="form-group">
-            <label for="description">Descrição</label>
-            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description"
-              placeholder="Digite a descrição"></textarea>
+            <label for="size">Modelo</label>
+            <input type="text" class="form-control" formControlName="size" id="size" placeholder="Digite o modelo">
           </div>
         </div>
         <div class="col-3">
           <div class="form-group">
-            <label for="color">Cor</label>
-            <input type="text" class="form-control" formControlName="color" id="color" placeholder="Digite a cor">
+            <label for="price">Tipo</label>
+            <input type="text" class="form-control" formControlName="price" id="price" placeholder="Digite o tipo">
           </div>
         </div>
-        <div class="col-2">
+      </div>
+      <div class="row">
+        <div class="col-12">
           <div class="form-group">
-            <label for="amount">Quatidade</label>
-            <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Digite a quantidade">
-          </div>
-        </div>
-        <div class="col-1" style="margin-top: 3%;">
-          <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
-            <label class="form-check-label" for="defaultProduct">Produto default</label>
+            <label for="description">Descrição</label>
+            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description" placeholder="Digite a descrição"></textarea>
           </div>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="mode != 'Cadastrar'">
         <div class="col-12">
           <div class="form-group">
             <div class="inline-block">
-              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)"
-                multiple />
+              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)" multiple />
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12">
-          <!--div class="bg-warning" *ngIf="imagesToUpload?.length" style="margin-bottom: 40px">
-            <h3 style="color:red;">Último tamanho {{ imagesToUpload.length }} inválido!</h3>
-
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Erro</th>
-                  <th>Tipo</th>
-                  <th>Tamanho</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of imagesToUpload;let i=index">
-                  <td>
-                    <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.file.type)>=0">
-                      <div class="previewIcon" [ngfBackground]="item.File"></div>
-                    </div>
-                    <strong>{{ item.file.name }}</strong>
-                  </td>
-                  <td nowrap>
-                    {{ item.type }}
-                  </td>
-                  <td nowrap>
-                    {{ item.file.type }}
-                  </td>
-                  <td nowrap>
-                    {{ item.file.size/1024/1024 | number:'.2' }} MB
-                  </td>
-                  <td nowrap>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="imagesToUpload.splice(i,1)">
-                      <span class="fa fa-trash"></span>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div-->
-
-          <div style="margin-bottom: 40px">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Tipo</th>
-                  <th>Tamanho</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of imagesToUpload;let i=index">
-                  <td>
-                    <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
-                      <div class="previewIcon" [ngfBackground]="item"></div>
-                    </div>
-                    <strong>{{ item.name }}</strong>
-                  </td>
-                  <td nowrap>
-                    {{ item.type }}
-                  </td>
-                  <td nowrap>
-                    {{ item.size/1024/1024 | number:'.2' }} MB
-                  </td>
-                  <td nowrap>
-                    <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
-                      <span class="fa fa-trash"></span>
-                    </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
           </div>
         </div>
       </div>
 
       <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
       <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
+    </form>
+  </div>
+
+
+  <div class="container" *ngIf="mode != 'Cadastrar'">
+    <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" class="form-control" formControlName="name" id="name" placeholder="Digite o nome">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="id_fk">Categoria</label>
+            <select class="form-control" formControlName="id_fk" id="category">
+              <ng-container *ngFor="let i of rowsCategory">
+                <option value="{{i.id}}">{{i.category}}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="size">Modelo</label>
+            <input type="text" class="form-control" formControlName="size" id="size" placeholder="Digite o modelo">
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <label for="price">Tipo</label>
+            <input type="text" class="form-control" formControlName="price" id="price" placeholder="Digite o tipo">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="description">Descrição</label>
+            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description" placeholder="Digite a descrição"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <button id="add" type="submit" class="btn btn-success">Atualizar</button>
+      <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
+
+      <hr style="margin-bottom: 4%;">
+
+      <div id="accCont" *ngIf="arrEmpty == true">
+        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+          <ngb-panel title="Adicionar novo">
+            <ng-template ngbPanelContent>
+
+              <div class="row">
+
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="size">Tamanho</label>
+                    <input type="number" class="form-control" formControlName="size" id="size" placeholder="Tamanho">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="amount">Quatidade</label>
+                    <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Quantidade">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="price">Preço</label>
+                    <input type="number" class="form-control" formControlName="price" id="price" placeholder="Preço">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="color">Cor</label>
+                    <input type="text" class="form-control" formControlName="color" id="color" placeholder="Cor">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="color">Material</label>
+                    <input type="text" class="form-control" formControlName="color" id="color" placeholder="Material">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
+                <div>
+                  <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+                  <label class="form-check-label" for="defaultProduct">Desconto</label>
+                </div>
+
+                <div style="margin-left: 3%;">
+                  <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+                  <label class="form-check-label" for="defaultProduct">Promoção</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <div class="inline-block">
+                      <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)" multiple />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+
+                  <div style="margin-bottom: 40px">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Nome</th>
+                          <th>Tipo</th>
+                          <th>Tamanho</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of imagesToUpload;let i=index">
+                          <td>
+                            <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                              <div class="previewIcon" [ngfBackground]="item"></div>
+                            </div>
+                            <strong>{{ item.name }}</strong>
+                          </td>
+                          <td nowrap>
+                            {{ item.type }}
+                          </td>
+                          <td nowrap>
+                            {{ item.size/1024/1024 | number:'.2' }} MB
+                          </td>
+                          <td nowrap>
+                            <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
+                              <span class="fa fa-trash"></span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+
+              <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
+              <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
+
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+
+
+      <div id="accCont" *ngIf="arrEmpty == false">
+        <button class="btn btn-success pull-right" type="button" style="margin-top: -5%" (click)="createNewSubP()">Cadastrar novo Subproduto</button>
+        <ngb-accordion [closeOthers]="true" activeIds="static-1">
+          <ngb-panel *ngFor="let i of subProd" title="{{ i.name }}">
+            <ng-template ngbPanelContent>
+
+              <div class="row">
+
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="size">Tamanho</label>
+                    <input type="number" class="form-control" formControlName="size" id="size" placeholder="Tamanho">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="amount">Quatidade</label>
+                    <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Quantidade">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="price">Preço</label>
+                    <input type="number" class="form-control" formControlName="price" id="price" placeholder="Preço">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="color">Cor</label>
+                    <input type="text" class="form-control" formControlName="color" id="color" placeholder="Cor">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="color">Material</label>
+                    <input type="text" class="form-control" formControlName="color" id="color" placeholder="Material">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
+                <div>
+                  <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+                  <label class="form-check-label" for="defaultProduct">Desconto</label>
+                </div>
+
+                <div style="margin-left: 3%;">
+                  <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+                  <label class="form-check-label" for="defaultProduct">Promoção</label>
+                </div>
+              </div>
+
+              <button id="add" type="submit" class="btn btn-success">Atualizar</button>
+              <button id="cancel" type="button" class="btn btn-danger" (click)="removeSubProduct(i.id)">Excluir</button>
+
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+
+        <ngb-accordion [closeOthers]="true" activeIds="static-1" *ngIf="createNewSubProd == true">
+          <ngb-panel title="Novo SubProduto">
+            <ng-template ngbPanelContent>
+
+              <div class="row">
+
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="size">Tamanho</label>
+                    <input type="number" class="form-control" formControlName="size" id="size" placeholder="Tamanho">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="amount">Quatidade</label>
+                    <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Quantidade">
+                  </div>
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label for="price">Preço</label>
+                    <input type="number" class="form-control" formControlName="price" id="price" placeholder="Preço">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="color">Cor</label>
+                    <input type="text" class="form-control" formControlName="color" id="color" placeholder="Cor">
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label for="color">Material</label>
+                    <input type="text" class="form-control" formControlName="color" id="color" placeholder="Material">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
+                <div>
+                  <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+                  <label class="form-check-label" for="defaultProduct">Desconto</label>
+                </div>
+
+                <div style="margin-left: 3%;">
+                  <input type="checkbox" class="form-check-input" id="defaultProduct" (change)="changeDefaultProduct($event.target)">
+                  <label class="form-check-label" for="defaultProduct">Promoção</label>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <div class="inline-block">
+                      <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)" multiple />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+
+                  <div style="margin-bottom: 40px">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>Nome</th>
+                          <th>Tipo</th>
+                          <th>Tamanho</th>
+                          <th>Ações</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of imagesToUpload;let i=index">
+                          <td>
+                            <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                              <div class="previewIcon" [ngfBackground]="item"></div>
+                            </div>
+                            <strong>{{ item.name }}</strong>
+                          </td>
+                          <td nowrap>
+                            {{ item.type }}
+                          </td>
+                          <td nowrap>
+                            {{ item.size/1024/1024 | number:'.2' }} MB
+                          </td>
+                          <td nowrap>
+                            <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
+                              <span class="fa fa-trash"></span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                </div>
+              </div>
+              <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
+              <button id="cancel" type="button" class="btn btn-danger">Cancelar</button>
+
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
+
     </form>
   </div>
 
