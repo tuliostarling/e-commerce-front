@@ -20,8 +20,6 @@ import { CategoryModel } from '../../../../model/category/category';
 })
 export class ProductRegisterComponent implements OnInit {
 
-  // @ViewChild(ChildDirective) child: Element;
-
   idRegistry: number;
   formulario: FormGroup;
   createProductModel: ProductModel;
@@ -38,6 +36,7 @@ export class ProductRegisterComponent implements OnInit {
   subProd = [];
   arrEmpty: boolean;
   createNewSubProd = false;
+  idSubProduct: number;
 
   constructor(
     private apiService: ProductService,
@@ -148,6 +147,16 @@ export class ProductRegisterComponent implements OnInit {
     });
   }
 
+  updateSubProduct(id: number) {
+    console.log(id);
+    // this.ngOnInit();
+  }
+
+  removeSubProduct(id: number) {
+    console.log(id);
+    // this.ngOnInit();
+  }
+
   handleFileSelect(fileInput: any) {
     this.imagesToUpload = <any>fileInput.target.files;
   }
@@ -182,13 +191,5 @@ export class ProductRegisterComponent implements OnInit {
 
   createNewSubP() {
     this.createNewSubProd = !this.createNewSubProd;
-  }
-
-  resetForm() {
-    // document.getElementById("myForm").reset();
-  }
-
-  removeSubProduct(id: number) {
-    console.log(id);
   }
 }

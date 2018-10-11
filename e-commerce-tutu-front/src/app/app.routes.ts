@@ -30,6 +30,7 @@ export const ROUTES: Routes = [
     { path: 'coupon_register', component: DiscountCouponRegisterComponent },
     { path: 'coupon_edit/:id', component: DiscountCouponRegisterComponent },
     { path: 'product_list', component: ProductListComponent },
+    { path: 'product_register', component: ProductRegisterComponent },
     { path: 'product_register/:id', component: ProductRegisterComponent },
     { path: 'category_list/:id', component: ProductCategoryListComponent },
     { path: 'cart', component: CartComponent },

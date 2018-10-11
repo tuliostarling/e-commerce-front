@@ -70,7 +70,7 @@
 
 
   <div class="container" *ngIf="mode != 'Cadastrar'">
-    <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
+    <form role="form" [formGroup]="formulario" #form="ngForm" (ngSubmit)="onSubmit(formulario)">
       <div class="row">
         <div class="col-3">
           <div class="form-group">
@@ -111,10 +111,13 @@
       </div>
 
       <button id="add" type="submit" class="btn btn-success">Atualizar</button>
-      <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
+      <button id="cancel" type="button" class="btn btn-danger" (click)="form.reset()">Cancelar</button>
 
-      <hr style="margin-bottom: 4%;">
+    </form>
 
+    <hr style="margin-bottom: 4%;">
+
+    <form role="form" [formGroup]="formulario" #form="ngForm" (ngSubmit)="onSubmit(formulario)">
       <div id="accCont" *ngIf="arrEmpty == true">
         <ngb-accordion [closeOthers]="true" activeIds="static-1">
           <ngb-panel title="Adicionar novo">
@@ -218,14 +221,15 @@
               </div>
 
               <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
-              <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
+              <button id="cancel" type="button" class="btn btn-danger" (click)="form.reset()">Cancelar</button>
 
             </ng-template>
           </ngb-panel>
         </ngb-accordion>
       </div>
+    </form>
 
-
+    <form id="form-create-new-sub-product" #form="ngForm" ole="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
       <div id="accCont" *ngIf="arrEmpty == false">
         <button class="btn btn-success pull-right" type="button" style="margin-top: -5%" (click)="createNewSubP()">Cadastrar novo Subproduto</button>
         <ngb-accordion [closeOthers]="true" activeIds="static-1">
@@ -279,7 +283,7 @@
                 </div>
               </div>
 
-              <button id="add" type="submit" class="btn btn-success">Atualizar</button>
+              <button id="add" type="button" class="btn btn-success" (click)="updateSubProduct(i.id)">Atualizar</button>
               <button id="cancel" type="button" class="btn btn-danger" (click)="removeSubProduct(i.id)">Excluir</button>
 
             </ng-template>
@@ -387,7 +391,7 @@
                 </div>
               </div>
               <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
-              <button id="cancel" type="button" class="btn btn-danger">Cancelar</button>
+              <button id="cancel" type="button" class="btn btn-danger" (click)="form.reset()">Cancelar</button>
 
             </ng-template>
           </ngb-panel>
