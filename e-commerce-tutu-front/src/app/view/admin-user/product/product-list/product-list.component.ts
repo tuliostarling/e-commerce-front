@@ -29,13 +29,18 @@ export class ProductListComponent implements OnInit {
     this.router.navigateByUrl('product_register');
   }
 
-  addSubProduct(id: number) {
+  editProduct(id: number) {
     this.router.navigateByUrl('product_register/' + id);
   }
 
-  // delete(id: number) {
-  //   this.apiService.delete(id).subscribe((res) => {
-  //     if (res) { this.ngOnInit(); }
-  //   });
-  // }
+  //Criar Modal de confirmação paara deletar.
+  deleteProduct(id: number) {
+    this.apiService.delete(id).subscribe((res) => {
+      if (res) {
+        alert('Produto Deletado com sucesso!');
+        return this.ngOnInit();
+      }
+      return alert('Erro ao deletar Produto');
+    });
+  }
 }

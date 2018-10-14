@@ -8,10 +8,11 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { ProductModel } from '../../../../model/product/product';
+import { ProductModel, SubProductModel } from '../../../../model/product/product';
 import { ProductService } from '../../../../service/product/product-api.service';
 import { CategoryService } from '../../../../service';
 import { CategoryModel } from '../../../../model/category/category';
+import { VirtualTimeScheduler } from 'rxjs';
 
 @Component({
   selector: 'app-product-register',
@@ -20,23 +21,23 @@ import { CategoryModel } from '../../../../model/category/category';
 })
 export class ProductRegisterComponent implements OnInit {
 
-  idRegistry: number;
+  idMainProduct: number;
+  idSubProduct: number;
+
   formulario: FormGroup;
+  formularioSubProduct: FormGroup;
   createProductModel: ProductModel;
+  createSubProductModel: SubProductModel;
   rowsCategory: CategoryModel;
   rowsProduct: ProductModel;
+  rowsSubProducts: SubProductModel;
   idProduct: number;
   mode: string;
 
   formData: FormData = new FormData();
-  defaultProduct: boolean;
+  promotion: boolean;
   discount: boolean;
   imagesToUpload: any;
-
-  subProd = [];
-  arrEmpty: boolean;
-  createNewSubProd = false;
-  idSubProduct: number;
 
   constructor(
     private apiService: ProductService,
@@ -57,34 +58,23 @@ export class ProductRegisterComponent implements OnInit {
         }
       });
 
-    this.subProd = [
-      {
-        id: 1,
-        name: 'teste',
-        description: 'testetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetesteteste'
-      },
-      {
-        id: 2,
-        name: 'teste1',
-        description: 'testetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetesteteste'
-      },
-      {
-        id: 3,
-        name: 'teste2',
-        description: 'testetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetestetesteteste'
-      }
-    ];
-
     this.formulario = this.form.group({
-      id_fk: [null],
-      defaultProduct: [null, Validators.required],
+      id_category: [null],
       name: [null, Validators.required],
+      model: [null, Validators.required],
+      type: [null, Validators.required],
+      description: [null, Validators.required],
+    });
+
+    this.formularioSubProduct = this.form.group({
       size: [null],
       amount: [null, Validators.required],
       price: [null, Validators.required],
+      old_price: [null, Validators.required],
       discount: [null],
-      description: [null, Validators.required],
-      color: [null, Validators.required]
+      color: [null, Validators.required],
+      material: [null],
+      promotion: [null]
     });
 
     this.getCategory();
@@ -92,15 +82,16 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   getProduct() {
-    // this.apiService.getOne(this.idProduct).subscribe((data) => {
-    //   this.rowsProduct = data;
-    // });
+    this.apiService.getOneMain(this.idProduct).subscribe((data) => {
+      this.idMainProduct = data[0].id;
+      this.rowsProduct = data;
+      this.loadForm(this.rowsProduct, this.formulario)
 
-    if (this.subProd.length === 0) {
-      this.arrEmpty = true;
-    } else {
-      this.arrEmpty = false;
-    }
+      this.apiService.getAllSubProducts(this.rowsProduct[0].id).subscribe((res) => {
+        if (res) this.rowsSubProducts = res;
+        this.loadForm(this.rowsSubProducts, this.formularioSubProduct);
+      });
+    });
   }
 
   getCategory() {
@@ -109,37 +100,45 @@ export class ProductRegisterComponent implements OnInit {
     });
   }
 
-  navToListCoup() {
-    this.router.navigateByUrl('product_list');
-  }
-
   onSubmit(form) {
     this.createProductModel = form.value;
 
-    this.createProduct(this.createProductModel).then((res => {
-      this.idRegistry = res[0].product_id;
-
-      const formImage = new FormData();
-      const files: Array<File> = this.imagesToUpload;
-
-      for (let i = 0; i < files.length; i++) {
-        formImage.append('file', files[i]);
-      }
-
-      this.apiService.addImage(formImage, this.idRegistry).subscribe((resImg) => {
-        if (resImg != null) {
-          alert('Sucesso ao cadastrar Imagem');
+    if (this.mode == 'Cadastrar') {
+      this.apiService.create(this.createProductModel).subscribe(res => {
+        if (res){
+          alert('Produto Cadastro com Sucesso!');
           return this.navToListCoup();
-        } else {
-          return alert('Erro ao cadastrar Imagem');
-        }
+        } 
+        return alert('Erro ao Cadastrar Produto, Tente Novamente');
       });
-    }));
+    }
+    if (this.mode == 'Cadastrar Subproduto') {
+      this.createSubProduct(form.value).then((res => {
+        this.idSubProduct = res[0].id_subproduct;
+
+        const formImage = new FormData();
+        const files: Array<File> = this.imagesToUpload;
+
+        for (let i = 0; i < files.length; i++) {
+          formImage.append('file', files[i]);
+        }
+
+        this.apiService.addImage(formImage, this.idSubProduct).subscribe((resImg) => {
+          if (resImg != null) {
+            alert('Sucesso ao SubProduto');
+            form.reset();
+            return this.ngOnInit();
+          } else {
+            return alert('Erro ao cadastrar Imagem');
+          }
+        });
+      }));
+    }
   }
 
-  createProduct<T>(productModel: ProductModel) {
+  createSubProduct<T>(subProductModel: SubProductModel) {
     return new Promise((resolve, reject) => {
-      this.apiService.create(productModel)
+      this.apiService.createSubProduct(subProductModel, this.rowsProduct[0].id)
         .subscribe(res => {
           if (res == null) { return reject(res); }
           resolve(res);
@@ -147,8 +146,30 @@ export class ProductRegisterComponent implements OnInit {
     });
   }
 
-  updateSubProduct(id: number) {
-    console.log(id);
+  updateMainProduct(form) {
+    this.apiService.update(form.value, this.idMainProduct).subscribe((res) => {
+      if(res) return this.ngOnInit(); 
+      return alert('Erro Ao Atualizar Produto');
+    });
+  }
+
+  loadForm(productInfo, formGroup: FormGroup) {
+    const newData = new Array<any>();
+    const data: any = productInfo[0];
+
+    Object.keys(formGroup.controls).forEach(row => {
+      const control = formGroup.get(row);
+      control.setValue(data[row]);
+      newData.push({
+        row: row,
+        value: data[row]
+      });
+    });
+  }
+
+
+  updateSubProduct(form) {
+    console.log(form.value);
     // this.ngOnInit();
   }
 
@@ -165,31 +186,28 @@ export class ProductRegisterComponent implements OnInit {
     delete this.imagesToUpload[indexe];
   }
 
-  getDate() {
-    return new Date();
+  navToListCoup() {
+    this.router.navigateByUrl('product_list');
   }
 
-  changeDefaultProduct(evt) {
-    if (evt.checked === true) {
-      this.defaultProduct = true;
-      this.formulario.get('defaultProduct').setValue(this.defaultProduct);
-    } else {
-      this.defaultProduct = false;
-      this.formulario.get('defaultProduct').setValue(this.defaultProduct);
-    }
-  }
 
   changeDiscount(evt) {
     if (evt.checked === true) {
       this.discount = true;
-      this.formulario.get('discount').setValue(this.discount);
+      this.formularioSubProduct.get('discount').setValue(this.discount);
     } else {
       this.discount = false;
-      this.formulario.get('discount').setValue(this.discount);
+      this.formularioSubProduct.get('discount').setValue(this.discount);
+    }
+  }
+  changePromotionProduct(evt) {
+    if (evt.checked === true) {
+      this.promotion = true;
+      this.formularioSubProduct.get('promotion').setValue(this.promotion);
+    } else {
+      this.promotion = false;
+      this.formularioSubProduct.get('promotion').setValue(this.promotion);
     }
   }
 
-  createNewSubP() {
-    this.createNewSubProd = !this.createNewSubProd;
-  }
 }

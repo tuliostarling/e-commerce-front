@@ -9,27 +9,23 @@
     <thead>
       <tr>
         <th scope="col">Nome</th>
-        <th scope="col">Tamanho</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">Preço</th>
         <th scope="col">Descrição</th>
-        <th scope="col">Cor</th>
+        <th scope="col">Modelo</th>
+        <th scope="col">Tipo</th>
         <th scope="col" class="title-table">Ação</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let i of rowsProducts">
         <td>{{ i.name }}</td>
-        <td>{{ i.size }}</td>
-        <td>{{ i.amount }}</td>
-        <td>{{ i.price }}</td>
         <td>{{ i.description }}</td>
-        <td>{{ i.color }}</td>
+        <td>{{ i.model }}</td>
+        <td>{{ i.type }}</td>
         <td class="action">
-          <button type="button" class="btn btn-success btn-md" (click)="addSubProduct(i.id_product)">
+          <button type="button" class="btn btn-success btn-md" (click)="editProduct(i.id)">
             <i class="fa fa-plus"></i>
           </button>
-          <button type="button" class="btn btn-danger btn-md" (click)="delete(i.id_product)">
+          <button type="button" class="btn btn-danger btn-md" (click)="deleteProduct(i.id)">
             <i class="fa fa-trash"></i>
           </button>
         </td>

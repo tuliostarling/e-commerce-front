@@ -1,13 +1,18 @@
 export interface ProductModel {
     id: number;
-    id_fk: number;
-    defaultProduct: boolean;
+    id_category: number;
     name: string;
+    description: string;
+}
+
+
+export interface SubProductModel {
+    id_product: number;
     size: number;
     amount: number;
     price: number;
+    promotion: boolean;
     discount: boolean;
-    description: string;
     color: string;
 }
 

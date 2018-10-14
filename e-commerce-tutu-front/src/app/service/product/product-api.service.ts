@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { ProductModel } from '../../model/product/product';
+import { ProductModel, SubProductModel } from '../../model/product/product';
 
 @Injectable()
 export class ProductService {
@@ -14,30 +14,46 @@ export class ProductService {
     ) { }
 
     getAll() {
-        return this.http.get<ProductModel>(`${this.API_URL}listall/`);
+        return this.http.get<ProductModel>(`${this.API_URL}listall/Products`);
     }
 
     getAllByCategory(id: number) {
         return this.http.get<ProductModel>(`${this.API_URL}listBycategory/${id}`);
     }
 
-    getOne(id: number) {
-        return this.http.post<ProductModel>(`${this.API_URL}get/`, id);
+    getOneMain(id: number) {
+        return this.http.get<ProductModel>(`${this.API_URL}listoneMain/${id}`);
+    }
+
+    getAllSubProducts(id: number) {
+        return this.http.get<SubProductModel>(`${this.API_URL}listall/SubProducts/${id}`);
     }
 
     create(dadosForm: ProductModel) {
         return this.http.post<ProductModel>(`${this.API_URL}add/`, dadosForm);
     }
 
+    createSubProduct(dadosForm: SubProductModel, id: number) {
+        return this.http.post<SubProductModel>(`${this.API_URL}addSubProduct/${id}`, dadosForm);
+    }
+
     addImage(dadosForm: FormData, id: number) {
         return this.http.post(`${this.API_URL}addImages/${id}`, dadosForm);
     }
 
-    update(dadosForm: ProductModel) {
-        return this.http.put<ProductModel>(`${this.API_URL}update/`, dadosForm);
+    update(dadosForm: ProductModel, id: number) {
+        return this.http.put<ProductModel>(`${this.API_URL}put/${id}`, dadosForm);
+    }
+
+    updateSubProduct(dadosForm: ProductModel, id: number) {
+        return this.http.put<ProductModel>(`${this.API_URL}/product/putSubProduct/${id}`, dadosForm);
     }
 
     delete(id: number) {
         return this.http.delete<ProductModel>(`${this.API_URL}del/${id}`);
+    }
+
+    deleteSubProduct(id: number) {
+        return this.http.delete<ProductModel>(`${this.API_URL}delSubProduct/${id}`);
     }
 }
