@@ -5,7 +5,7 @@
 
       <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
         <h6 class="text-uppercase mb-4 font-weight-bold">Tutu Guerra</h6>
-        
+
         <img src="../../../assets/images/credit_card_icons/visa-48px.png" class="img-fluid">
         <img src="../../../assets/images/credit_card_icons/mastercard-48px.png" class="img-fluid">
         <img src="../../../assets/images/credit_card_icons/amex-48px.png" class="img-fluid">
@@ -22,14 +22,8 @@
 
       <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
         <h6 class="text-uppercase mb-4 font-weight-bold">Produtos</h6>
-        <p>
-          <a href="#!">Sapatos</a>
-        </p>
-        <p>
-          <a href="#!">Bolsas</a>
-        </p>
-        <p>
-          <a href="#!">Cintos</a>
+        <p *ngFor="let i of newCategoryList">
+          <a href="javascript:void(0)" (click)="categoryListLoad(i.id)">{{ i.category }}</a>
         </p>
       </div>
 
@@ -38,7 +32,7 @@
       <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
         <h6 class="text-uppercase mb-4 font-weight-bold">Geral</h6>
         <p>
-          <a href="#!">Minha conta</a>
+          <a href="javascript:void(0)" (click)="profile()">Minha conta</a>
         </p>
         <p>
           <a href="#!">Taxa de entrega</a>
@@ -56,6 +50,7 @@
           <i class="fa fa-envelope mr-3"></i> tutuguerra@gmail.com</p>
         <p>
           <i class="fa fa-phone mr-3"></i> (31)3222-2344</p>
+        <a href="javascript:void(0)">Contate-nos</a>
       </div>
     </div>
 

@@ -18,6 +18,8 @@ import { ProductCategoryListComponent } from './view/common-user/product-categor
 import { CartComponent } from './view/common-user/cart/cart.component';
 import { ListOneProductComponent } from './view/common-user/list-one-product/list-one-product.component';
 import { UserProfileComponent } from './view/common-user/user-profile/user-profile.component';
+import { WishListComponent } from './view/common-user/wish-list/wish-list.component';
+import { PromotionsComponent } from './view/common-user/promotions/promotions.component';
 
 
 export const ROUTES: Routes = [
@@ -38,4 +40,6 @@ export const ROUTES: Routes = [
     { path: 'product/:id', component: ListOneProductComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'profile/:id', component: UserProfileComponent },
+    { path: 'wish_list', component: WishListComponent },
+    { path: 'promotions', component: PromotionsComponent },
 ];

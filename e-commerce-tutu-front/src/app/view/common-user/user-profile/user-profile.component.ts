@@ -27,16 +27,16 @@ export class UserProfileComponent implements OnInit {
     private acRoute: ActivatedRoute
   ) { }
 
-  public rowsCategory: UserCreateModel;
+  public rowsUser: UserCreateModel;
 
   ngOnInit() {
     this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
 
     this.apiService.getListOne(this.id).subscribe((data) => {
-      this.rowsCategory = data;
-      this.name = this.rowsCategory[0].name;
-      this.email = this.rowsCategory[0].email;
-    });
+      this.rowsUser = data;
+      this.name = this.rowsUser[0].name;
+      this.email = this.rowsUser[0].email;
+  });
 
     this.formulario = this.form.group({
       id: [null],
@@ -47,9 +47,9 @@ export class UserProfileComponent implements OnInit {
 
   onSubmit(form) {
     this.attForm();
-    this.rowsCategory = form.value;
+    this.rowsUser = form.value;
 
-    this.apiService.update(this.rowsCategory).subscribe((res) => {
+    this.apiService.update(this.rowsUser).subscribe((res) => {
       if (res === null) { return alert('Erro ao cadastrar'); }
 
       this.update = false;

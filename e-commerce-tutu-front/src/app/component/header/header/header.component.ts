@@ -83,12 +83,17 @@ export class HeaderComponent implements OnInit {
     location.reload();
   }
 
+  reload() {
+    location.reload();
+  }
+
   home() {
     this.router.navigateByUrl('/home');
   }
 
   categoryListLoad(category_id: number) {
     this.router.navigateByUrl('/category_list/' + category_id);
+    this.reload();
   }
 
   registerCategory() {
@@ -113,5 +118,13 @@ export class HeaderComponent implements OnInit {
 
   dashboard() {
     this.router.navigateByUrl('/dashboard');
+  }
+
+  wishList() {
+    this.router.navigateByUrl('/wish_list');
+  }
+
+  promotions() {
+    this.router.navigateByUrl('/promotions');
   }
 }

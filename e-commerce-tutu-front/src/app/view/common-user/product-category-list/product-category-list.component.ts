@@ -15,10 +15,8 @@ export class ProductCategoryListComponent implements OnInit {
   productsList: ProductModel;
   idCategory: number;
   categoryName: string;
-
-  images = [{
-    url: 'https://collegecandy.files.wordpress.com/2016/04/shutterstock_3574313361.jpg?quality=88&w=750'
-  }];
+  rowsProduct: ProductModel;
+  oldPrice: number;
 
   constructor(
     private router: Router,
@@ -43,8 +41,8 @@ export class ProductCategoryListComponent implements OnInit {
         const category = document.getElementById('category');
 
         this.categoryName = res[0].category;
-        // Alterando a imagem com valor mockado
-        category.setAttribute('style', `background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${this.images[0].url});`);
+
+        category.setAttribute('style', `background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${res[0].location_aws});`);
       }
     });
   }
@@ -53,6 +51,8 @@ export class ProductCategoryListComponent implements OnInit {
     this.apiService.getAllByCategory(this.idCategory).subscribe(res => {
       if (res != null) {
         console.log(res);
+        this.rowsProduct = res;
+        // this.oldPrice = this.rowsProduct.oldPrice;
       }
     });
   }

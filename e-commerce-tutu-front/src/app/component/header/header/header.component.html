@@ -22,6 +22,7 @@
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item" href="javascript:void(0);" (click)="profile()">Meu perfil</button>
               <button class="dropdown-item" (click)="dashboard()">Dashboard</button>
+              <button class="dropdown-item" (click)="wishList()">WishList</button>
               <button class="dropdown-item" href="javascript:void(0);" (click)="registerCategory()">Cadastrar categoria</button>
               <button class="dropdown-item" href="javascript:void(0);" (click)="registerProduct()">Cadastrar produto</button>
               <button class="dropdown-item" href="javascript:void(0);" (click)="registerCoupon()">Cadastrar cupom</button>
@@ -37,6 +38,7 @@
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
             <div ngbDropdownMenu aria-labelledby="dropdown-btn">
               <button class="dropdown-item" href="javascript:void(0);" (click)="profile()">Meu perfil</button>
+              <button class="dropdown-item" (click)="wishList()">WishList</button>
               <button class="dropdown-item" (click)="logout()">Sair</button>
             </div>
           </div>
@@ -52,12 +54,10 @@
   <hr>
   <div class="nav-scroller py-1 mb-2">
     <nav class="nav d-flex justify-content-between">
-      <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="home()">Pagina Inicial</a>
       <ng-container *ngFor="let i of newCategoryList">
         <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="categoryListLoad(i.id)">{{ i.category }}</a>
       </ng-container>
-      <!--a id="btn_nav" class="p-2" href="#">Bolsas</a>
-      <a id="btn_nav" class="p-2" href="#">Cintos</a-->
+      <a id="btn_nav" class="p-2" href="javascript:void(0)" (click)="promotions()">Promoções</a>
       <a id="btn_nav" class="p-2" href="#">Sobre</a>
       <a id="btn_nav" class="p-2" href="#">Contate-nos</a>
     </nav>
