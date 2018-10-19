@@ -89,7 +89,8 @@ export class ProductRegisterComponent implements OnInit {
 
       this.apiService.getAllSubProducts(this.rowsProduct[0].id).subscribe((res) => {
         if (res) this.rowsSubProducts = res;
-        this.loadForm(this.rowsSubProducts, this.formularioSubProduct);
+        console.log(this.rowsSubProducts);
+        //this.loadForm(this.rowsSubProducts, this.formularioSubProduct);
       });
     });
   }
@@ -100,18 +101,19 @@ export class ProductRegisterComponent implements OnInit {
     });
   }
 
-  onSubmit(form) {
+  onSubmit(form: FormGroup) {
     this.createProductModel = form.value;
 
     if (this.mode == 'Cadastrar') {
       this.apiService.create(this.createProductModel).subscribe(res => {
-        if (res){
+        if (res) {
           alert('Produto Cadastro com Sucesso!');
           return this.navToListCoup();
-        } 
+        }
         return alert('Erro ao Cadastrar Produto, Tente Novamente');
       });
     }
+
     if (this.mode == 'Cadastrar Subproduto') {
       this.createSubProduct(form.value).then((res => {
         this.idSubProduct = res[0].id_subproduct;
@@ -124,13 +126,13 @@ export class ProductRegisterComponent implements OnInit {
         }
 
         this.apiService.addImage(formImage, this.idSubProduct).subscribe((resImg) => {
-          if (resImg != null) {
-            alert('Sucesso ao SubProduto');
-            form.reset();
-            return this.ngOnInit();
-          } else {
-            return alert('Erro ao cadastrar Imagem');
-          }
+          //if (resImg != null) {
+          //   alert('Sucesso ao SubProduto');
+          //   this.cleanAcordion(form);
+          //   return this.ngOnInit();
+          // } else {
+          //   return alert('Erro ao cadastrar Imagem');
+          // }
         });
       }));
     }
@@ -148,7 +150,7 @@ export class ProductRegisterComponent implements OnInit {
 
   updateMainProduct(form) {
     this.apiService.update(form.value, this.idMainProduct).subscribe((res) => {
-      if(res) return this.ngOnInit(); 
+      if (res) return this.ngOnInit();
       return alert('Erro Ao Atualizar Produto');
     });
   }
@@ -174,16 +176,32 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   removeSubProduct(id: number) {
-    console.log(id);
-    // this.ngOnInit();
+    this.apiService.deleteSubProduct(id).subscribe((res) => {
+      if (res) {
+        alert('Variação deletada com sucesso!');
+        return this.ngOnInit();
+      }
+      alert('Erro ao deletar variação!');
+    });
+  }
+
+  cleanAcordion(form) {
+    form.reset();
+    this.imagesToUpload = [];
+    this.discount = false;
+    this.formularioSubProduct.get('discount').setValue(this.discount);
+    this.promotion = false;
+    this.formularioSubProduct.get('promotion').setValue(this.promotion);
   }
 
   handleFileSelect(fileInput: any) {
     this.imagesToUpload = <any>fileInput.target.files;
   }
 
-  removeFile(indexe) {
-    delete this.imagesToUpload[indexe];
+  removeFile(indexe, toot) {
+    console.log(indexe)
+    console.log(toot)
+    //delete this.imagesToUpload[indexe];
   }
 
   navToListCoup() {
@@ -200,6 +218,7 @@ export class ProductRegisterComponent implements OnInit {
       this.formularioSubProduct.get('discount').setValue(this.discount);
     }
   }
+
   changePromotionProduct(evt) {
     if (evt.checked === true) {
       this.promotion = true;

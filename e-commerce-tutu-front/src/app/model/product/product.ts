@@ -11,9 +11,11 @@ export interface SubProductModel {
     size: number;
     amount: number;
     price: number;
+    material: string;
     promotion: boolean;
     discount: boolean;
     color: string;
+    images: Array<object>;
 }
 
 export interface ProductListModel {
