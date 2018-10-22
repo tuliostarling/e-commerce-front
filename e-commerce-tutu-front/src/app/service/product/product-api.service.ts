@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { ProductModel, SubProductModel } from '../../model/product/product';
+import { ProductModel, SubProductModel, SubProductListModel } from '../../model/product/product';
 
 @Injectable()
 export class ProductService {
@@ -30,7 +30,7 @@ export class ProductService {
     }
 
     getAllSubProducts(id: number) {
-        return this.http.get<SubProductModel>(`${this.API_URL}listall/SubProducts/${id}`);
+        return this.http.get<SubProductListModel>(`${this.API_URL}listall/SubProducts/${id}`);
     }
 
     create(dadosForm: ProductModel) {
@@ -50,7 +50,7 @@ export class ProductService {
     }
 
     updateSubProduct(dadosForm: ProductModel, id: number) {
-        return this.http.put<ProductModel>(`${this.API_URL}/product/putSubProduct/${id}`, dadosForm);
+        return this.http.put<ProductModel>(`${this.API_URL}putSubProduct/${id}`, dadosForm);
     }
 
     delete(id: number) {
