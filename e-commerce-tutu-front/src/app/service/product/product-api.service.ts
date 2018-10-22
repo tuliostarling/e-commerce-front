@@ -17,8 +17,12 @@ export class ProductService {
         return this.http.get<ProductModel>(`${this.API_URL}listall/Products`);
     }
 
-    getAllByCategory(id: number) {
-        return this.http.get<ProductModel>(`${this.API_URL}listBycategory/${id}`);
+    getAllByCategory(id: number, page: number) {
+        return this.http.get<ProductModel>(`${this.API_URL}listBycategory/${id}/${page}`);
+    }
+
+    getAllByPromotions(id: number) {
+        return this.http.get<ProductModel>(`${this.API_URL}listAll/Promotions/${id}`);
     }
 
     getOneMain(id: number) {

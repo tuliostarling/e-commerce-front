@@ -140,7 +140,6 @@ export class CategoryRegisterComponent implements OnInit {
     }
   }
 
-
   insertCategoryImage<T>(formImage: FormData) {
     return new Promise((resolve, reject) => {
       this.apiService.addImage(formImage)
@@ -159,5 +158,9 @@ export class CategoryRegisterComponent implements OnInit {
           resolve(res);
         });
     });
+  }
+
+  list() {
+    this.router.navigateByUrl('/category_list');
   }
 }

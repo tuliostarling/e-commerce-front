@@ -93,4 +93,7 @@ export class DiscountCouponRegisterComponent implements OnInit {
     }
   }
 
+  list() {
+    this.router.navigateByUrl('/coupon_list');
+  }
 }
