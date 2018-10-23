@@ -11,7 +11,7 @@ import { ProductModel } from '../../../model/product/product';
 })
 export class PromotionsComponent implements OnInit {
 
-  rowsProduct: ProductModel;
+  rowsProduct: Array<ProductModel>;
   totalSubProducts: number;
   navLinks: number;
   page: number;

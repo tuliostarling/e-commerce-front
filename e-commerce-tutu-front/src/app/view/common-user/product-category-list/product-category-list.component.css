@@ -93,7 +93,7 @@ a:hover
 {
    color:#FE980F; 
    text-decoration:none; 
-   cursor:pointer;  
+   cursor:pointer;
 }
 
 img {
@@ -114,4 +114,8 @@ img {
   margin-top: 15%;
   color: #FE980F;
   font-size: 50px;
+}
+
+.middle:hover, .bottom:hover {
+  cursor:pointer;
 }

@@ -5,11 +5,9 @@
       <div class="images">
         <img src="../../../../assets/images/04(3)" class="img-fluid" style="margin-left: 20%; margin-top: 15%" />
       </div>
-      <img id="imgThumb" src="../../../../assets/images/04(3)" class="rounded float-left" alt="...">
-      <img id="imgThumb" src="../../../../assets/images/04(3)" class="rounded" alt="...">
-      <img id="imgThumb" src="../../../../assets/images/04(3)" class="rounded" alt="...">
-      <img id="imgThumb" src="../../../../assets/images/04(3)" class="rounded" alt="...">
-      <img id="imgThumb" src="../../../../assets/images/04(3)" class="rounded" alt="...">
+      <!--ng-container *ngFor="let i of ArrImg">
+        <img id="imgThumb" src="{{i.img}}" class="rounded float-left" alt="...">
+      </ng-container-->
     </div>
 
     <div class="col-7">
@@ -17,7 +15,7 @@
         <div class="buy">
           <div class="row">
             <div class="col-6">
-              <h3>Salto alto</h3>
+              <h3>{{productName}}</h3>
             </div>
             <div class="col-6" style="text-align: right">
               <a>
@@ -35,7 +33,7 @@
           <div class="row">
             <div class="col-6" style="text-align: center; margin-top: 1%;">
               <h5>
-                <b>R$ 150,00</b>
+                <b>R$ {{productPrice}}</b>
               </h5>
             </div>
             <div class="col-6" style="text-align: center">
@@ -87,11 +85,7 @@
 
         <div class="row">
           <div class="col-12" style="margin-top: 1%;">
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras posuere diam eget auctor vestibulum. Aliquam aliquam
-              leo vitae erat laoreet, imperdiet mattis dolor consequat. Vivamus at pellentesque dolor. Pellentesque faucibus
-              molestie posuere. Phasellus eu tortor ac nisl pharetra pretium. Nam sit amet rhoncus dolor. Quisque nec molestie
-              dui. Donec vestibulum lorem nisl, nec imperdiet diam interdum luctus. Fusce faucibus feugiat sem nec consectetur.
-              Mauris sit amet sodales quam. Ut aliquet venenatis volutpat.</p>
+            <p> {{productDescription}}</p>
           </div>
         </div>
 
@@ -109,7 +103,7 @@
                 </tr>
                 <tr>
                   <th scope="row">Cor</th>
-                  <td>Marrom</td>
+                  <td>{{productColor}}</td>
                 </tr>
                 <tr>
                   <th scope="row">Garantia</th>
