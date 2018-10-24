@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormGroup,
-  FormControl,
   FormBuilder,
   Validators,
-  AbstractControl
+  FormArray
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+
 
 import { ProductModel, SubProductModel } from '../../../../model/product/product';
 import { ProductService } from '../../../../service/product/product-api.service';
 import { CategoryService } from '../../../../service';
 import { CategoryModel } from '../../../../model/category/category';
-import { VirtualTimeScheduler } from 'rxjs';
+
 
 @Component({
   selector: 'app-product-register',
@@ -26,11 +26,16 @@ export class ProductRegisterComponent implements OnInit {
 
   formulario: FormGroup;
   formularioSubProduct: FormGroup;
+  formSubProducts: FormArray;
+
   createProductModel: ProductModel;
   createSubProductModel: SubProductModel;
   rowsCategory: CategoryModel;
   rowsProduct: ProductModel;
-  rowsSubProducts: SubProductModel;
+  rowsSubProducts: Array<SubProductModel>;
+  rowsImagesObj: any;
+
+  removedImages = [];
   idProduct: number;
   mode: string;
 
@@ -38,6 +43,8 @@ export class ProductRegisterComponent implements OnInit {
   promotion: boolean;
   discount: boolean;
   imagesToUpload: any;
+
+  @ViewChild('fileInput') fileInput: any;
 
   constructor(
     private apiService: ProductService,
@@ -74,11 +81,17 @@ export class ProductRegisterComponent implements OnInit {
       discount: [null],
       color: [null, Validators.required],
       material: [null],
-      promotion: [null]
+      promotion: [null],
+      formSubProducts: this.form.array([this.createArrayForm()])
     });
 
     this.getCategory();
     this.getProduct();
+  }
+
+  // Gambs haven't sleep for 28 hours gimme a break
+  currentImageNode(i) {
+    return this.rowsImagesObj[i].images;
   }
 
   getProduct() {
@@ -88,11 +101,45 @@ export class ProductRegisterComponent implements OnInit {
       this.loadForm(this.rowsProduct, this.formulario)
 
       this.apiService.getAllSubProducts(this.rowsProduct[0].id).subscribe((res) => {
-        if (res) this.rowsSubProducts = res;
+        if (res) this.rowsSubProducts = res.rows;
         console.log(this.rowsSubProducts);
-        //this.loadForm(this.rowsSubProducts, this.formularioSubProduct);
+        this.loadSubProducts();
+
+        this.rowsImagesObj = res.rows.map(x => { return { images: x.images } });
       });
     });
+  }
+
+  createArrayForm(): FormGroup {
+    return this.form.group({
+      id: [null],
+      size: [null],
+      amount: [null, Validators.required],
+      price: [null, Validators.required],
+      old_price: [null, Validators.required],
+      discount: [null],
+      color: [null, Validators.required],
+      material: [null],
+      promotion: [null]
+    })
+  }
+
+  loadSubProducts() {
+    const control = this.form.array([]);
+    this.rowsSubProducts.forEach(x => {
+      control.push(this.form.group({
+        id: [x.id],
+        size: [x.size],
+        amount: [x.amount, Validators.required],
+        price: [x.price, Validators.required],
+        old_price: [x.old_price, Validators.required],
+        discount: [x.discount],
+        color: [x.color, Validators.required],
+        material: [x.material],
+        promotion: [x.promotion]
+      }));
+    });
+    this.formularioSubProduct.setControl('formSubProducts', control);
   }
 
   getCategory() {
@@ -124,15 +171,16 @@ export class ProductRegisterComponent implements OnInit {
         for (let i = 0; i < files.length; i++) {
           formImage.append('file', files[i]);
         }
-
+        console.log(formImage.get('file'));
+        console.log(files);
         this.apiService.addImage(formImage, this.idSubProduct).subscribe((resImg) => {
-          //if (resImg != null) {
-          //   alert('Sucesso ao SubProduto');
-          //   this.cleanAcordion(form);
-          //   return this.ngOnInit();
-          // } else {
-          //   return alert('Erro ao cadastrar Imagem');
-          // }
+          if (resImg != null) {
+            alert('Sucesso ao cadastrar SubProduto');
+            this.cleanAcordion(form);
+            return this.ngOnInit();
+          } else {
+            return alert('Erro ao cadastrar Imagem');
+          }
         });
       }));
     }
@@ -169,13 +217,64 @@ export class ProductRegisterComponent implements OnInit {
     });
   }
 
+  updateSubProduct(index: number) {
+    const control = <FormArray>this.formularioSubProduct.controls['formSubProducts'];
+    let id = control.at(index).value.id;
+    let subProductObj = control.at(index).value;
 
-  updateSubProduct(form) {
-    console.log(form.value);
-    // this.ngOnInit();
+
+    this.apiService.updateSubProduct(subProductObj, id).subscribe((res => {
+      if (res) {
+
+        this.apiService.updateImages(this.formData, id).subscribe((res) => {
+
+        });
+      }
+
+      // alert('Variação atualizada com sucesso!');
+      // return this.ngOnInit();
+      // alert('Erro ao atualizar variação!');
+    }))
   }
 
-  removeSubProduct(id: number) {
+  handleSubProductFile(fileInput: any, index: number) {
+    const totalImgInput = fileInput.target.files.length;
+    const totalImgs = this.rowsImagesObj[index].images.length;
+
+    if (this.rowsImagesObj[index].images.length >= 5) return alert('Maximo de 5 imagens permitidas!');
+    if (totalImgs + totalImgInput > 5) return alert('Maximo de 5 imagens permitidas!');
+
+    let arrImageInput = Array<any>();
+    arrImageInput = <any>fileInput.target.files
+
+    this.asyncForEach(arrImageInput, index)
+  }
+
+  async asyncForEach(array, index) {
+    for (let i = 0; i < array.length; i++) {
+      let reader = new FileReader();
+      await reader.readAsDataURL(array[i]);
+
+      this.formData.append('file', array[i]);
+      reader.onload = (event: any) => {
+        this.rowsImagesObj[index].images.push({ url: event.target.result });
+      }
+    }
+  }
+ 
+  removeFile(subIndex: number, iElementmageIndex: number, key: string) {
+    const index: number = this.rowsImagesObj[subIndex]
+
+    if (index !== -1) {
+      let size = this.rowsImagesObj[subIndex].images.splice(index, 1);
+      size.forEach(x => this.formData.append('key', key));
+    }
+  }
+
+  removeSubProduct(index: number) {
+    const control = <FormArray>this.formularioSubProduct.controls['formSubProducts'];
+    let id = control.at(index).value.id;
+
     this.apiService.deleteSubProduct(id).subscribe((res) => {
       if (res) {
         alert('Variação deletada com sucesso!');
@@ -192,22 +291,16 @@ export class ProductRegisterComponent implements OnInit {
     this.formularioSubProduct.get('discount').setValue(this.discount);
     this.promotion = false;
     this.formularioSubProduct.get('promotion').setValue(this.promotion);
+    this.fileInput.nativeElement.value =  "";
   }
 
   handleFileSelect(fileInput: any) {
     this.imagesToUpload = <any>fileInput.target.files;
   }
 
-  removeFile(indexe, toot) {
-    console.log(indexe)
-    console.log(toot)
-    //delete this.imagesToUpload[indexe];
-  }
-
   navToListCoup() {
     this.router.navigateByUrl('product_list');
   }
-
 
   changeDiscount(evt) {
     if (evt.checked === true) {

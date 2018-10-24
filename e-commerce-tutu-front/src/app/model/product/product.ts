@@ -7,9 +7,11 @@ export interface ProductModel {
 
 
 export interface SubProductModel {
+    id: number;
     id_product: number;
-    size: number;
+    size: string;
     amount: number;
+    old_price: number;
     price: number;
     material: string;
     promotion: boolean;
@@ -18,10 +20,12 @@ export interface SubProductModel {
     images: Array<object>;
 }
 
-export interface ProductListModel {
-    id_subproduct: number;
-    name: string;
-    id_product: number;
-    price: string;
-    location_aws: string;
+export interface SubProductListModel {
+    rows: Array<SubProductModel>;
+}
+
+
+export interface ImageObjectModel {
+    url: string;
+    key: string;
 }
