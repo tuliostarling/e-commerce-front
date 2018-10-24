@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { ProductModel, SubProductModel, SubProductListModel } from '../../model/product/product';
+import { ProductModel, RequestProductModel, SubProductModel, SubProductListModel } from '../../model/product/product';
 
 @Injectable()
 export class ProductService {
@@ -17,12 +17,16 @@ export class ProductService {
         return this.http.get<ProductModel>(`${this.API_URL}listall/Products`);
     }
 
+    getOne(id: number) {
+        return this.http.get<ProductModel>(`${this.API_URL}listone/${id}`);
+    }
+
     getAllByCategory(id: number, page: number) {
-        return this.http.get<ProductModel>(`${this.API_URL}listBycategory/${id}/${page}`);
+        return this.http.get<RequestProductModel>(`${this.API_URL}listBycategory/${id}/${page}`);
     }
 
     getAllByPromotions(id: number) {
-        return this.http.get<ProductModel>(`${this.API_URL}listAll/Promotions/${id}`);
+        return this.http.get<RequestProductModel>(`${this.API_URL}listAll/Promotions/${id}`);
     }
 
     getOneMain(id: number) {

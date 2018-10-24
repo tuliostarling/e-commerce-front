@@ -3,8 +3,14 @@ export interface ProductModel {
     id_category: number;
     name: string;
     description: string;
+
+    subProduct: Array<SubProductModel>;
 }
 
+export interface RequestProductModel {
+    total: number;
+    rows: Array<ProductModel>;
+}
 
 export interface SubProductModel {
     id: number;

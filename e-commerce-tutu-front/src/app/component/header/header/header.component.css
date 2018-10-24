@@ -3,6 +3,10 @@
     height: 100px;
 }
 
+.logo:hover {
+    cursor: pointer;
+}
+
 /*.logo {
     width: 250px;
     height: 100px;

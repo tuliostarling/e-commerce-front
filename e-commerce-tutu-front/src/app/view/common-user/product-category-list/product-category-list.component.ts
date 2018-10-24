@@ -14,7 +14,7 @@ export class ProductCategoryListComponent implements OnInit {
 
   idCategory: number;
   categoryName: string;
-  rowsProduct: ProductModel;
+  rowsProduct: Array<ProductModel>;
   totalSubProducts: number;
   oldPrice: number;
   navLinks: number;
@@ -62,6 +62,10 @@ export class ProductCategoryListComponent implements OnInit {
         this.makeArrNavLinks();
       }
     });
+  }
+
+  listProduct(id: number) {
+    this.router.navigateByUrl(`product/${id}`);
   }
 
   makeArrNavLinks() {
