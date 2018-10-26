@@ -58,6 +58,14 @@ a:hover {
     margin: 1%
 }
 
+#imgThumb:hover {
+    cursor:pointer;  
+}
+
+#img-product {
+    cursor:pointer;
+}
+
 tr {
     text-align: center;
 }
