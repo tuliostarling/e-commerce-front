@@ -16,6 +16,9 @@ export class CartComponent implements OnInit {
   productName: string;
   selectValue: number;
   finalValue: number;
+  qtdItens: number;
+  freight: number;
+  total: number;
 
   constructor(
     private router: Router,
@@ -41,6 +44,10 @@ export class CartComponent implements OnInit {
 
         this.productName = this.cartRows.name;
         this.idItem = this.cartRows[0].id_item;
+        this.qtdItens = this.cartRows[0].qtd;
+        this.freight = 20;
+
+        this.total = this.finalValue + this.freight;
       }
     });
   }
