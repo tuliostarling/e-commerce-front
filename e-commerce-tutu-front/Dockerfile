@@ -1,4 +1,4 @@
-FROM nginx:alpine
+FROM node:alpine
 
 COPY package*.json ./
 
