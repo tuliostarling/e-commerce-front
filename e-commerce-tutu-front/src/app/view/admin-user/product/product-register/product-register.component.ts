@@ -171,8 +171,7 @@ export class ProductRegisterComponent implements OnInit {
         for (let i = 0; i < files.length; i++) {
           formImage.append('file', files[i]);
         }
-        console.log(formImage.get('file'));
-        console.log(files);
+
         this.apiService.addImage(formImage, this.idSubProduct).subscribe((resImg) => {
           if (resImg != null) {
             alert('Sucesso ao cadastrar SubProduto');
@@ -225,15 +224,14 @@ export class ProductRegisterComponent implements OnInit {
 
     this.apiService.updateSubProduct(subProductObj, id).subscribe((res => {
       if (res) {
-
         this.apiService.updateImages(this.formData, id).subscribe((res) => {
-
+          if (res) {
+            alert('Variação atualizada com sucesso!');
+            return this.ngOnInit();
+          }
+          alert('Erro ao atualizar variação!');
         });
       }
-
-      // alert('Variação atualizada com sucesso!');
-      // return this.ngOnInit();
-      // alert('Erro ao atualizar variação!');
     }))
   }
 
@@ -261,13 +259,14 @@ export class ProductRegisterComponent implements OnInit {
       }
     }
   }
- 
-  removeFile(subIndex: number, iElementmageIndex: number, key: string) {
+
+  removeFile(subIndex: number, id: string, key: string) {
     const index: number = this.rowsImagesObj[subIndex]
+    let keys = [];
 
     if (index !== -1) {
       let size = this.rowsImagesObj[subIndex].images.splice(index, 1);
-      size.forEach(x => this.formData.append('key', key));
+      size.forEach(x => this.formData.append('key', key), this.formData.append('id', id));
     }
   }
 
@@ -291,7 +290,7 @@ export class ProductRegisterComponent implements OnInit {
     this.formularioSubProduct.get('discount').setValue(this.discount);
     this.promotion = false;
     this.formularioSubProduct.get('promotion').setValue(this.promotion);
-    this.fileInput.nativeElement.value =  "";
+    this.fileInput.nativeElement.value = "";
   }
 
   handleFileSelect(fileInput: any) {
