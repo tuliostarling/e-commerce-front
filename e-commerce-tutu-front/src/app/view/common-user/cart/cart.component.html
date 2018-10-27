@@ -60,10 +60,10 @@
 
       <div class="row" style="margin-top: 5%">
         <div class="col-6">
-          <p style="color: #949494; font-size: 15px">Subtotal (1 produto)</p>
+          <p style="color: #949494; font-size: 15px">Subtotal ({{qtdItens}} produto(s))</p>
         </div>
         <div class="col-6">
-          <p style="float: right; color: #949494; font-size: 15px">R$ 150,00</p>
+          <p style="float: right; color: #949494; font-size: 15px">R$ {{finalValue}},00</p>
         </div>
       </div>
       <div class="row" style="margin-bottom: -5%">
@@ -71,7 +71,7 @@
           <p style="font-size: 15px">Frete</p>
         </div>
         <div class="col-6">
-          <p style="float: right; font-size: 15px">R$ 20,00</p>
+          <p style="float: right; font-size: 15px">R$ {{freight}},00</p>
         </div>
       </div>
       <hr>
@@ -83,7 +83,7 @@
         </div>
         <div class="col-6">
           <p style="float: right; font-size: 15px">
-            <b>R$ 170,00</b>
+            <b>R$ {{total}},00</b>
           </p>
         </div>
       </div>
