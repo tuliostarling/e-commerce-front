@@ -61,7 +61,6 @@ export class ProductService {
         return this.http.put<ProductModel>(`${this.API_URL}putImages/${id}`, dadosForm);
     }
 
-
     delete(id: number) {
         return this.http.delete<ProductModel>(`${this.API_URL}del/${id}`);
     }
