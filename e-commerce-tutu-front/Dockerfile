@@ -8,7 +8,7 @@ EXPOSE 4200
 WORKDIR $HOME
 COPY ./ $HOME
 
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli \ 
  && npm install \
  && npm rebuild
 
