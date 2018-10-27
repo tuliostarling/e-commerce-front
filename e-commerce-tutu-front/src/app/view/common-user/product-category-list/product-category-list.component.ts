@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductModel } from '../../../model/product/product';
 import { ProductService, CategoryService } from '../../../service';
 import { FormBuilder } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-product-category-list',
   templateUrl: './product-category-list.component.html',
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./product-category-list.component.css']
 })
 export class ProductCategoryListComponent implements OnInit {
@@ -22,11 +24,16 @@ export class ProductCategoryListComponent implements OnInit {
   arrLink = [];
   lastItenArr: number;
 
+  dados = [];
+  idCart: number;
+  decodedToken: any;
+
   constructor(
     private router: Router,
     private apiService: ProductService,
     private apiServiceCategory: CategoryService,
-    private acRoute: ActivatedRoute
+    private acRoute: ActivatedRoute,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -34,6 +41,13 @@ export class ProductCategoryListComponent implements OnInit {
       .subscribe(_ => {
         this.idCategory = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
+
+        const t = localStorage.getItem('token');
+
+        if (t != null) {
+          this.decodedToken = this.jwtDecode(t);
+          this.idCart = this.decodedToken.cart;
+        }
 
         this.getCategory();
         this.getProducts();
@@ -110,5 +124,25 @@ export class ProductCategoryListComponent implements OnInit {
 
   changePage(num: number) {
     this.router.navigateByUrl(`/category_list/${this.idCategory}/${num}`);
+  }
+
+  addProductToCart(id: number, content) {
+    this.dados.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
+
+    this.apiService.addToCart(this.dados).subscribe(res => {
+      if (res != null) {
+        this.modalService.open(content, { centered: true });
+      }
+    });
+  }
+
+  cart() {
+    this.router.navigateByUrl('/cart');
+  }
+
+  jwtDecode(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   }
 }
