@@ -2,9 +2,6 @@ FROM nginx:alpine
 
 COPY package*.json ./
 
-# Install AngularCLI
-RUN npm install -g @angular/cli
-
 WORKDIR /e-commerce-tutu-front
 
 COPY ./ /e-commerce-tutu-front
