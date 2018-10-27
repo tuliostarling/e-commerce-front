@@ -1,10 +1,11 @@
-FROM node:alpine
+FROM node:10-alpine
 
-COPY package*.json ./
+ENV HOME='/usr/src/app'
 
-WORKDIR /e-commerce-tutu-front
+EXPOSE 4200
 
-COPY ./ /e-commerce-tutu-front
+WORKDIR $HOME
+COPY ./ $HOME
 
 RUN npm install && npm rebuild
 
