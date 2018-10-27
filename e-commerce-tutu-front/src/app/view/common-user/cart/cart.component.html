@@ -16,29 +16,29 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let i of cartRows">
             <td scope="row">
               <div id="leftsidemenu">
-                <img src="../../../../assets/images/04(3)" style="width: 80px; height: 80px;">
+                <img src="i.location_aws" style="width: 80px; height: 80px;">
               </div>
               <div id="rigthsidemenu">
-                <p>Salto alto - 34</p>
+                <p>{{i.name}} - {{i.size}}</p>
               </div>
             </td>
             <td>
-              <select>
-                <option>0</option>
-                <option selected>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
+              <select (change)="change($event.target)">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
               </select>
             </td>
-            <td>R$ 150,00</td>
+            <td>R$ {{i.price}}</td>
             <td>
-              <button class="btn btn-danger btn-sm">
+              <button class="btn btn-danger btn-sm" (click)="delete(i.id)">
                 <i class="fa fa-trash"></i>
               </button>
             </td>
@@ -95,5 +95,4 @@
       </div>
     </div>
   </div>
-
 </div>

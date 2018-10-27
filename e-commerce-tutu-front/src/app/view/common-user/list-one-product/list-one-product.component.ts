@@ -24,7 +24,6 @@ export class ListOneProductComponent implements OnInit {
   ArrImg = [];
   imgIndex: number;
   changeImgBool = false;
-  previousUrl: any;
 
   constructor(
     private router: Router,

@@ -8,6 +8,7 @@ import { ProductModel, RequestProductModel, SubProductModel, SubProductListModel
 export class ProductService {
 
     API_URL: string = AppSettings.API_ENDPOINT + 'product/';
+    API_URL_CART: string = AppSettings.API_ENDPOINT + 'cart/';
 
     constructor(
         private http: HttpClient
@@ -67,5 +68,22 @@ export class ProductService {
 
     deleteSubProduct(id: number) {
         return this.http.delete<ProductModel>(`${this.API_URL}delSubProduct/${id}`);
+    }
+
+    // cart
+    getProductsCart(id: number) {
+        return this.http.get<ProductModel>(`${this.API_URL_CART}loadCart/${id}`);
+    }
+
+    addToCart(dadosForm: any) {
+        return this.http.post<ProductModel>(`${this.API_URL_CART}addCart/`, dadosForm);
+    }
+
+    removeFromCart(id: number) {
+        return this.http.delete<ProductModel>(`${this.API_URL_CART}removeCart/${id}`);
+    }
+
+    updateAmount(dadosForm: any) {
+        return this.http.post<ProductModel>(`${this.API_URL_CART}increaseAmount/`, dadosForm);
     }
 }
