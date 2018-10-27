@@ -2,8 +2,6 @@ FROM nginx:alpine
 
 COPY package*.json ./
 
-RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
-
 # Install AngularCLI
 RUN npm install -g @angular/cli
 
