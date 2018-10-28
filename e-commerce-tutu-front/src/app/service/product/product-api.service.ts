@@ -9,6 +9,7 @@ export class ProductService {
 
     API_URL: string = AppSettings.API_ENDPOINT + 'product/';
     API_URL_CART: string = AppSettings.API_ENDPOINT + 'cart/';
+    API_URL_WISH_LIST: string = AppSettings.API_ENDPOINT + 'wishlist/';
 
     constructor(
         private http: HttpClient
@@ -85,5 +86,10 @@ export class ProductService {
 
     updateAmount(dadosForm: any) {
         return this.http.post<ProductModel>(`${this.API_URL_CART}increaseAmount/`, dadosForm);
+    }
+
+    // wishlist
+    getProductsWishL(id: number) {
+        return this.http.get<ProductModel>(`${this.API_URL_WISH_LIST}loadWishList/${id}`);
     }
 }

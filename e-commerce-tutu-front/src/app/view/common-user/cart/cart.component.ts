@@ -13,12 +13,12 @@ export class CartComponent implements OnInit {
   idItem: number;
   cartRows: any;
   decodedToken: any;
-  productName: string;
   selectValue: number;
   finalValue: number;
-  qtdItens: number;
+  qtdItens = [];
   freight: number;
   total: number;
+  sumQtdItems: number;
 
   constructor(
     private router: Router,
@@ -42,14 +42,21 @@ export class CartComponent implements OnInit {
         this.cartRows = res[0];
         this.finalValue = res[1].finalValue;
 
-        this.productName = this.cartRows.name;
         this.idItem = this.cartRows[0].id_item;
-        this.qtdItens = this.cartRows[0].qtd;
         this.freight = 20;
+
+        for (const i of Object.keys(this.cartRows)) {
+          this.qtdItens.push(this.cartRows[i].qtd);
+        }
+        this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
         this.total = this.finalValue + this.freight;
       }
     });
+  }
+
+  sumItems(a, b) {
+    return a + b;
   }
 
   jwtDecode(token) {
@@ -66,6 +73,10 @@ export class CartComponent implements OnInit {
         alert('Erro');
       }
     });
+  }
+
+  listProduct(id: number) {
+    this.router.navigateByUrl(`product/${id}`);
   }
 
   delete(id: number, content) {

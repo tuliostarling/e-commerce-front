@@ -18,8 +18,8 @@
         <tbody>
           <tr *ngFor="let i of cartRows">
             <td scope="row">
-              <div id="leftsidemenu">
-                <img src="i.location_aws" style="width: 80px; height: 80px;">
+              <div id="leftsidemenu" (click)="listProduct(i.id)">
+                <img src="{{i.location_aws}}" style="width: 80px; height: 80px;">
               </div>
               <div id="rigthsidemenu">
                 <p>{{i.name}} - {{i.size}}</p>
@@ -60,7 +60,7 @@
 
       <div class="row" style="margin-top: 5%">
         <div class="col-6">
-          <p style="color: #949494; font-size: 15px">Subtotal ({{qtdItens}} produto(s))</p>
+          <p style="color: #949494; font-size: 15px">Subtotal ({{sumQtdItems}} produto(s))</p>
         </div>
         <div class="col-6">
           <p style="float: right; color: #949494; font-size: 15px">R$ {{finalValue}},00</p>

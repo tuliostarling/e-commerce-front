@@ -16,3 +16,7 @@
 #rightsidemenu {
   display: inline;
 }
+
+#leftsidemenu:hover {
+    cursor: pointer;
+}
