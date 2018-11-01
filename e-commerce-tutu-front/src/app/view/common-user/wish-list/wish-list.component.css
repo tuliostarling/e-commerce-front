@@ -134,3 +134,7 @@ img {
 .row {
     margin-top: 3%
 }
+
+#leftsidemenu:hover {
+    cursor: pointer;
+}

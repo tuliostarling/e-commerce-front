@@ -24,8 +24,10 @@ export class ProductCategoryListComponent implements OnInit {
   arrLink = [];
   lastItenArr: number;
 
-  dados = [];
+  dadosCart = [];
+  dadosWish = [];
   idCart: number;
+  idWish: number;
   decodedToken: any;
 
   constructor(
@@ -47,6 +49,7 @@ export class ProductCategoryListComponent implements OnInit {
         if (t != null) {
           this.decodedToken = this.jwtDecode(t);
           this.idCart = this.decodedToken.cart;
+          this.idWish = this.decodedToken.wishlist;
         }
 
         this.getCategory();
@@ -127,9 +130,19 @@ export class ProductCategoryListComponent implements OnInit {
   }
 
   addProductToCart(id: number, content) {
-    this.dados.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
+    this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
 
-    this.apiService.addToCart(this.dados).subscribe(res => {
+    this.apiService.addToCart(this.dadosCart).subscribe(res => {
+      if (res != null) {
+        this.modalService.open(content, { centered: true });
+      }
+    });
+  }
+
+  addProductToWishList(id: number, content) {
+    this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id, amount: 1 });
+
+    this.apiService.addToWishList(this.dadosWish).subscribe(res => {
       if (res != null) {
         this.modalService.open(content, { centered: true });
       }

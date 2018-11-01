@@ -2,7 +2,7 @@
   <nav id="breadc" aria-label="breadcrumb">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
-        <a href="product_list">Listagem de Produtos</a>
+        <a id="btn-breadcrumb" (click)="list()">Listagem de Produtos</a>
       </li>
       <li class="breadcrumb-item active" aria-current="page">Cadastro de Produto</li>
     </ol>
@@ -48,15 +48,13 @@
         <div class="col-12">
           <div class="form-group">
             <label for="description">Descrição</label>
-            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description"
-              placeholder="Digite a descrição"></textarea>
+            <textarea type="text" class="form-control" formControlName="description" rows="3" id="description" placeholder="Digite a descrição"></textarea>
           </div>
         </div>
       </div>
 
       <button *ngIf="mode == 'Cadastrar'" id="add" type="submit" class="btn btn-success">Cadastrar</button>
-      <button *ngIf="mode == 'Cadastrar Subproduto'" id="add" type="button" (click)="updateMainProduct(formulario)"
-        class="btn btn-success">Atualizar</button>
+      <button *ngIf="mode == 'Cadastrar Subproduto'" id="add" type="button" (click)="updateMainProduct(formulario)" class="btn btn-success">Atualizar</button>
       <button id="cancel" type="button" class="btn btn-danger" (click)="navToListCoup()">Cancelar</button>
     </form>
   </div>
@@ -169,115 +167,114 @@
           </ngb-panel>
         </ngb-accordion>
       </div>
-
-      <div role="formSubProducts" formArrayName="formSubProducts" *ngFor="let item of formularioSubProduct.get('formSubProducts').controls;let i = index;">
-        <div [formGroupName]="i">
-          <ngb-accordion [closeOthers]="true" activeIds="static-1">
-            <ngb-panel title="{{i+1}} Variação">
-              <ng-template ngbPanelContent>
-                <button type="button" class="btn btn-danger btn-md" (click)="removeSubProduct(i)" style="float: right;">
-                  <i class="fa fa-trash"></i>
-                </button>
-                <div class="row">
-                  <div class="col-2">
-                    <div class="form-group">
-                      <label for="size">Tamanho</label>
-                      <input type="number" class="form-control" id="size" placeholder="Tamanho" formControlName="size">
+      <div id="accSubProduct">
+        <div role="formSubProducts" formArrayName="formSubProducts" *ngFor="let item of formularioSubProduct.get('formSubProducts').controls;let i = index;">
+          <div [formGroupName]="i">
+            <ngb-accordion [closeOthers]="true" activeIds="static-1" *ngIf="rowsSubProducts != undefined">
+              <ngb-panel title="{{i+1}} Variação">
+                <ng-template ngbPanelContent>
+                  <button type="button" class="btn btn-danger btn-md" (click)="removeSubProduct(i)" style="float: right;">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                  <div class="row">
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label for="size">Tamanho</label>
+                        <input type="number" class="form-control" id="size" placeholder="Tamanho" formControlName="size">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-2">
-                    <div class="form-group">
-                      <label for="amount">Quatidade</label>
-                      <input type="number" class="form-control" id="amount" placeholder="Quantidade" formControlName="amount">
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label for="amount">Quatidade</label>
+                        <input type="number" class="form-control" id="amount" placeholder="Quantidade" formControlName="amount">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-3">
-                    <div class="form-group">
-                      <label for="color">Cor</label>
-                      <input type="text" class="form-control" id="color" placeholder="Cor" formControlName="color">
+                    <div class="col-3">
+                      <div class="form-group">
+                        <label for="color">Cor</label>
+                        <input type="text" class="form-control" id="color" placeholder="Cor" formControlName="color">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-2">
-                    <div class="form-group">
-                      <label for="price">Preço</label>
-                      <input type="number" class="form-control" id="price" placeholder="Preço" formControlName="price">
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label for="price">Preço</label>
+                        <input type="number" class="form-control" id="price" placeholder="Preço" formControlName="price">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-2">
-                    <div class="form-group">
-                      <label for="old_price">Preço Antigo</label>
-                      <input type="number" class="form-control" id="old_price" placeholder="nulo" formControlName="old_price">
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label for="old_price">Preço Antigo</label>
+                        <input type="number" class="form-control" id="old_price" placeholder="nulo" formControlName="old_price">
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-2">
-                    <div class="form-group">
-                      <label for="material">Material</label>
-                      <input type="text" class="form-control" id="material" placeholder="Material" formControlName="material">
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
-                  <div>
-                    <input type="checkbox" class="form-check-input" id="discount" checked="changeDiscount({{item.discount}})"
-                      (change)="changeDiscount($event.target)">
-                    <label class="form-check-label" for="discount">Desconto</label>
-                  </div>
-
-                  <div style="margin-left: 3%;">
-                    <input type="checkbox" class="form-check-input" id="promotion" checked="changeDiscount({{item.promotion}})"
-                      (change)="changePromotionProduct($event.target)">
-                    <label class="form-check-label" for="promotion">Promoção</label>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <div class="inline-block">
-                        <input #fileInput type="file" class="form-control-file" id="exampleFormControlFile1" (change)="handleSubProductFile($event,i)"
-                          multiple />
+                    <div class="col-2">
+                      <div class="form-group">
+                        <label for="material">Material</label>
+                        <input type="text" class="form-control" id="material" placeholder="Material" formControlName="material">
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="row">
-                  <div class="col-12">
-
-                    <div style="margin-bottom: 40px">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                            <th>Images</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <div *ngFor="let file of currentImageNode(i);let j=index;">
-                              <td>
-                                <img class="form-control" alt="" [src]="file.url">
-                              </td>
-                              <td>
-                                <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,file.id,file.key)">
-                                  <span class="fa fa-trash"></span>
-                                </button>
-                              </td>
-                            </div>
-                          </tr>
-                        </tbody>
-                      </table>
+                  <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
+                    <div>
+                      <input type="checkbox" class="form-check-input" id="discount" checked="changeDiscount({{item.discount}})" (change)="changeDiscount($event.target)">
+                      <label class="form-check-label" for="discount">Desconto</label>
                     </div>
 
+                    <div style="margin-left: 3%;">
+                      <input type="checkbox" class="form-check-input" id="promotion" checked="changeDiscount({{item.promotion}})" (change)="changePromotionProduct($event.target)">
+                      <label class="form-check-label" for="promotion">Promoção</label>
+                    </div>
                   </div>
-                </div>
 
-                <button id="add" type="button" class="btn btn-success" (click)="updateSubProduct(i,file)">Atualizar</button>
-                <button id="cancel" type="button" class="btn btn-danger" (click)="cleanAcordion(form)">Cancelar</button>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="form-group">
+                        <div class="inline-block">
+                          <input #fileInput type="file" class="form-control-file" id="exampleFormControlFile1" (change)="handleSubProductFile($event,i)"
+                            multiple />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
+                  <div class="row">
+                    <div class="col-12">
+
+                      <div style="margin-bottom: 40px">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th>Images</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <div *ngFor="let file of currentImageNode(i);let j=index;">
+                                <td>
+                                  <img class="form-control" alt="" [src]="file.url">
+                                </td>
+                                <td>
+                                  <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,j,file.id,file.key)">
+                                    <span class="fa fa-trash"></span>
+                                  </button>
+                                </td>
+                              </div>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <button id="add" type="button" class="btn btn-success" (click)="updateSubProduct(i)">Atualizar</button>
+                  <button id="cancel" type="button" class="btn btn-danger" (click)="cleanAcordion(form)">Cancelar</button>
+
+                </ng-template>
+              </ngb-panel>
+            </ngb-accordion>
+          </div>
         </div>
       </div>
 

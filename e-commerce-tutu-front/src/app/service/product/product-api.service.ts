@@ -92,4 +92,12 @@ export class ProductService {
     getProductsWishL(id: number) {
         return this.http.get<ProductModel>(`${this.API_URL_WISH_LIST}loadWishList/${id}`);
     }
+
+    addToWishList(dadosForm: any) {
+        return this.http.post<ProductModel>(`${this.API_URL_WISH_LIST}addtoWishList/`, dadosForm);
+    }
+
+    removeFromWish(id: number) {
+        return this.http.delete<ProductModel>(`${this.API_URL_WISH_LIST}removeWishList/${id}`);
+    }
 }

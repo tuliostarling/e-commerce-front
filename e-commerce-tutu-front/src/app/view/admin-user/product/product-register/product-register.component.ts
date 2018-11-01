@@ -98,14 +98,15 @@ export class ProductRegisterComponent implements OnInit {
     this.apiService.getOneMain(this.idProduct).subscribe((data) => {
       this.idMainProduct = data[0].id;
       this.rowsProduct = data;
-      this.loadForm(this.rowsProduct, this.formulario)
+      this.loadForm(this.rowsProduct, this.formulario);
 
       this.apiService.getAllSubProducts(this.rowsProduct[0].id).subscribe((res) => {
-        if (res) this.rowsSubProducts = res.rows;
-        console.log(this.rowsSubProducts);
+        if (res) { this.rowsSubProducts = res.rows; }
         this.loadSubProducts();
 
-        this.rowsImagesObj = res.rows.map(x => { return { images: x.images } });
+        const i = 0;
+        this.rowsImagesObj = res.rows.map(x => ({ images: x.images }));
+
       });
     });
   }
@@ -121,7 +122,7 @@ export class ProductRegisterComponent implements OnInit {
       color: [null, Validators.required],
       material: [null],
       promotion: [null]
-    })
+    });
   }
 
   loadSubProducts() {
@@ -151,7 +152,7 @@ export class ProductRegisterComponent implements OnInit {
   onSubmit(form: FormGroup) {
     this.createProductModel = form.value;
 
-    if (this.mode == 'Cadastrar') {
+    if (this.mode === 'Cadastrar') {
       this.apiService.create(this.createProductModel).subscribe(res => {
         if (res) {
           alert('Produto Cadastro com Sucesso!');
@@ -161,7 +162,7 @@ export class ProductRegisterComponent implements OnInit {
       });
     }
 
-    if (this.mode == 'Cadastrar Subproduto') {
+    if (this.mode === 'Cadastrar Subproduto') {
       this.createSubProduct(form.value).then((res => {
         this.idSubProduct = res[0].id_subproduct;
 
@@ -197,7 +198,7 @@ export class ProductRegisterComponent implements OnInit {
 
   updateMainProduct(form) {
     this.apiService.update(form.value, this.idMainProduct).subscribe((res) => {
-      if (res) return this.ngOnInit();
+      if (res) { return this.ngOnInit(); }
       return alert('Erro Ao Atualizar Produto');
     });
   }
@@ -218,61 +219,62 @@ export class ProductRegisterComponent implements OnInit {
 
   updateSubProduct(index: number) {
     const control = <FormArray>this.formularioSubProduct.controls['formSubProducts'];
-    let id = control.at(index).value.id;
-    let subProductObj = control.at(index).value;
-
+    const id = control.at(index).value.id;
+    const subProductObj = control.at(index).value;
 
     this.apiService.updateSubProduct(subProductObj, id).subscribe((res => {
       if (res) {
-        this.apiService.updateImages(this.formData, id).subscribe((res) => {
-          if (res) {
+        this.apiService.updateImages(this.formData, id).subscribe((res1) => {
+          if (res1) {
             alert('Variação atualizada com sucesso!');
+            this.formData.delete('key');
+            this.formData.delete('id');
             return this.ngOnInit();
           }
           alert('Erro ao atualizar variação!');
         });
       }
-    }))
+    }));
   }
 
   handleSubProductFile(fileInput: any, index: number) {
     const totalImgInput = fileInput.target.files.length;
     const totalImgs = this.rowsImagesObj[index].images.length;
 
-    if (this.rowsImagesObj[index].images.length >= 5) return alert('Maximo de 5 imagens permitidas!');
-    if (totalImgs + totalImgInput > 5) return alert('Maximo de 5 imagens permitidas!');
+    if (this.rowsImagesObj[index].images.length >= 5) { return alert('Maximo de 5 imagens permitidas!'); }
+    if (totalImgs + totalImgInput > 5) { return alert('Maximo de 5 imagens permitidas!'); }
 
     let arrImageInput = Array<any>();
-    arrImageInput = <any>fileInput.target.files
+    arrImageInput = <any>fileInput.target.files;
 
-    this.asyncForEach(arrImageInput, index)
+    this.asyncForEach(arrImageInput, index);
   }
 
   async asyncForEach(array, index) {
     for (let i = 0; i < array.length; i++) {
-      let reader = new FileReader();
+      const reader = new FileReader();
       await reader.readAsDataURL(array[i]);
 
       this.formData.append('file', array[i]);
       reader.onload = (event: any) => {
         this.rowsImagesObj[index].images.push({ url: event.target.result });
-      }
+      };
     }
   }
 
-  removeFile(subIndex: number, id: string, key: string) {
-    const index: number = this.rowsImagesObj[subIndex]
-    let keys = [];
+  removeFile(i: number, subIndex: number, id: string, key: string) {
+    const index: number = this.rowsImagesObj[i];
+    const keys = [];
 
     if (index !== -1) {
-      let size = this.rowsImagesObj[subIndex].images.splice(index, 1);
+      const size = this.rowsImagesObj[i].images.splice(subIndex, 1);
       size.forEach(x => this.formData.append('key', key), this.formData.append('id', id));
     }
   }
 
   removeSubProduct(index: number) {
     const control = <FormArray>this.formularioSubProduct.controls['formSubProducts'];
-    let id = control.at(index).value.id;
+    const id = control.at(index).value.id;
 
     this.apiService.deleteSubProduct(id).subscribe((res) => {
       if (res) {
@@ -290,7 +292,9 @@ export class ProductRegisterComponent implements OnInit {
     this.formularioSubProduct.get('discount').setValue(this.discount);
     this.promotion = false;
     this.formularioSubProduct.get('promotion').setValue(this.promotion);
-    this.fileInput.nativeElement.value = "";
+    this.fileInput.nativeElement.value = '';
+    this.formData.delete('key');
+    this.formData.delete('id');
   }
 
   handleFileSelect(fileInput: any) {
@@ -319,6 +323,10 @@ export class ProductRegisterComponent implements OnInit {
       this.promotion = false;
       this.formularioSubProduct.get('promotion').setValue(this.promotion);
     }
+  }
+
+  list() {
+    this.router.navigateByUrl('/product_list');
   }
 
 }
