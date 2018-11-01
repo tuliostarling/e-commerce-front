@@ -24,6 +24,8 @@ export class ListOneProductComponent implements OnInit {
   ArrImg = [];
   imgIndex: number;
   changeImgBool = false;
+  installments: number;
+  division: number;
 
   constructor(
     private router: Router,
@@ -53,6 +55,19 @@ export class ListOneProductComponent implements OnInit {
         this.productColor = this.rowsSubProduct.color;
         this.productDescription = this.rowsProduct.description;
         this.productSize = this.rowsSubProduct.size;
+
+        if (this.productPrice >= 80 && this.productPrice < 140) {
+          this.installments = 2;
+          this.division = Math.round(this.productPrice / this.installments);
+        } else if (this.productPrice >= 140 && this.productPrice < 300) {
+          this.installments = 3;
+          this.division = Math.round(this.productPrice / this.installments);
+        } else if (this.productPrice >= 300) {
+          this.installments = 4;
+          this.division = Math.round(this.productPrice / this.installments);
+        } else {
+          this.installments = 1;
+        }
       }
     });
   }

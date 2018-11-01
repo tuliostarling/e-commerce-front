@@ -27,13 +27,9 @@
             </td>
             <td>
               <select (change)="change($event.target)">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
+                <ng-container *ngFor="let j of qtdOpt">
+                  <option value="{{j}}">{{i.qtd}}</option>
+                </ng-container>
               </select>
             </td>
             <td>R$ {{i.price}}</td>
@@ -85,6 +81,18 @@
           <p style="float: right; font-size: 15px">
             <b>R$ {{total}},00</b>
           </p>
+        </div>
+      </div>
+      <hr>
+      <div class="row" style="margin-bottom: -4%">
+        <div class="col-2">
+          <i id="iconCredit" class="fa fa-credit-card fa-2x"></i>
+        </div>
+        <div class="col-10 float-right" style="margin-top: 1%;" *ngIf="installments != 1">
+          <p>R${{total}},00 por {{installments}}x de R${{division}},00</p>
+        </div>
+        <div class="col-10" style="margin-top: 1%" *ngIf="installments == 1">
+          <p>R$ {{total}},00. Pagamento a vista</p>
         </div>
       </div>
 

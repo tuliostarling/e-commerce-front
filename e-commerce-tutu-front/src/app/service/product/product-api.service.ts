@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
 import { ProductModel, RequestProductModel, SubProductModel, SubProductListModel } from '../../model/product/product';
+import { RequestCartModel } from '../../model/cart/cart';
 
 @Injectable()
 export class ProductService {
@@ -73,7 +74,7 @@ export class ProductService {
 
     // cart
     getProductsCart(id: number) {
-        return this.http.get<ProductModel>(`${this.API_URL_CART}loadCart/${id}`);
+        return this.http.get<RequestCartModel>(`${this.API_URL_CART}loadCart/${id}`);
     }
 
     addToCart(dadosForm: any) {
@@ -85,7 +86,7 @@ export class ProductService {
     }
 
     updateAmount(dadosForm: any) {
-        return this.http.post<ProductModel>(`${this.API_URL_CART}increaseAmount/`, dadosForm);
+        return this.http.post<RequestCartModel>(`${this.API_URL_CART}increaseAmount/`, dadosForm);
     }
 
     // wishlist

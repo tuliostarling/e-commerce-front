@@ -58,3 +58,10 @@ li > a {
 #accSubProduct {
     margin: 2%;
 }
+
+#imgSubProduct {
+    width: 120px;
+    height: 120px;
+    max-width: 120px;
+    max-height: 120px;
+}

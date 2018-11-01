@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../service';
+import { CartModel } from '../../../model/cart/cart';
 
 @Component({
   selector: 'app-cart',
@@ -11,14 +12,18 @@ export class CartComponent implements OnInit {
 
   idCart: number;
   idItem: number;
-  cartRows: any;
+  cartRows: Array<CartModel>;
   decodedToken: any;
   selectValue: number;
   finalValue: number;
+  qtdOpt = [];
+  optSelected = [];
   qtdItens = [];
   freight: number;
   total: number;
   sumQtdItems: number;
+  installments: number;
+  division: number;
 
   constructor(
     private router: Router,
@@ -39,8 +44,9 @@ export class CartComponent implements OnInit {
   getProducts() {
     this.apiService.getProductsCart(this.idCart).subscribe(res => {
       if (res != null) {
-        this.cartRows = res[0];
-        this.finalValue = res[1].finalValue;
+        this.cartRows = res.rows;
+        this.finalValue = res.pricesObj.finalValue;
+        this.qtdOpt = res.qtdOptions;
 
         this.idItem = this.cartRows[0].id_item;
         this.freight = 20;
@@ -51,6 +57,22 @@ export class CartComponent implements OnInit {
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
         this.total = this.finalValue + this.freight;
+
+        if (this.total >= 80 && this.total < 140) {
+          this.installments = 2;
+          this.division = Math.round(this.total / this.installments);
+        } else if (this.total >= 140 && this.total < 300) {
+          this.installments = 3;
+          this.division = Math.round(this.total / this.installments);
+        } else if (this.total >= 300) {
+          this.installments = 4;
+          this.division = Math.round(this.total / this.installments);
+        } else {
+          this.installments = 1;
+        }
+
+        // const toot = this.cartRows.map(x => x.qtd).reduce((acc, curr) => acc += curr - 1, 0);
+        // console.log(toot);
       }
     });
   }

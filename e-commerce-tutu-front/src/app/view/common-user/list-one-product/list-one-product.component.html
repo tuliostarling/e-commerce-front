@@ -53,8 +53,11 @@
             <div class="col-1">
               <i id="iconCredit" class="fa fa-credit-card fa-2x"></i>
             </div>
-            <div class="col-11" style="margin-top: 1%">
-              <p>R$ 150,00 em até 2x de R$ 75,00 s/ juros</p>
+            <div class="col-11" style="margin-top: 1%" *ngIf="installments != 1">
+              <p>R$ {{productPrice}},00 em até {{installments}}x de R$ {{division}},00</p>
+            </div>
+            <div class="col-11" style="margin-top: 1%" *ngIf="installments == 1">
+              <p>R$ {{productPrice}},00. Pagamento a vista</p>
             </div>
           </div>
         </div>
@@ -193,18 +196,18 @@
   </div>
 
   <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="modal-title">O que deseja fazer em seguida?</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+    <div class="modal-header">
+      <h4 class="modal-title">O que deseja fazer em seguida?</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
-        <div class="modal-body">
-            <button type="button" class="btn btn-primary float-right" (click)="cart(); c('Close click')">Finalizar compra</button>
-            <button type="button" class="btn btn-success" (click)="productList(); c('Close click')">Continuar comprando</button>
-        </div>
+    <div class="modal-body">
+      <button type="button" class="btn btn-primary float-right" (click)="cart(); c('Close click')">Finalizar compra</button>
+      <button type="button" class="btn btn-success" (click)="productList(); c('Close click')">Continuar comprando</button>
+    </div>
 
-    </ng-template>
+  </ng-template>
 
 </div>

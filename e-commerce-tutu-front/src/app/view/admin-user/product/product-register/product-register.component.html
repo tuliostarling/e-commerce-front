@@ -252,7 +252,7 @@
                             <tr>
                               <div *ngFor="let file of currentImageNode(i);let j=index;">
                                 <td>
-                                  <img class="form-control" alt="" [src]="file.url">
+                                  <img class="form-control" id="imgSubProduct" alt="" [src]="file.url">
                                 </td>
                                 <td>
                                   <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,j,file.id,file.key)">
