@@ -91,7 +91,8 @@ export class ProductRegisterComponent implements OnInit {
 
   // Gambs haven't sleep for 28 hours gimme a break
   currentImageNode(i) {
-    return this.rowsImagesObj[i].images;
+    if (this.rowsImagesObj[i] != undefined) return this.rowsImagesObj[i].images;
+    else return null;
   }
 
   getProduct() {
@@ -100,13 +101,10 @@ export class ProductRegisterComponent implements OnInit {
       this.rowsProduct = data;
       this.loadForm(this.rowsProduct, this.formulario);
 
-      this.apiService.getAllSubProducts(this.rowsProduct[0].id).subscribe((res) => {
+      this.apiService.getAllSubProducts(this.idMainProduct).subscribe((res) => {
         if (res) { this.rowsSubProducts = res.rows; }
         this.loadSubProducts();
-
-        const i = 0;
-        this.rowsImagesObj = res.rows.map(x => ({ images: x.images }));
-
+        this.rowsImagesObj = res.images.map(x => ({ images: x.images }));
       });
     });
   }
@@ -224,24 +222,33 @@ export class ProductRegisterComponent implements OnInit {
 
     this.apiService.updateSubProduct(subProductObj, id).subscribe((res => {
       if (res) {
-        this.apiService.updateImages(this.formData, id).subscribe((res1) => {
-          if (res1) {
-            alert('Variação atualizada com sucesso!');
-            this.formData.delete('key');
-            this.formData.delete('id');
-            return this.ngOnInit();
-          }
-          alert('Erro ao atualizar variação!');
-        });
+
+        if (this.formData.get('key') == null && this.formData.get('id') == null && this.formData.get('file') != null) {
+          this.apiService.addImage(this.formData, id).subscribe((data) => {
+            if (data) return alert('Variação atualizada com sucesso!');
+          });
+
+        } else {
+          this.apiService.updateImages(this.formData, id).subscribe((res1) => {
+            if (res1) {
+              alert('Variação atualizada com sucesso!');
+              this.formData.delete('key');
+              this.formData.delete('id');
+              return this.ngOnInit();
+            }
+            alert('Erro ao atualizar variação!');
+          });
+        }
       }
     }));
   }
 
   handleSubProductFile(fileInput: any, index: number) {
-    const totalImgInput = fileInput.target.files.length;
-    const totalImgs = this.rowsImagesObj[index].images.length;
+    let totalImgInput = fileInput.target.files.length;
+    let totalImgs;
 
-    if (this.rowsImagesObj[index].images.length >= 5) { return alert('Maximo de 5 imagens permitidas!'); }
+    if (index > 0) totalImgs = this.rowsImagesObj[index].images.length;
+    if (totalImgInput.length >= 5) { return alert('Maximo de 5 imagens permitidas!'); }
     if (totalImgs + totalImgInput > 5) { return alert('Maximo de 5 imagens permitidas!'); }
 
     let arrImageInput = Array<any>();
@@ -257,14 +264,13 @@ export class ProductRegisterComponent implements OnInit {
 
       this.formData.append('file', array[i]);
       reader.onload = (event: any) => {
-        this.rowsImagesObj[index].images.push({ url: event.target.result });
+        if (index > 0) this.rowsImagesObj[index].images.push({ url: event.target.result });
       };
     }
   }
 
   removeFile(i: number, subIndex: number, id: string, key: string) {
     const index: number = this.rowsImagesObj[i];
-    const keys = [];
 
     if (index !== -1) {
       const size = this.rowsImagesObj[i].images.splice(subIndex, 1);

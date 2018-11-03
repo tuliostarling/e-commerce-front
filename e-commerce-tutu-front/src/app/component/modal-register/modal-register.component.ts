@@ -19,10 +19,8 @@ import { UserCreateModel } from '../../model/user/userCreate';
   styleUrls: ['./modal-register.component.css']
 })
 export class ModalRegisterComponent implements OnInit {
-  @Input() classes: string;
 
-  // @ViewChild('modalBtn') modalBtn: ElementRef;
-
+  modalReference: any;
   formulario: FormGroup;
   createUserModel: UserCreateModel;
   closeModal: string;
@@ -43,7 +41,7 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   openModal(content) {
-    this.modalService.open(content, { centered: true });
+    this.modalReference = this.modalService.open(content, { centered: true });
   }
 
   onSubmit(form) {
@@ -54,8 +52,8 @@ export class ModalRegisterComponent implements OnInit {
         if (res == null) {
           return alert('Erro ao cadastrar');
         } else {
-          // (this.modalBtn.nativeElement).modal('hide');
-          return alert('Usuário cadastrado com sucesso!');
+          this.modalReference.close();
+          return alert('Usuário cadastrado, link de confirmação enviado para seu email!');
         }
       });
   }

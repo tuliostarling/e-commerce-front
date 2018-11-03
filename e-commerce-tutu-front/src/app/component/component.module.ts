@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header/header.component';
 import { ModalLoginComponent } from './modal-login/modal-login.component';
 import { FooterComponent } from './footer/footer.component';
 import { ModalRegisterComponent } from './modal-register/modal-register.component';
+import { ConfirmRegisterComponent } from './confirm-register/confirm-register.component';
 
 @NgModule({
   imports: [
@@ -19,13 +20,15 @@ import { ModalRegisterComponent } from './modal-register/modal-register.componen
     HeaderComponent,
     ModalLoginComponent,
     FooterComponent,
-    ModalRegisterComponent
+    ModalRegisterComponent,
+    ConfirmRegisterComponent
   ],
   exports: [
     HeaderComponent,
     ModalLoginComponent,
     FooterComponent,
-    ModalRegisterComponent
+    ModalRegisterComponent,
+    ConfirmRegisterComponent
   ]
 })
 export class ComponentModule { }

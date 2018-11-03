@@ -20,6 +20,7 @@ import { ListOneProductComponent } from './view/common-user/list-one-product/lis
 import { UserProfileComponent } from './view/common-user/user-profile/user-profile.component';
 import { WishListComponent } from './view/common-user/wish-list/wish-list.component';
 import { PromotionsComponent } from './view/common-user/promotions/promotions.component';
+import { ConfirmRegisterComponent } from './component/confirm-register/confirm-register.component';
 
 
 export const ROUTES: Routes = [
@@ -42,4 +43,5 @@ export const ROUTES: Routes = [
     { path: 'profile/:id', component: UserProfileComponent },
     { path: 'wish_list', component: WishListComponent },
     { path: 'promotions/:page', component: PromotionsComponent },
+    { path: 'confirm/:hex', component: ConfirmRegisterComponent }
 ];

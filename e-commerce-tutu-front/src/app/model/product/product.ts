@@ -3,7 +3,6 @@ export interface ProductModel {
     id_category: number;
     name: string;
     description: string;
-
     subProduct: Array<SubProductModel>;
 }
 
@@ -28,6 +27,7 @@ export interface SubProductModel {
 
 export interface SubProductListModel {
     rows: Array<SubProductModel>;
+    images: Array<any>;
 }
 
 
