@@ -1,15 +1,21 @@
-FROM node:10-alpine
+FROM node:10 as build
 
-ENV HOME='/usr/src/app'
+ARG configuration=production
 
-EXPOSE 4200
+WORKDIR /usr/src/app
 
+COPY ./nginx.conf /nginx.conf
+COPY  package*.json /usr/src/app
 
-WORKDIR $HOME
-COPY ./ $HOME
+RUN npm install
 
-RUN npm install -g @angular/cli \ 
- && npm install \
- && npm rebuild
+COPY ./ /usr/src/app
 
-CMD ["ng serve"]
+RUN npm run build -- --output-path=./dist/out --configuration $configuration
+
+FROM nginx:1.15
+
+COPY --from=build /app/dist/out/ /usr/share/nginx/html
+
+COPY --from=build /nginx.conf /etc/nginx/conf.d/default.conf
+

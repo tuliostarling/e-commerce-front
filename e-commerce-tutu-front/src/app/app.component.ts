@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,8 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   title = 'app';
-
   urlCheck = true;
+  production = environment.production;
 
   constructor(router: Router) {
     router.events.subscribe((e) => {
