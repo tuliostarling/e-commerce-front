@@ -80,7 +80,8 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     localStorage.clear();
-    location.reload();
+    this.reload();
+    this.home();
   }
 
   reload() {

@@ -19,6 +19,7 @@ import { UserCreateModel } from '../../model/user/userCreate';
   styleUrls: ['./modal-register.component.css']
 })
 export class ModalRegisterComponent implements OnInit {
+  @Input() classes: string;
 
   modalReference: any;
   formulario: FormGroup;
