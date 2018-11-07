@@ -70,6 +70,8 @@ export class ProductCategoryListComponent implements OnInit {
   }
 
   getProducts() {
+    this.rowsProduct = [];
+
     this.apiService.getAllByCategory(this.idCategory, this.page).subscribe(res => {
       if (res != null) {
         this.rowsProduct = res.rows;

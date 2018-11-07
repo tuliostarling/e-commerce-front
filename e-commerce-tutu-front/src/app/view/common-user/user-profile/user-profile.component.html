@@ -3,13 +3,13 @@
   <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" *ngIf="update == true"
     id="form">
     <div class="form-row">
-      <div class="col-md-6 mb-3">
+      <div class="col-sm-12 col-md-6 mb-3">
         <div class="form-group">
           <label for="name">Nome</label>
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nome" value="{{name}}" required>
         </div>
       </div>
-      <div class="col-md-6 mb-3">
+      <div class="col-sm-12 col-md-6 mb-3">
         <div class="form-group">
           <label for="email">Email</label>
           <div class="input-group">
@@ -28,12 +28,12 @@
 
   <ng-container *ngIf="update == false">
     <div class="row" id="form">
-      <div class="col-md-3 mb-3">
+      <div class="col-sm-12 col-md-3 mb-3">
         <h5>Nome</h5>
         <p style="margin-top:1%">{{name}}</p>
       </div>
 
-      <div class="col-md-5 mb-3">
+      <div class="col-sm-12 col-md-5 mb-3">
         <h5>Email</h5>
         <div class="input-group">
           <div class="input-group-prepend">
@@ -44,10 +44,10 @@
         </div>
       </div>
 
-      <div class="col-md-2 mb-3" style="margin-top: 2.8%;">
+      <div class="col-sm-12 col-md-2 mb-3" style="margin-top: 2.8%;">
         <button class="btn btn-primary" type="button" (click)="clickUpdate()">Atualizar meus dados</button>
       </div>
-      <div class="col-md-2 mb-3" style="margin-top: 3.3%">
+      <div class="col-sm-12 col-md-2 mb-3" style="margin-top: 3.3%">
         <a id="forgot_pass">Esqueci minha senha</a>
       </div>
     </div>

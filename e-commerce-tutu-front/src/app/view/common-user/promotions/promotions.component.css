@@ -115,3 +115,7 @@ background: 'linear-gradient(rgba(255,0,0,0.5),rgba(255,0,0,0.5))'
     color: #FE980F;
     font-size: 50px;
   }
+
+  #container {
+      margin-top: 0.8%
+  }

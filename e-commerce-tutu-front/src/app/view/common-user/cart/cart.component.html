@@ -27,8 +27,8 @@
             </td>
             <td>
               <select (change)="change($event.target)">
-                <ng-container *ngFor="let j of qtdOpt">
-                  <option value="{{j}}">{{i.qtd}}</option>
+                <ng-container >
+                  <option *ngFor="let j of arr;let i = index" [selected]="j === defaultPosition" value="{{j}}">{{j}}</option>
                 </ng-container>
               </select>
             </td>

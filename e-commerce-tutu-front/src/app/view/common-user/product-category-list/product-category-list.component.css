@@ -1,8 +1,5 @@
 * {
     list-style: none;
-    text-decoration: none;
-    letter-spacing: 1px;
-    box-sizing: border-box;
 }
 .block {
     margin: 35px;
@@ -118,4 +115,8 @@ img {
 
 .middle:hover, .bottom:hover {
   cursor:pointer;
+}
+
+#container {
+  margin-top: 0.8%
 }

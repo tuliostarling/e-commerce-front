@@ -25,6 +25,8 @@ export class CartComponent implements OnInit {
   installments: number;
   division: number;
 
+  arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  defaultPosition: number;
   constructor(
     private router: Router,
     private apiService: ProductService
@@ -47,6 +49,12 @@ export class CartComponent implements OnInit {
         this.cartRows = res.rows;
         this.finalValue = res.pricesObj.finalValue;
         this.qtdOpt = res.qtdOptions;
+
+        for (let i = 0; i < this.arr.length; i++) {
+          if (this.cartRows[0].qtd === this.arr[i]) {
+            this.defaultPosition = this.arr[i];
+          }
+        }
 
         this.idItem = this.cartRows[0].id_item;
         this.freight = 20;

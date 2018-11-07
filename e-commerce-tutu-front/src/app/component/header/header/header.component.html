@@ -1,11 +1,11 @@
 <div class='container'>
   <header class="blog-header py-3">
     <div class="row flex justify-content-between align-items-center">
-      <div class="col-sm-6 pt-1">
+      <div class="col-md-6 col-sm-12 pt-1">
         <!--img class="logo" src='../../../../assets/images/logoTutuGuerra.jpeg' href="javascript:void(0);" (click)="home()"-->
         <img class="logo" src='../../../../assets/images/project_1507733529688.png' href="javascript:void(0);" (click)="home()">
       </div>
-      <div class="col-sm-6 d-flex justify-content-end align-items-center">
+      <div class="col-md-6 col-sm-12 d-flex justify-content-end align-items-center" id="buttons-header">
         <a class="text-muted" href="#">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round" class="mx-3">
@@ -15,7 +15,9 @@
         </a>
 
         <ng-container *ngIf="logged == true && admin == true">
-          <a class="btn btn-sm btn-outline-secondary" href="javascript:void(0);" (click)="cart()" style="margin-right: 2%"><i class="fa fa-shopping-bag" aria-hidden="true"></i></a>
+          <a class="btn btn-sm btn-outline-secondary" href="javascript:void(0);" (click)="cart()" style="margin-right: 2%">
+            <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+          </a>
 
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
@@ -32,7 +34,9 @@
         </ng-container>
 
         <ng-container *ngIf="logged == true && admin == false">
-          <a class="btn btn-sm btn-outline-secondary" style="margin-right: 2%" href="javascript:void(0);" (click)="cart()"><i class="fa fa-shopping-basket" aria-hidden="true"></i></a>
+          <a class="btn btn-sm btn-outline-secondary" style="margin-right: 2%" href="javascript:void(0);" (click)="cart()">
+            <i class="fa fa-shopping-basket" aria-hidden="true"></i>
+          </a>
 
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-sm btn-outline" id="dropdown-btn" ngbDropdownToggle>Olá, {{ userNameDecoded }}</button>
@@ -52,14 +56,27 @@
     </div>
   </header>
   <hr>
-  <div class="nav-scroller py-1 mb-2">
-    <nav class="nav d-flex justify-content-between">
-      <ng-container *ngFor="let i of newCategoryList">
-        <a id="btn_nav" class="p-2" href="javascript:void(0);" (click)="categoryListLoad(i.id)">{{ i.category }}</a>
-      </ng-container>
-      <a id="btn_nav" class="p-2" href="javascript:void(0)" (click)="promotions()">Promoções</a>
-      <a id="btn_nav" class="p-2" href="#">Sobre</a>
-      <a id="btn_nav" class="p-2" href="#">Contate-nos</a>
-    </nav>
-  </div>
+
+  <nav class="navbar navbar-expand-lg bg-default ">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <i id="icon-header" class="fa fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item px-5" *ngFor="let i of newCategoryList">
+          <a id="btn_nav" class="nav-link" href="javascript:void(0);" (click)="categoryListLoad(i.id)">{{ i.category }}</a>
+        </li>
+        <li class="nav-item px-5">
+            <a id="btn_nav" class="nav-link" href="javascript:void(0)" (click)="promotions()">Promoções</a>
+        </li>
+        <li class="nav-item px-5 float-right">
+          <a id="btn_nav" class="nav-link" href="#">Sobre</a>
+        </li>
+        <li class="nav-item px-5 float-right">
+            <a id="btn_nav" class="nav-link" href="#">Contato</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>

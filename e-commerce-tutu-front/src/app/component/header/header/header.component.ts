@@ -93,7 +93,6 @@ export class HeaderComponent implements OnInit {
 
   categoryListLoad(category_id: number) {
     this.router.navigateByUrl('/category_list/' + category_id + '/0');
-    this.reload();
   }
 
   registerCategory() {
