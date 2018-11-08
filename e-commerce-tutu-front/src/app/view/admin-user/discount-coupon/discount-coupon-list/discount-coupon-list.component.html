@@ -33,4 +33,41 @@
     </table>
   </div>
 
+  <nav aria-label="navigation">
+      <ul class="pagination justify-content-center">
+        <li *ngIf="this.page == 0" class="page-item disabled">
+          <a class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Anterior</span>
+          </a>
+        </li>
+        <li *ngIf="this.page != 0" class="page-item">
+          <a class="page-link" (click)="btnClickPrevious()" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Anterior</span>
+          </a>
+        </li>
+        <ng-container *ngFor="let i of arrLink">
+          <li *ngIf="this.page == i.value" class="page-item active">
+            <a class="page-link" (click)="changePage(i.value)">{{i.num}}</a>
+          </li>
+          <li *ngIf="this.page != i.value" class="page-item">
+            <a class="page-link" (click)="changePage(i.value)">{{i.num}}</a>
+          </li>
+        </ng-container>
+        <li *ngIf="this.page != this.lastItenArr" class="page-item">
+          <a class="page-link" (click)="btnClickNext()" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Próximo</span>
+          </a>
+        </li>
+        <li *ngIf="this.page == this.lastItenArr" class="page-item disabled">
+          <a class="page-link" (click)="btnClickNext()" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Próximo</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
 </div>

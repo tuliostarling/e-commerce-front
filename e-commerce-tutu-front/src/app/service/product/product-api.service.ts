@@ -16,8 +16,8 @@ export class ProductService {
         private http: HttpClient
     ) { }
 
-    getAll() {
-        return this.http.get<ProductModel>(`${this.API_URL}listall/Products`);
+    getAll(page: number) {
+        return this.http.get<RequestProductModel>(`${this.API_URL}listall/Products/${page}`);
     }
 
     getOne(id: number) {

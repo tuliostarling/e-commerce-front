@@ -101,11 +101,11 @@ export class HeaderComponent implements OnInit {
   }
 
   registerCoupon() {
-    this.router.navigateByUrl('/coupon_list');
+    this.router.navigateByUrl('/coupon_list/0' );
   }
 
   registerProduct() {
-    this.router.navigateByUrl('/product_list');
+    this.router.navigateByUrl('/product_list/0');
   }
 
   cart() {
