@@ -1,14 +1,12 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-5">
+    <div class="col-5" *ngIf="ArrImg.length > 0">
       <div class="images" *ngIf="changeImgBool == false">
-        <img id="img-product" src="{{ArrImg[0].img}}" class="img-fluid" style="margin-left: 22%; margin-top: 15%; width: 250px; height: 250px;"
-        />
+        <img id="img-product" src="{{ArrImg[0].img}}" class="img-fluid" style="margin-left: 22%; margin-top: 15%; width: 250px; height: 250px;" />
       </div>
       <div class="images" *ngIf="changeImgBool == true">
-        <img id="img-product" src="{{ArrImg[imgIndex].img}}" class="img-fluid" style="margin-left: 22%; margin-top: 15%; width: 250px; height: 250px;"
-        />
+        <img id="img-product" src="{{ArrImg[imgIndex].img}}" class="img-fluid" style="margin-left: 22%; margin-top: 15%; width: 250px; height: 250px;" />
       </div>
       <ng-container *ngFor="let i of ArrImg">
         <img id="imgThumb" src="{{i.img}}" class="rounded float-left" alt="product" (click)="changeImg(i.index)">
@@ -168,28 +166,39 @@
             </div>
           </div>
           <div class="col-3" style="text-align: right">
-            <button class="btn btn-primary">Avaliar</button>
+            <button class="btn btn-primary" (click)="showBox();">Avaliar</button>
           </div>
         </div>
 
         <hr style="margin-top: 1%; margin-bottom: 3%">
 
         <div class="row">
-          <div class="col-6" style="margin-top: 1%;">
-            <h5>
-              Muito bom
-            </h5>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i>
-            <p>Produto de muita qualidade!</p>
-          </div>
-          <div class="col-6" style="text-align: right; margin-top: 1%;">
-            <p>01/08/2018</p>
+          <div class="container" *ngIf='showCommentBox === true'>
+            <form role="form" [formGroup]="formulario" #form="ngForm" (ngSubmit)="onSubmit(formulario)">
+              <div class="form-group">
+                <label for="comment">Avaliação</label>
+                <textarea class="form-control" id="comment" formControlName="comment" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
           </div>
         </div>
+
+        <div class="rows" *ngFor='let i of rowsComment'>
+          <div id="commentBox" class="rows col-1" style="margin-top: 1%;">
+            <h5>{{i.name}}</h5>
+            <div class="col-3" style="margin-top: 0.3%">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+            </div>
+            <p style="text-align:right">{{i.created_at | date: "dd/MM/yyyy"}}</p>
+          </div>
+          <p>{{i.comment}}</p>
+        </div>
+
 
       </div>
     </div>

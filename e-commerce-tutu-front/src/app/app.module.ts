@@ -9,6 +9,7 @@ import { UserApiService } from './service';
 import { CategoryService } from './service/category/category-api.service';
 import { CouponService } from './service/discount-coupon/coupon-api.service';
 import { ProductService } from './service/product/product-api.service';
+import { CommentService } from './service/comment/comment-api.service';
 
 import { ViewModule } from './view/view.module';
 import { ComponentModule } from './component/component.module';
@@ -30,7 +31,7 @@ import { CountdownTimerModule } from 'ngx-countdown-timer';
     ComponentModule,
     CountdownTimerModule
   ],
-  providers: [UserApiService, HttpClientModule, CategoryService, CouponService, ProductService],
+  providers: [UserApiService, HttpClientModule, CategoryService, CouponService, ProductService, CommentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
