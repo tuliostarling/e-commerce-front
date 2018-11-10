@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { ProductModel, RequestProductModel, SubProductModel, SubProductListModel } from '../../model/product/product';
+import { ProductModel, RequestProductModel, SubProductModel, RequestSubProductModel } from '../../model/product/product';
 import { RequestCartModel } from '../../model/cart/cart';
 
 @Injectable()
@@ -36,8 +36,8 @@ export class ProductService {
         return this.http.get<ProductModel>(`${this.API_URL}listoneMain/${id}`);
     }
 
-    getAllSubProducts(id: number) {
-        return this.http.get<SubProductListModel>(`${this.API_URL}listall/SubProducts/${id}`);
+    getAllSubProducts(id: number, page: number) {
+        return this.http.get<RequestSubProductModel>(`${this.API_URL}listall/SubProducts/${id}/${page}`);
     }
 
     create(dadosForm: ProductModel) {

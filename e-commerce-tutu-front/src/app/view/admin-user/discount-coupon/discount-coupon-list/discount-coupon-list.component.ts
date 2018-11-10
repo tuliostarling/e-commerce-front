@@ -26,9 +26,12 @@ export class DiscountCouponListComponent implements OnInit {
   totalCoupons: number;
 
   ngOnInit() {
-    this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
+    this.acRoute.url
+      .subscribe(_ => {
+        this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
-    this.getListAll();
+        this.getListAll();
+      });
   }
 
   getListAll() {

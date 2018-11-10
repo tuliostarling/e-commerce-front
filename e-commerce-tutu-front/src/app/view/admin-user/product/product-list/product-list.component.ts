@@ -32,21 +32,23 @@ export class ProductListComponent implements OnInit {
   }
 
   getProducts() {
-    this.apiService.getAll(this.page).subscribe((res) => {
-      this.rowsProducts = res.rows;
-      this.totalProducts = res.total[0].count;
+    this.acRoute.url
+      .subscribe(_ => {
+        this.apiService.getAll(this.page).subscribe((res) => {
+          this.rowsProducts = res.rows;
+          this.totalProducts = res.total[0].count;
 
-      this.makeArrNavLinks();
-    });
-
+          this.makeArrNavLinks();
+        });
+      });
   }
 
   navToRegsProd() {
-    this.router.navigateByUrl('product_register');
+    this.router.navigateByUrl('product_register/new');
   }
 
   editProduct(id: number) {
-    this.router.navigateByUrl('product_register/' + id);
+    this.router.navigateByUrl(`product_register/${id}/0`);
   }
 
   // Criar Modal de confirmação paara deletar.

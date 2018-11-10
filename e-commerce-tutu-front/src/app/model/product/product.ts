@@ -25,7 +25,8 @@ export interface SubProductModel {
     images: Array<object>;
 }
 
-export interface SubProductListModel {
+export interface RequestSubProductModel {
+    total: number;
     rows: Array<SubProductModel>;
     images: Array<any>;
 }

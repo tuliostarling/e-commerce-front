@@ -44,6 +44,10 @@ export class PromotionsComponent implements OnInit {
     });
   }
 
+  listProduct(id: number) {
+    this.router.navigateByUrl(`product/${id}`);
+  }
+
   makeArrNavLinks() {
     this.navLinks = this.totalSubProducts / 16;
 

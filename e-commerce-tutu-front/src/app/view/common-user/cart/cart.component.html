@@ -1,11 +1,11 @@
 <div class="container">
   <div class="content" style="margin-top: 2%">
-    <p>Carrinho</p>
-    <hr style="border-bottom-width: 50px;">
+    <p id="title">Carrinho</p>
+    <hr id="line">
   </div>
 
   <div class="row" style="margin-top: 5%; margin-bottom: 2%">
-    <div class="col-8">
+    <div class="col-sm-12 col-md-8">
       <table class="table">
         <thead>
           <tr>
@@ -27,7 +27,7 @@
             </td>
             <td>
               <select (change)="change($event.target)">
-                <ng-container >
+                <ng-container>
                   <option *ngFor="let j of arr;let i = index" [selected]="j === defaultPosition" value="{{j}}">{{j}}</option>
                 </ng-container>
               </select>
@@ -42,21 +42,31 @@
         </tbody>
       </table>
 
-      <form class="form-inline">
-        <div class="form-group" style="width: 30%">
-          <label style="color: #949494; font-size: 15px" for="cep">Calcule frete e prazo</label>
-          <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP">
+
+      <div class="row">
+        <div class="col-sm-12">
+          <form class="form-inline">
+            <div class="col-xs-6 col-sm-6 col-md-4" id="inputLabelCEP">
+              <div class="form-group">
+                <label id="labelCEP" for="cep">Calcule frete e prazo: </label>
+                <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP">
+              </div>
+            </div>
+            <div class="col-sm-2 col-md-2" id="btnCEP">
+              <button type="submit" class="btn btn-success">OK</button>
+            </div>
+          </form>
         </div>
-        <button type="submit" class="btn btn-success" style="margin-top: 3%">OK</button>
-      </form>
+      </div>
+
 
     </div>
-    <div class="col-4" style="background-color:#f7f7f7">
+    <div class="col-sm-12 col-md-4" style="background-color:#f7f7f7">
       <h5 style="margin-top:5%">Resumo do pedido</h5>
 
       <div class="row" style="margin-top: 5%">
         <div class="col-6">
-          <p style="color: #949494; font-size: 15px">Subtotal ({{sumQtdItems}} produto(s))</p>
+          <p id="subtotalText">Subtotal ({{sumQtdItems}} produto(s))</p>
         </div>
         <div class="col-6">
           <p style="float: right; color: #949494; font-size: 15px">R$ {{finalValue}},00</p>

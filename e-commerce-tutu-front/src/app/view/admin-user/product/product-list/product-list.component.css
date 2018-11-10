@@ -25,3 +25,28 @@ td > .btn {
     text-align: center;
     color: #FE980F;
 }
+
+table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+table td {
+    width: 30em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+@media only screen and (max-width: 768px) {
+    table {
+        table-layout: fixed;
+        width: 190%;
+    }
+    
+    table td {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}

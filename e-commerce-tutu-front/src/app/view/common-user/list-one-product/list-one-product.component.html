@@ -1,7 +1,7 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-5" *ngIf="ArrImg.length > 0">
+    <div class="col-sm-12 col-md-5" *ngIf="ArrImg.length > 0">
       <div class="images" *ngIf="changeImgBool == false">
         <img id="img-product" src="{{ArrImg[0].img}}" class="img-fluid" style="margin-left: 22%; margin-top: 15%; width: 250px; height: 250px;" />
       </div>
@@ -13,7 +13,7 @@
       </ng-container>
     </div>
 
-    <div class="col-7">
+    <div class="col-sm-12 col-md-7">
       <div class="content">
         <div class="buy">
           <div class="row">
@@ -48,14 +48,14 @@
           <hr style="margin-top: 5%">
 
           <div class="row" style="margin-bottom: -4%">
-            <div class="col-1">
+            <div class="col-2">
               <i id="iconCredit" class="fa fa-credit-card fa-2x"></i>
             </div>
-            <div class="col-11" style="margin-top: 1%" *ngIf="installments != 1">
-              <p>R$ {{productPrice}},00 em até {{installments}}x de R$ {{division}},00</p>
+            <div class="col-10" id="price" *ngIf="installments != 1">
+              <p id="price-text">R$ {{productPrice}},00 em até {{installments}}x de R$ {{division}},00</p>
             </div>
-            <div class="col-11" style="margin-top: 1%" *ngIf="installments == 1">
-              <p>R$ {{productPrice}},00. Pagamento a vista</p>
+            <div class="col-10" id="price" *ngIf="installments == 1">
+              <p id="price-text">R$ {{productPrice}},00. Pagamento a vista</p>
             </div>
           </div>
         </div>
@@ -138,24 +138,24 @@
       <div id="aval" class="aval">
         <div class="row">
           <div class="col-12">
-            <h4>Avaliações</h4>
+            <h4 style="margin-top: 3%">Avaliações</h4>
           </div>
         </div>
 
         <hr>
 
         <div class="row" style="margin-top: 3%">
-          <div class="col-1" style="text-align:right">
+          <div class="col-sm-1 col-md-1" id="aval">
             <h4>4.0</h4>
           </div>
-          <div class="col-3" style="margin-top: 0.3%">
+          <div class="col-sm-3 col-md-3" style="margin-top: 0.3%" id="stars">
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
             <i class="fa fa-star-o"></i> (1)
           </div>
-          <div class="col-5">
+          <div class="col-sm-5 col-md-5" id="drop-down">
             <div class="form-group">
               <select class="form-control">
                 <option selected>Avaliações mais recentes</option>
@@ -165,8 +165,8 @@
               </select>
             </div>
           </div>
-          <div class="col-3" style="text-align: right">
-            <button class="btn btn-primary" (click)="showBox();">Avaliar</button>
+          <div class="col-sm-3 col-md-3" id="btn-aval" style="text-align: right">
+            <button *ngIf='showCommentBox === false' class="btn btn-primary" (click)="showBox();">Avaliar</button>
           </div>
         </div>
 
@@ -179,7 +179,8 @@
                 <label for="comment">Avaliação</label>
                 <textarea class="form-control" id="comment" formControlName="comment" rows="3"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Enviar</button>
+              <button class="btn btn-danger float-right" (click)="showBox(); form.reset()" style="margin-left: 1%">Cancelar</button>
+              <button type="submit" class="btn btn-success float-right">Enviar</button>
             </form>
           </div>
         </div>
@@ -214,7 +215,7 @@
 
     <div class="modal-body">
       <button type="button" class="btn btn-primary float-right" (click)="cart(); c('Close click')">Finalizar compra</button>
-      <button type="button" class="btn btn-success" (click)="productList(); c('Close click')">Continuar comprando</button>
+      <button type="button" class="btn btn-success" (click)="c('Close click')">Continuar comprando</button>
     </div>
 
   </ng-template>

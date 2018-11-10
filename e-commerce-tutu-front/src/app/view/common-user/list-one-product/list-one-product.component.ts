@@ -35,7 +35,7 @@ export class ListOneProductComponent implements OnInit {
   ratingStar: number;
   commentForm: CommentModel;
   formulario: FormGroup;
-  showCommentBox: boolean;
+  showCommentBox = false;
   decodedToken: any;
 
   constructor(
@@ -69,7 +69,7 @@ export class ListOneProductComponent implements OnInit {
 
         for (const i of Object.keys(this.rowsSubProduct.location_aws)) {
           this.ArrImg.push({ index: i, img: this.rowsSubProduct.location_aws[i] });
-          //console.log(this.ArrImg);
+          // console.log(this.ArrImg);
         }
 
         this.productName = this.rowsProduct.name;
@@ -96,7 +96,7 @@ export class ListOneProductComponent implements OnInit {
 
   getComments() {
     this.commentService.getList(this.idProduct).subscribe((res) => {
-      if (res) this.rowsComment = res;
+      if (res) { this.rowsComment = res; }
       console.log(this.rowsComment);
     });
   }
@@ -109,8 +109,9 @@ export class ListOneProductComponent implements OnInit {
     this.formulario.get('rating').setValue(3);
     this.commentForm = form.value;
     this.commentService.create(this.commentForm).subscribe((res) => {
-      if (res) return alert('Comentario inserido com sucesso');
-      else return alert('Erro ao inserir comentario');
+      if (res) {
+        return alert('Comentario inserido com sucesso');
+      } else { return alert('Erro ao inserir comentario'); }
     });
   }
 
@@ -136,8 +137,7 @@ export class ListOneProductComponent implements OnInit {
   showBox() {
     if (this.showCommentBox === true) {
       this.showCommentBox = false;
-    }
-    else this.showCommentBox = true;
+    } else { this.showCommentBox = true; }
   }
 
   cart() {

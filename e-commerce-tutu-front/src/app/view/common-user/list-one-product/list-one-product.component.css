@@ -62,10 +62,25 @@ a:hover {
     cursor:pointer;  
 }
 
-#img-product {
-    cursor:pointer;
-}
-
 tr {
     text-align: center;
+}
+
+#price {
+    margin-top: 1%;
+}
+
+@media only screen and (max-width: 768px) {
+    .images {
+        margin-top: -5%;
+        margin-left: -10%;
+    }
+
+    #imgThumb {
+        width: 23%;
+    }
+    
+    /* #price-text {
+        margin-bottom: -5%;
+    } */
 }

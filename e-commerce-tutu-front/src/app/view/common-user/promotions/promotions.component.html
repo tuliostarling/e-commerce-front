@@ -26,11 +26,11 @@
         </div>
 
         <div class="middle">
-          <img src="{{i.location_aws}}" alt="pic" (click)="listOneProduct(1)" />
+          <img src="{{i.location_aws}}" alt="pic" (click)="listProduct(i.id_subproduct)" />
         </div>
 
         <div class="bottom">
-          <div class="heading" (click)="listOneProduct(1)">
+          <div class="heading" (click)="listProduct(i.id_subproduct)">
             <a href="javascript:void(0);">{{ i.name }}</a>
           </div>
           <div class="info">Teste</div>
