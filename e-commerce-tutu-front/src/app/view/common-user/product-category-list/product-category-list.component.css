@@ -102,13 +102,15 @@ img {
   background-size: cover;
   background-position: center center;
   color: #fff;
-  height: 450px;
   padding-top: 50px;
+  width: 100%; 
+  height: auto;
 }
 
 .bg-overlay p {
   text-align: center;
-  margin-top: 15%;
+  margin-top: 10%;
+  padding-bottom: 15%;
   color: #FE980F;
   font-size: 50px;
 }
@@ -118,5 +120,16 @@ img {
 }
 
 #container {
-  margin-top: 0.8%
+  margin-top: 0.8%;
+}
+
+@media only screen and (max-width: 768px) {
+  .images {
+      margin-top: -5%;
+      margin-left: -10%;
+  }
+
+  #imgThumb {
+      width: 23%;
+  }
 }
