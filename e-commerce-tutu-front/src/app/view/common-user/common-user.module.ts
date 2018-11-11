@@ -12,6 +12,7 @@ import { ProductCategoryListComponent } from './product-category-list/product-ca
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { WishListComponent } from './wish-list/wish-list.component';
 import { PromotionsComponent } from './promotions/promotions.component';
+import { FinishUserRegisterComponent } from './finish-user-register/finish-user-register.component';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { PromotionsComponent } from './promotions/promotions.component';
     UserProfileComponent,
     WishListComponent,
     PromotionsComponent,
+    FinishUserRegisterComponent,
   ],
   exports: [
     HomeComponent,

@@ -24,14 +24,14 @@ export class ConfirmRegisterComponent implements OnInit {
         if (params.hasOwnProperty('hex')) {
           this.hexHash = params.hex;
         }
-      })
-      this.confirmUser();
+      });
+    this.confirmUser();
   }
 
   confirmUser() {
     this.apiService.confirmAccount(this.hexHash).subscribe((res) => {
-      if (res) this.router.navigateByUrl('home');
-    })
+      if (res) { this.router.navigateByUrl('home'); }
+    });
   }
 
 }

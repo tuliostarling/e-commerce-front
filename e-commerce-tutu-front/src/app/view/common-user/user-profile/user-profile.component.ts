@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { UserApiService } from '../../../service';
 import { UserCreateModel } from '../../../model/user/userCreate';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,6 +12,7 @@ import { UserCreateModel } from '../../../model/user/userCreate';
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
+  @ViewChild('openModalEle') openModalEle: ElementRef;
 
   formulario: FormGroup;
   id: number;
@@ -20,11 +22,15 @@ export class UserProfileComponent implements OnInit {
 
   update = false;
 
+  decodedCep: string;
+  decodedToken: any;
+
   constructor(
     public apiService: UserApiService,
     private form: FormBuilder,
     public router: Router,
-    private acRoute: ActivatedRoute
+    private acRoute: ActivatedRoute,
+    private modalService: NgbModal,
   ) { }
 
   public rowsUser: UserCreateModel;
@@ -32,17 +38,34 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
 
+    const t = localStorage.getItem('token');
+
+    if (t != null) {
+      this.decodedToken = this.jwtDecode(t);
+      this.decodedCep = this.decodedToken.cep;
+    }
+
+    if (this.decodedCep === null) {
+      this.openModalEle.nativeElement.click();
+    }
+
     this.apiService.getListOne(this.id).subscribe((data) => {
       this.rowsUser = data;
       this.name = this.rowsUser[0].name;
       this.email = this.rowsUser[0].email;
-  });
+    });
 
     this.formulario = this.form.group({
       id: [null],
       name: [null, Validators.required],
       email: [null],
     });
+  }
+
+  jwtDecode(token) {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace('-', '+').replace('_', '/');
+    return JSON.parse(window.atob(base64));
   }
 
   onSubmit(form) {
@@ -66,5 +89,13 @@ export class UserProfileComponent implements OnInit {
 
   clickUpdate() {
     this.update = !this.update;
+  }
+
+  openModal(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
+  finishRegister() {
+    this.router.navigateByUrl('/finish_register/' + this.decodedToken.id);
   }
 }

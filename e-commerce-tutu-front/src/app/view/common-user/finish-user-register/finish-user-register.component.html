@@ -1,0 +1,46 @@
+<div class="container">
+  <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" id="form">
+    <div class="form-row">
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" required>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="street">Rua</label>
+          <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="neighborhood">Bairro</label>
+          <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="num">Número</label>
+          <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="comp">Complemento</label>
+          <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" required>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-success" type="submit">Atualizar</button>
+    <button class="btn btn-danger" type="button" (click)="home()" style="margin-left: 1%">Cancelar</button>
+  </form>
+</div>

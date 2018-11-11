@@ -21,6 +21,7 @@ import { UserProfileComponent } from './view/common-user/user-profile/user-profi
 import { WishListComponent } from './view/common-user/wish-list/wish-list.component';
 import { PromotionsComponent } from './view/common-user/promotions/promotions.component';
 import { ConfirmRegisterComponent } from './component/confirm-register/confirm-register.component';
+import { FinishUserRegisterComponent } from './view/common-user/finish-user-register/finish-user-register.component';
 
 
 export const ROUTES: Routes = [
@@ -43,5 +44,6 @@ export const ROUTES: Routes = [
     { path: 'profile/:id', component: UserProfileComponent },
     { path: 'wish_list', component: WishListComponent },
     { path: 'promotions/:page', component: PromotionsComponent },
-    { path: 'confirm/:hex', component: ConfirmRegisterComponent }
+    { path: 'confirm/:hex', component: ConfirmRegisterComponent },
+    { path: 'finish_register/:id', component: FinishUserRegisterComponent }
 ];
