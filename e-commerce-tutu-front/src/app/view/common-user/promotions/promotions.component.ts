@@ -63,6 +63,7 @@ export class PromotionsComponent implements OnInit {
       }
     }
 
+    this.arrLink = [];
     // Checks whether the array exists and is empty
     if (typeof this.arrLink !== 'undefined' && this.arrLink.length <= 0) {
       for (let i = 0; i < this.navLinks; i++) {

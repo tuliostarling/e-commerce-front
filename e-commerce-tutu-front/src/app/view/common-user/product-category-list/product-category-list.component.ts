@@ -75,7 +75,7 @@ export class ProductCategoryListComponent implements OnInit {
     this.apiService.getAllByCategory(this.idCategory, this.page).subscribe(res => {
       if (res != null) {
         this.rowsProduct = res.rows;
-        this.totalSubProducts = res.rows.length;
+        this.totalSubProducts = res.total[0].count;
         // this.oldPrice = this.rowsProduct.oldPrice;
 
         this.makeArrNavLinks();
@@ -102,6 +102,7 @@ export class ProductCategoryListComponent implements OnInit {
       }
     }
 
+    this.arrLink = [];
     // Checks whether the array exists and is empty
     if (typeof this.arrLink !== 'undefined' && this.arrLink.length <= 0) {
       for (let i = 0; i < this.navLinks; i++) {
