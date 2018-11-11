@@ -1,10 +1,11 @@
 #principal_btn {
-    border-color: #FE980F;
-    color: #FE980F;
+    border-color: #000;
+    color: #000;
+    background-color: #fff
 }
 
 #principal_btn:hover {
-    background-color: #FE980F;
+    background-color: rgb(114, 110, 106);
     color: #fff;
 }
 

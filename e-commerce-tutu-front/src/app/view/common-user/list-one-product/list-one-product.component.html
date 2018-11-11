@@ -61,21 +61,33 @@
         </div>
 
         <div class="end">
-          <div class="row">
-            <div class="col-12" style="margin-top: 1%;">
-              <!-->p>Frete para:
+          <div class="row" class="col-sm-12">
+            <div *ngIf='decodedToken.cep != null && shipBox == false' class="col-12" style="margin-top: 1%;">
+              <p>Frete para:
                 <b>Rua Cristina, 99, Anchieta - Belo Horizonte</b>
               </p>
               <p>CEP:
                 <b>30310-692</b>
-              </p-->
-              <div>
-                <input id="shipCep" value="">
-              </div>
+              </p>
               <a href="javascript:getShipPrice()"> Escolher outro endereço </a>
             </div>
+
+            <form class="form-inline">
+              <div class="col-xs-6 col-sm-6 col-md-4" id="inputLabelCEP">
+                <div class="form-group">
+                  <label id="labelCEP" for="cep">Calcule frete e prazo: </label>
+                  <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
+                </div>
+              </div>
+              <div class="col-sm-2 col-md-2" id="btnCEP">
+                <button (click)="getShipPrice(cep)"class="btn btn-success">OK</button>
+              </div>
+            </form>
+
           </div>
         </div>
+
+
       </div>
     </div>
   </div>

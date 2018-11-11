@@ -1,5 +1,5 @@
 export interface infoCepModel {
-
+    cep: string;
 }
 
 

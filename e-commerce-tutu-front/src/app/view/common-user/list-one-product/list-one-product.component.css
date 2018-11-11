@@ -70,6 +70,16 @@ tr {
     margin-top: 1%;
 }
 
+
+#labelCEP {
+    color: #949494;
+    font-size: 15px
+}
+
+#btnCEP {
+    margin-top: 3%;
+}
+
 @media only screen and (max-width: 768px) {
     .images {
         margin-top: -5%;

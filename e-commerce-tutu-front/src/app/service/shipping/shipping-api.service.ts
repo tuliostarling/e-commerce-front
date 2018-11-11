@@ -5,7 +5,7 @@ import { AppSettings } from '../../app.settings';
 import { infoCepModel, valueShippingModel } from '../../model/shipping/shipping';
 
 @Injectable()
-export class ProductService {
+export class ShippingService {
 
     API_URL: string = AppSettings.API_ENDPOINT + 'shipping/';
 
@@ -13,12 +13,12 @@ export class ProductService {
         private http: HttpClient
     ) { }
 
-    getCepInfo(dadosForm: infoCepModel) {
-        return this.http.post<infoCepModel>(`${this.API_URL}shippingInfo/`, dadosForm);
+    getCepInfo(cepCode: string) {
+        return this.http.post<infoCepModel>(`${this.API_URL}shippingInfo/`, { cep: cepCode });
     }
 
-    getShippingValue(dadosForm: valueShippingModel) {
-        return this.http.post<valueShippingModel>(`${this.API_URL}shippingPrice/`, dadosForm);
+    getShippingValue(cepCode: string) {
+        return this.http.post<valueShippingModel>(`${this.API_URL}shippingPrice/`, { cep: cepCode });
     }
 
 }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { ProductService } from '../../../service';
 import { CommentService } from '../../../service/comment/comment-api.service';
 import { ProductModel, SubProductModel } from '../../../model/product/product';
@@ -47,6 +48,7 @@ export class ListOneProductComponent implements OnInit {
     private router: Router,
     private apiService: ProductService,
     private commentService: CommentService,
+    private shippingService: ShippingService,
     private form: FormBuilder,
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
@@ -62,6 +64,7 @@ export class ListOneProductComponent implements OnInit {
       rating: [null, Validators.required]
     });
 
+    this.getToken();
     this.getProducts();
     this.getComments();
   }
@@ -74,7 +77,6 @@ export class ListOneProductComponent implements OnInit {
 
         for (const i of Object.keys(this.rowsSubProduct.location_aws)) {
           this.ArrImg.push({ index: i, img: this.rowsSubProduct.location_aws[i] });
-          // console.log(this.ArrImg);
         }
 
         this.productName = this.rowsProduct.name;
@@ -99,16 +101,28 @@ export class ListOneProductComponent implements OnInit {
     });
   }
 
+  getShipPrice(cepVal) {
+    const validacep = /\d{2}\.\d{3}\-\d{3}/;
+    if (validacep.test(cepVal.value)) {
+      let cep = cepVal.value.replace(/\D/g, '');
+
+      this.shippingService.getShippingValue(cep).subscribe((res) => {
+        console.log(res);
+      });
+    } else {
+      //alert('Cep inserido é invalido!');
+      console.log('CEP INVALIDO')
+    }
+  }
+
   getComments() {
     this.commentService.getList(this.idProduct).subscribe((res) => {
-      if (res) { this.rowsComment = res; }
-      console.log(this.rowsComment);
+      if (res) return this.rowsComment = res;
     });
   }
 
   onSubmit(form: FormGroup) {
-    this.getToken();
-
+    console.log(this.decodedToken)
     this.formulario.get('id_user').setValue(this.decodedToken.id);
     this.formulario.get('id_subproduct').setValue(this.idProduct);
     this.formulario.get('rating').setValue(3);
@@ -125,6 +139,8 @@ export class ListOneProductComponent implements OnInit {
 
     if (t != null) {
       this.decodedToken = this.jwtDecode(t);
+      if (this.decodedToken.cep == null) this.shipBox = true;
+      else this.shipBox = false;
     }
   }
 
