@@ -37,6 +37,11 @@ export class ListOneProductComponent implements OnInit {
   formulario: FormGroup;
   showCommentBox = false;
   decodedToken: any;
+  shipBox: boolean;
+
+  //validacep = /^[0-9]{8}$/;
+  //var cep = valor.replace(/\D/g, '');
+
 
   constructor(
     private router: Router,
