@@ -6,9 +6,10 @@ import { DatePipe } from '@angular/common';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { ProductService } from '../../../service';
 import { CommentService } from '../../../service/comment/comment-api.service';
-import { ProductModel, SubProductModel } from '../../../model/product/product';
+import { ProductModel } from '../../../model/product/product';
 import { CommentModel } from '../../../model/comment/comment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ValueModel, AdressModel } from 'src/app/model/shipping/shipping';
 
 @Component({
   selector: 'app-list-one-product',
@@ -38,11 +39,11 @@ export class ListOneProductComponent implements OnInit {
   formulario: FormGroup;
   showCommentBox = false;
   decodedToken: any;
+
+  rowsShipping: Array<ValueModel>;
+  adressInfo: Array<AdressModel>;
   shipBox: boolean;
-
-  //validacep = /^[0-9]{8}$/;
-  //var cep = valor.replace(/\D/g, '');
-
+  currentCep: string;
 
   constructor(
     private router: Router,
@@ -103,11 +104,18 @@ export class ListOneProductComponent implements OnInit {
 
   getShipPrice(cepVal) {
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
-    if (validacep.test(cepVal.value)) {
-      let cep = cepVal.value.replace(/\D/g, '');
+    this.currentCep = cepVal.value;
 
-      this.shippingService.getShippingValue(cep).subscribe((res) => {
-        console.log(res);
+    if (validacep.test(this.currentCep)) {
+      let cep = this.currentCep.replace(/\D/g, '');
+      let obj = { cep: cep, value: this.productPrice }
+
+      this.shippingService.getShippingValue(obj).subscribe((res) => {
+        if (res) {
+          this.rowsShipping = res.totalValue;
+          this.adressInfo = res.adress;
+          this.shipBox === true;
+        }
       });
     } else {
       //alert('Cep inserido é invalido!');

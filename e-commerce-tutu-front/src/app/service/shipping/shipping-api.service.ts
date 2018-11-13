@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { infoCepModel, valueShippingModel } from '../../model/shipping/shipping';
+import { InfoCepModel, ValueModel , RequestShippingModel } from '../../model/shipping/shipping';
 
 @Injectable()
 export class ShippingService {
@@ -14,11 +14,11 @@ export class ShippingService {
     ) { }
 
     getCepInfo(cepCode: string) {
-        return this.http.post<infoCepModel>(`${this.API_URL}shippingInfo/`, { cep: cepCode });
+        return this.http.post<InfoCepModel>(`${this.API_URL}shippingInfo/`, { cep: cepCode });
     }
 
-    getShippingValue(cepCode: string) {
-        return this.http.post<valueShippingModel>(`${this.API_URL}shippingPrice/`, { cep: cepCode });
+    getShippingValue(shipInfo: object) {
+        return this.http.post<RequestShippingModel>(`${this.API_URL}shippingPrice/`, shipInfo);
     }
 
 }

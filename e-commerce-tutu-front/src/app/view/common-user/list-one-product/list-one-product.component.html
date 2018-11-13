@@ -62,12 +62,12 @@
 
         <div class="end">
           <div class="row" class="col-sm-12">
-            <div *ngIf='decodedToken.cep != null && shipBox == false' class="col-12" style="margin-top: 1%;">
+            <div *ngIf='shipBox === false' class="col-12" style="margin-top: 1%;">
               <p>Frete para:
-                <b>Rua Cristina, 99, Anchieta - Belo Horizonte</b>
+                <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
               </p>
               <p>CEP:
-                <b>30310-692</b>
+                <b>{{currentCep}}</b>
               </p>
               <a href="javascript:getShipPrice()"> Escolher outro endereço </a>
             </div>
@@ -80,7 +80,7 @@
                 </div>
               </div>
               <div class="col-sm-2 col-md-2" id="btnCEP">
-                <button (click)="getShipPrice(cep)"class="btn btn-success">OK</button>
+                <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
               </div>
             </form>
 
