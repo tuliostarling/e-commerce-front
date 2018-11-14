@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../../../../service/category/category-api.service';
 import { CategoryModel } from '../../../../model/category/category';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-category-list',
   templateUrl: './category-list.component.html',
@@ -13,7 +15,8 @@ export class CategoryListComponent implements OnInit {
 
   constructor(
     public apiService: CategoryService,
-    public router: Router
+    public router: Router,
+    private toastrService: ToastrService
   ) { }
 
   public rowsCategory: CategoryModel;
@@ -34,8 +37,11 @@ export class CategoryListComponent implements OnInit {
 
   delete(id: number) {
     this.apiService.delete(id).subscribe((res) => {
-      if (res) { return this.ngOnInit(); }
-      return alert('Erro ao deletar categoria');
+      if (res) {
+        this.toastrService.success('Categoria deletada!', 'Sucesso!');
+        return this.ngOnInit();
+      }
+      return this.toastrService.error('Erro ao deletar categoria', 'Erro!');
     });
   }
 }

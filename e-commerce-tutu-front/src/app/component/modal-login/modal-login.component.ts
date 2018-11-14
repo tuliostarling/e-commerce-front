@@ -9,6 +9,7 @@ import {
 import { Location } from '@angular/common';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
 
 import { UserApiService } from '../../service';
 import { UserLoginModel } from '../../model/user/userLogin';
@@ -29,7 +30,8 @@ export class ModalLoginComponent implements OnInit {
     private service: UserApiService,
     private modalService: NgbModal,
     private form: FormBuilder,
-    private location: Location
+    private location: Location,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -48,7 +50,7 @@ export class ModalLoginComponent implements OnInit {
 
     this.service.loginUser(this.loginUserModel)
       .subscribe(res => {
-        if (res === null) { return alert('Erro ao entrar'); }
+        if (res === null) { return this.toastrService.error('Erro ao entrar', 'Erro!'); }
 
         if (res.token != null) {
           localStorage.setItem('token', res.token);

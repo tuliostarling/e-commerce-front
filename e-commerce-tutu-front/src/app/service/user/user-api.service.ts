@@ -31,7 +31,7 @@ export class UserApiService {
         return this.http.put<UserCreateModel>(`${this.API_URL}put/`, dadosForm);
     }
 
-    confirmAccount(hash: String){
+    confirmAccount(hash: String) {
         return this.http.get<any>(`${AppSettings.API_ENDPOINT}confirm/${hash}`);
     }
 

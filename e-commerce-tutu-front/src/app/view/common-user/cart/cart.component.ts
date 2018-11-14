@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../../service';
 import { CartModel } from '../../../model/cart/cart';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -29,7 +31,8 @@ export class CartComponent implements OnInit {
   defaultPosition: number;
   constructor(
     private router: Router,
-    private apiService: ProductService
+    private apiService: ProductService,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -100,8 +103,11 @@ export class CartComponent implements OnInit {
 
     this.apiService.updateAmount(dados).subscribe(res => {
       if (res == null) {
-        alert('Erro');
+        this.toastrService.error('Erro ao atualizar quantidade', 'Erro!');
       }
+
+      this.toastrService.success('Quantidade atualizada!', 'Sucesso!');
+      return this.ngOnInit();
     });
   }
 
@@ -112,8 +118,11 @@ export class CartComponent implements OnInit {
   delete(id: number, content) {
     this.apiService.removeFromCart(id).subscribe(res => {
       if (res == null) {
-        alert('Erro');
+        this.toastrService.error('Erro ao remover do produto do carrinho', 'Erro!');
       }
+
+      this.toastrService.success('Produto removido do carrinho!', 'Sucesso!');
+      return this.ngOnInit();
     });
   }
 

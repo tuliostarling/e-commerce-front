@@ -3,13 +3,21 @@
   <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" *ngIf="update == true"
     id="form">
     <div class="form-row">
-      <div class="col-sm-12 col-md-6 mb-3">
+      <div class="col-sm-12 col-md-4 mb-3">
         <div class="form-group">
           <label for="name">Nome</label>
           <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nome" value="{{name}}" required>
         </div>
       </div>
-      <div class="col-sm-12 col-md-6 mb-3">
+
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="number" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" value="{{cpf}}" required>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-5 mb-3">
         <div class="form-group">
           <label for="email">Email</label>
           <div class="input-group">
@@ -22,15 +30,54 @@
         </div>
       </div>
     </div>
+
+    <div class="form-row">
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <input type="number" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="street">Rua</label>
+          <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" value="{{street}}" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="neighborhood">Bairro</label>
+          <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" value="{{neighborhood}}"
+            required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="num">Número</label>
+          <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" value="{{num}}" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="comp">Complemento</label>
+          <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" value="{{comp}}" required>
+        </div>
+      </div>
+    </div>
     <button class="btn btn-success" type="submit">Atualizar</button>
     <button class="btn btn-danger" type="button" (click)="clickUpdate()" style="margin-left: 1%">Cancelar</button>
   </form>
 
   <ng-container *ngIf="update == false">
     <div class="row" id="form">
-      <div class="col-sm-12 col-md-3 mb-3">
+      <div class="col-sm-12 col-md-4 mb-3">
         <h5>Nome</h5>
         <p style="margin-top:1%">{{name}}</p>
+      </div>
+
+      <div class="col-sm-12 col-md-3 mb-3">
+        <h5>CPF</h5>
+        <p style="margin-top:1%">{{cpf}}</p>
       </div>
 
       <div class="col-sm-12 col-md-5 mb-3">
@@ -43,7 +90,32 @@
             readonly>
         </div>
       </div>
+    </div>
 
+    <div class="row" id="form">
+      <div class="col-sm-12 col-md-2 mb-3">
+        <h5>CEP</h5>
+        <p style="margin-top:1%">{{cep}}</p>
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <h5>Rua</h5>
+        <p style="margin-top:1%">{{street}}</p>
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <h5>Bairro</h5>
+        <p style="margin-top:1%">{{neighborhood}}</p>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <h5>Número</h5>
+        <p style="margin-top:1%">{{num}}</p>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <h5>Complemento</h5>
+        <p style="margin-top:1%">{{comp}}</p>
+      </div>
+    </div>
+
+    <div class="row" id="form">
       <div class="col-sm-12 col-md-2 mb-3" style="margin-top: 2.8%;">
         <button class="btn btn-primary" type="button" (click)="clickUpdate()">Atualizar meus dados</button>
       </div>

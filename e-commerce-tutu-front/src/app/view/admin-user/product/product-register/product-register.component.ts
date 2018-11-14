@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
 
 import { ProductModel, SubProductModel } from '../../../../model/product/product';
 import { ProductService } from '../../../../service/product/product-api.service';
@@ -59,7 +60,8 @@ export class ProductRegisterComponent implements OnInit {
     private apiCategoryService: CategoryService,
     private form: FormBuilder,
     private router: Router,
-    public acRoute: ActivatedRoute
+    public acRoute: ActivatedRoute,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -175,10 +177,10 @@ export class ProductRegisterComponent implements OnInit {
     if (this.mode === 'Cadastrar') {
       this.apiService.create(this.createProductModel).subscribe(res => {
         if (res) {
-          alert('Produto Cadastro com Sucesso!');
+          this.toastrService.success('Producto cadastrado!', 'Sucesso!');
           return this.navToListCoup();
         }
-        return alert('Erro ao Cadastrar Produto, Tente Novamente');
+        return this.toastrService.error('Erro ao cadastrar.', 'Erro!');
       });
     }
 
@@ -195,11 +197,11 @@ export class ProductRegisterComponent implements OnInit {
 
         this.apiService.addImage(formImage, this.idSubProduct).subscribe((resImg) => {
           if (resImg != null) {
-            alert('Sucesso ao cadastrar SubProduto');
+            this.toastrService.success('SubProduto cadastrado!', 'Sucesso!');
             this.cleanAcordion(form);
             return this.ngOnInit();
           } else {
-            return alert('Erro ao cadastrar Imagem');
+            return this.toastrService.error('Erro ao cadastrar imagem.', 'Erro!');
           }
         });
       }));
@@ -219,7 +221,7 @@ export class ProductRegisterComponent implements OnInit {
   updateMainProduct(form) {
     this.apiService.update(form.value, this.idMainProduct).subscribe((res) => {
       if (res) { return this.ngOnInit(); }
-      return alert('Erro Ao Atualizar Produto');
+      return this.toastrService.error('Erro ao atualizar produto.', 'Erro!');
     });
   }
 
@@ -247,18 +249,18 @@ export class ProductRegisterComponent implements OnInit {
 
         if (this.formData.get('key') == null && this.formData.get('id') == null && this.formData.get('file') != null) {
           this.apiService.addImage(this.formData, id).subscribe((data) => {
-            if (data) { return alert('Variação atualizada com sucesso!'); }
+            if (data) { return this.toastrService.success('Variação atualizada com sucesso!', 'Sucesso!'); }
           });
 
         } else {
           this.apiService.updateImages(this.formData, id).subscribe((res1) => {
             if (res1) {
-              alert('Variação atualizada com sucesso!');
+              this.toastrService.success('Variação atualizada com sucesso!', 'Sucesso!');
               this.formData.delete('key');
               this.formData.delete('id');
               return this.ngOnInit();
             }
-            alert('Erro ao atualizar variação!');
+            this.toastrService.error('Erro ao atualizar variação.', 'Erro!');
           });
         }
       }
@@ -270,8 +272,8 @@ export class ProductRegisterComponent implements OnInit {
     let totalImgs;
 
     if (index > 0) { totalImgs = this.rowsImagesObj[index].images.length; }
-    if (totalImgInput.length >= 5) { return alert('Maximo de 5 imagens permitidas!'); }
-    if (totalImgs + totalImgInput > 5) { return alert('Maximo de 5 imagens permitidas!'); }
+    if (totalImgInput.length >= 5) { return this.toastrService.warning('Maximo de 5 imagens permitidas!', 'Atenção!'); }
+    if (totalImgs + totalImgInput > 5) { return this.toastrService.warning('Maximo de 5 imagens permitidas!', 'Atenção!'); }
 
     let arrImageInput = Array<any>();
     arrImageInput = <any>fileInput.target.files;
@@ -306,10 +308,10 @@ export class ProductRegisterComponent implements OnInit {
 
     this.apiService.deleteSubProduct(id).subscribe((res) => {
       if (res) {
-        alert('Variação deletada com sucesso!');
+        this.toastrService.success('Variação deletada com sucesso!', 'Sucesso!');
         return this.ngOnInit();
       }
-      alert('Erro ao deletar variação!');
+      this.toastrService.error('Erro ao deletar variação.', 'Erro!');
     });
   }
 
@@ -330,7 +332,7 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   navToListCoup() {
-    this.router.navigateByUrl('product_list');
+    this.router.navigateByUrl('/product_list/0');
   }
 
   changeDiscount(evt) {

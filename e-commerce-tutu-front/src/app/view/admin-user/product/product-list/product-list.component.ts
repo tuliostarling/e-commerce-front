@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../../service/product/product-api.service';
 import { ProductModel } from '../../../../model/product/product';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
@@ -19,7 +21,8 @@ export class ProductListComponent implements OnInit {
   constructor(
     public apiService: ProductService,
     public acRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private toastrService: ToastrService
   ) { }
 
   public rowsProducts: Array<ProductModel>;
@@ -55,10 +58,10 @@ export class ProductListComponent implements OnInit {
   deleteProduct(id: number) {
     this.apiService.delete(id).subscribe((res) => {
       if (res) {
-        alert('Produto Deletado com sucesso!');
+        this.toastrService.success('Produto deletado!', 'Sucesso!');
         return this.ngOnInit();
       }
-      return alert('Erro ao deletar Produto');
+      return this.toastrService.error('Erro ao deletar produto', 'Erro!');
     });
   }
 

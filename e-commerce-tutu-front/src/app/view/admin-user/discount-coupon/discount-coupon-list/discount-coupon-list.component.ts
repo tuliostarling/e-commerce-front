@@ -4,6 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CouponService } from '../../../../service/discount-coupon/coupon-api.service';
 import { CouponModel } from '../../../../model/discount-coupon/coupon';
 
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-discount-coupon-list',
   templateUrl: './discount-coupon-list.component.html',
@@ -19,7 +21,8 @@ export class DiscountCouponListComponent implements OnInit {
   constructor(
     public apiService: CouponService,
     private acRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private toastrService: ToastrService
   ) { }
 
   public rowsCoupon: Array<CouponModel>;
@@ -53,7 +56,12 @@ export class DiscountCouponListComponent implements OnInit {
 
   delete(id: number) {
     this.apiService.delete(id).subscribe((res) => {
-      if (res) { this.ngOnInit(); }
+      if (res) {
+        this.toastrService.success('Cumpom deletado!', 'Sucesso!');
+        return this.ngOnInit();
+      }
+
+      return this.toastrService.error('Erro ao deletar cumpom', 'Erro!');
     });
   }
 

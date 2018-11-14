@@ -61,11 +61,11 @@
 
 #forgot_pass:hover {
   color: #FE980F;
-  cursor: pointer
+  cursor: pointer;
 }
 
 #form {
-  margin-top: 8%; 
+  margin-top: 2%; 
   margin-left: 1px; 
-  margin-bottom: 8%
+  margin-bottom: 2%
 }

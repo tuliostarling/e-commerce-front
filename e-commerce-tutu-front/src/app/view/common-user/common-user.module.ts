@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HomeComponent } from './home/home.component';
 import { TopSellingProductsComponent } from '../../component/top-selling-products/top-selling-products.component';
@@ -19,6 +21,7 @@ import { FinishUserRegisterComponent } from './finish-user-register/finish-user-
     CommonModule,
     NgbModule.forRoot(),
     FormsModule, ReactiveFormsModule,
+    ToastrModule.forRoot(), BrowserAnimationsModule
   ],
   declarations: [
     HomeComponent,

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { ProductService } from '../../../service';
 import { CommentService } from '../../../service/comment/comment-api.service';
@@ -53,6 +55,7 @@ export class ListOneProductComponent implements OnInit {
     private form: FormBuilder,
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -107,38 +110,37 @@ export class ListOneProductComponent implements OnInit {
     this.currentCep = cepVal.value;
 
     if (validacep.test(this.currentCep)) {
-      let cep = this.currentCep.replace(/\D/g, '');
-      let obj = { cep: cep, value: this.productPrice }
+      const cep = this.currentCep.replace(/\D/g, '');
+      const obj = { cep: cep, value: this.productPrice };
 
       this.shippingService.getShippingValue(obj).subscribe((res) => {
         if (res) {
           this.rowsShipping = res.totalValue;
           this.adressInfo = res.adress;
-          this.shipBox === true;
+          this.shipBox = true;
         }
       });
     } else {
-      //alert('Cep inserido é invalido!');
-      console.log('CEP INVALIDO')
+      this.toastrService.error('CEP inválido', 'Erro!');
     }
   }
 
   getComments() {
     this.commentService.getList(this.idProduct).subscribe((res) => {
-      if (res) return this.rowsComment = res;
+      if (res) { return this.rowsComment = res; }
     });
   }
 
   onSubmit(form: FormGroup) {
-    console.log(this.decodedToken)
     this.formulario.get('id_user').setValue(this.decodedToken.id);
     this.formulario.get('id_subproduct').setValue(this.idProduct);
     this.formulario.get('rating').setValue(3);
     this.commentForm = form.value;
     this.commentService.create(this.commentForm).subscribe((res) => {
       if (res) {
-        return alert('Comentario inserido com sucesso');
-      } else { return alert('Erro ao inserir comentario'); }
+        this.toastrService.success('Comentario inserido com sucesso!', 'Sucesso!');
+        return this.ngOnInit();
+      } else { return this.toastrService.error('Erro ao inserir comentario', 'Erro!'); }
     });
   }
 
@@ -147,8 +149,9 @@ export class ListOneProductComponent implements OnInit {
 
     if (t != null) {
       this.decodedToken = this.jwtDecode(t);
-      if (this.decodedToken.cep == null) this.shipBox = true;
-      else this.shipBox = false;
+      if (this.decodedToken.cep == null) {
+        this.shipBox = true;
+      } else { this.shipBox = false; }
     }
   }
 

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { ProductService } from '../../../service';
 import { ProductModel } from '../../../model/product/product';
 
@@ -17,7 +19,8 @@ export class WishListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private apiService: ProductService
+    private apiService: ProductService,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -42,8 +45,11 @@ export class WishListComponent implements OnInit {
   delete(id: number, content) {
     this.apiService.removeFromWish(id).subscribe(res => {
       if (res == null) {
-        alert('Erro');
+        this.toastrService.error('Erro ao remover produto', 'Erro!');
       }
+
+      this.toastrService.success('Produto removido!', 'Sucesso!');
+      return this.ngOnInit();
     });
   }
 

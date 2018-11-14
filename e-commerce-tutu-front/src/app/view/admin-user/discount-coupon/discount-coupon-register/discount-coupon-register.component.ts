@@ -9,6 +9,8 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { CouponService } from '../../../../service/discount-coupon/coupon-api.service';
 import { CouponModel } from '../../../../model/discount-coupon/coupon';
 
@@ -28,7 +30,8 @@ export class DiscountCouponRegisterComponent implements OnInit {
     private apiService: CouponService,
     private form: FormBuilder,
     public acRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -65,14 +68,14 @@ export class DiscountCouponRegisterComponent implements OnInit {
             valid: [data[0].valid]
           });
         } else {
-          alert('erro');
+          this.toastrService.error('Erro ao carregar', 'Erro!');
         }
       });
     }
   }
 
   navToListCoup() {
-    this.router.navigateByUrl('coupon_list');
+    this.router.navigateByUrl('/coupon_list/0');
   }
 
   onSubmit(form) {
@@ -80,20 +83,17 @@ export class DiscountCouponRegisterComponent implements OnInit {
 
     if (this.idCoupon === undefined) {
       this.apiService.create(this.createCouponModel).subscribe(res => {
-        if (res === null) { return alert('Erro ao cadastrar'); }
+        if (res === null) { return this.toastrService.error('Erro ao cadastrar', 'Erro!'); }
 
+        this.toastrService.success('Cumpom cadastrado!', 'Sucesso!');
         this.navToListCoup();
       });
     } else {
       this.apiService.update(this.createCouponModel).subscribe((res) => {
-        if (res === null) { return alert('Erro ao cadastrar'); }
+        if (res === null) { return this.toastrService.error('Erro ao cadastrar', 'Erro!'); }
 
         this.navToListCoup();
       });
     }
-  }
-
-  list() {
-    this.router.navigateByUrl('/coupon_list');
   }
 }

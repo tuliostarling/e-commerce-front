@@ -6,6 +6,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ngfModule } from 'angular-file';
 
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { CategoryRegisterComponent } from './category/category-register/category-register.component';
 import { CategoryListComponent } from './category/category-list/category-list.component';
 import { DiscountCouponListComponent } from './discount-coupon/discount-coupon-list/discount-coupon-list.component';
@@ -20,7 +23,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     NgbModule.forRoot(),
     FormsModule, ReactiveFormsModule,
     AngularFontAwesomeModule,
-    ngfModule
+    ngfModule,
+    ToastrModule.forRoot(), BrowserAnimationsModule
   ],
   declarations: [
     CategoryRegisterComponent,

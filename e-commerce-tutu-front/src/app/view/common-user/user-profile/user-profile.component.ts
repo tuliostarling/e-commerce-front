@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { ToastrService } from 'ngx-toastr';
+
 import { UserApiService } from '../../../service';
 import { UserCreateModel } from '../../../model/user/userCreate';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +21,12 @@ export class UserProfileComponent implements OnInit {
   pass: string;
   name: string;
   email: string;
+  cep: number;
+  cpf: number;
+  num: string;
+  comp: string;
+  street: string;
+  neighborhood: string;
 
   update = false;
 
@@ -31,6 +39,7 @@ export class UserProfileComponent implements OnInit {
     public router: Router,
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
+    private toastrService: ToastrService
   ) { }
 
   public rowsUser: UserCreateModel;
@@ -49,16 +58,29 @@ export class UserProfileComponent implements OnInit {
       this.openModalEle.nativeElement.click();
     }
 
-    this.apiService.getListOne(this.id).subscribe((data) => {
-      this.rowsUser = data;
+    this.apiService.getListOne(this.id).subscribe((res) => {
+      this.rowsUser = res;
+
       this.name = this.rowsUser[0].name;
       this.email = this.rowsUser[0].email;
+      this.cep = this.rowsUser[0].cep;
+      this.cpf = this.rowsUser[0].cpf;
+      this.num = this.rowsUser[0].num;
+      this.comp = this.rowsUser[0].comp;
+      this.street = this.rowsUser[0].street;
+      this.neighborhood = this.rowsUser[0].neighborhood;
     });
 
     this.formulario = this.form.group({
       id: [null],
       name: [null, Validators.required],
       email: [null],
+      cpf: [null],
+      cep: [null],
+      street: [null],
+      neighborhood: [null],
+      num: [null],
+      comp: [null]
     });
   }
 
@@ -73,9 +95,11 @@ export class UserProfileComponent implements OnInit {
     this.rowsUser = form.value;
 
     this.apiService.update(this.rowsUser).subscribe((res) => {
-      if (res === null) { return alert('Erro ao cadastrar'); }
+      if (res === null) { return this.toastrService.error('Erro ao atualizar os dados', 'Erro!'); }
 
+      this.toastrService.success('Dados atualizados!', 'Sucesso!');
       this.update = false;
+      return this.ngOnInit();
     });
 
   }
