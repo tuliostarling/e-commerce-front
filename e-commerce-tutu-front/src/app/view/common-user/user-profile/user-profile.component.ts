@@ -17,6 +17,7 @@ export class UserProfileComponent implements OnInit {
   @ViewChild('openModalEle') openModalEle: ElementRef;
 
   formulario: FormGroup;
+  formnewpass: FormGroup;
   id: number;
   pass: string;
   name: string;
@@ -25,8 +26,11 @@ export class UserProfileComponent implements OnInit {
   cpf: number;
   num: string;
   comp: string;
+  state: string;
+  city: string;
   street: string;
   neighborhood: string;
+  chagepassBool = false;
 
   update = false;
 
@@ -67,6 +71,8 @@ export class UserProfileComponent implements OnInit {
       this.cpf = this.rowsUser[0].cpf;
       this.num = this.rowsUser[0].num;
       this.comp = this.rowsUser[0].comp;
+      this.state = this.rowsUser[0].state;
+      this.city = this.rowsUser[0].city;
       this.street = this.rowsUser[0].street;
       this.neighborhood = this.rowsUser[0].neighborhood;
     });
@@ -77,10 +83,18 @@ export class UserProfileComponent implements OnInit {
       email: [null],
       cpf: [null],
       cep: [null],
+      state: [null],
+      city: [null],
       street: [null],
       neighborhood: [null],
       num: [null],
       comp: [null]
+    });
+
+    this.formnewpass = this.form.group({
+      email: [null, Validators.required],
+      oldpass: [null, Validators.required],
+      newpass: [null, Validators.required]
     });
   }
 
@@ -121,5 +135,20 @@ export class UserProfileComponent implements OnInit {
 
   finishRegister() {
     this.router.navigateByUrl('/finish_register/' + this.decodedToken.id);
+  }
+
+  updatePass(form) {
+    this.formnewpass.patchValue({ email: this.email });
+
+    this.apiService.changePass(form.value).subscribe((res) => {
+      if (res == null) { return this.toastrService.error('Erro ao atualizar senha.', 'Erro!'); }
+
+      this.toastrService.success('Senha atualizada!', 'Sucesso!');
+      this.chagepassBool = false;
+    });
+  }
+
+  change_pass() {
+    this.chagepassBool = !this.chagepassBool;
   }
 }

@@ -75,7 +75,7 @@ export class CartComponent implements OnInit {
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
-        this.total = this.finalValue;//+ this.freight;
+        this.total = this.finalValue; // + this.freight;
 
         if (this.total >= 80 && this.total < 140) {
           this.installments = 2;
@@ -98,7 +98,7 @@ export class CartComponent implements OnInit {
 
 
   getShipPrice(cepVal) {
-    if (cepVal === true) return this.shipBox === true;
+    if (cepVal === true) { return this.shipBox === true; }
 
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
     this.currentCep = cepVal.value;

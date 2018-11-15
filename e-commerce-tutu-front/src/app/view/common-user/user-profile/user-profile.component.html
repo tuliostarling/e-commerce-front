@@ -13,7 +13,7 @@
       <div class="col-sm-12 col-md-3 mb-3">
         <div class="form-group">
           <label for="cpf">CPF</label>
-          <input type="number" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" value="{{cpf}}" required>
+          <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" value="{{cpf}}" required>
         </div>
       </div>
 
@@ -35,10 +35,16 @@
       <div class="col-sm-12 col-md-2 mb-3">
         <div class="form-group">
           <label for="cep">CEP</label>
-          <input type="number" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required>
+          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required>
         </div>
       </div>
       <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="city">Cidade</label>
+          <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" value="{{city}}" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3">
         <div class="form-group">
           <label for="street">Rua</label>
           <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" value="{{street}}" required>
@@ -49,6 +55,15 @@
           <label for="neighborhood">Bairro</label>
           <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" value="{{neighborhood}}"
             required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="state">Estado</label>
+          <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" value="{{state}}" required>
         </div>
       </div>
       <div class="col-sm-12 col-md-2 mb-3">
@@ -68,65 +83,119 @@
     <button class="btn btn-danger" type="button" (click)="clickUpdate()" style="margin-left: 1%">Cancelar</button>
   </form>
 
-  <ng-container *ngIf="update == false">
-    <div class="row" id="form">
+  <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" *ngIf="update == false"
+    id="form">
+    <div class="form-row">
       <div class="col-sm-12 col-md-4 mb-3">
-        <h5>Nome</h5>
-        <p style="margin-top:1%">{{name}}</p>
+        <div class="form-group">
+          <label for="name">Nome</label>
+          <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nome" value="{{name}}" required readonly>
+        </div>
       </div>
 
       <div class="col-sm-12 col-md-3 mb-3">
-        <h5>CPF</h5>
-        <p style="margin-top:1%">{{cpf}}</p>
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" value="{{cpf}}" required readonly>
+        </div>
       </div>
 
       <div class="col-sm-12 col-md-5 mb-3">
-        <h5>Email</h5>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroupPrepend">@</span>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend">@</span>
+            </div>
+            <input type="text" class="form-control" formControlName="email" id="email" placeholder="Email" aria-describedby="inputGroupPrepend"
+              value="{{email}}" readonly>
           </div>
-          <input type="text" class="form-control" id="email" placeholder="Email" aria-describedby="inputGroupPrepend" value="{{email}}"
-            readonly>
         </div>
       </div>
     </div>
 
-    <div class="row" id="form">
+    <div class="form-row">
       <div class="col-sm-12 col-md-2 mb-3">
-        <h5>CEP</h5>
-        <p style="margin-top:1%">{{cep}}</p>
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required readonly>
+        </div>
       </div>
       <div class="col-sm-12 col-md-3 mb-3">
-        <h5>Rua</h5>
-        <p style="margin-top:1%">{{street}}</p>
+        <div class="form-group">
+          <label for="city">Cidade</label>
+          <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" value="{{city}}" required readonly>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="street">Rua</label>
+          <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" value="{{street}}" required
+            readonly>
+        </div>
       </div>
       <div class="col-sm-12 col-md-3 mb-3">
-        <h5>Bairro</h5>
-        <p style="margin-top:1%">{{neighborhood}}</p>
-      </div>
-      <div class="col-sm-12 col-md-2 mb-3">
-        <h5>Número</h5>
-        <p style="margin-top:1%">{{num}}</p>
-      </div>
-      <div class="col-sm-12 col-md-2 mb-3">
-        <h5>Complemento</h5>
-        <p style="margin-top:1%">{{comp}}</p>
+        <div class="form-group">
+          <label for="neighborhood">Bairro</label>
+          <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" value="{{neighborhood}}"
+            required readonly>
+        </div>
       </div>
     </div>
 
+    <div class="row">
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="state">Estado</label>
+          <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" value="{{state}}" required
+            readonly>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="num">Número</label>
+          <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" value="{{num}}" required readonly>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="comp">Complemento</label>
+          <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" value="{{comp}}" required
+            readonly>
+        </div>
+      </div>
+    </div>
     <div class="row" id="form">
       <div class="col-sm-12 col-md-2 mb-3" style="margin-top: 2.8%;">
         <button class="btn btn-primary" type="button" (click)="clickUpdate()">Atualizar meus dados</button>
       </div>
       <div class="col-sm-12 col-md-2 mb-3" style="margin-top: 3.3%">
-        <a id="forgot_pass">Esqueci minha senha</a>
+        <a id="forgot_pass" (click)="change_pass()">Trocar minha senha</a>
       </div>
     </div>
-  </ng-container>
+  </form>
+
+  <form class="needs-validation" role="form" [formGroup]="formnewpass" (ngSubmit)="updatePass(formnewpass)" *ngIf="chagepassBool == true"
+    id="form">
+    <div class="col-sm-12 col-md-12 mb-3">
+      <div class="form-group">
+        <label for="oldpass">Senha antiga</label>
+        <input type="password" class="form-control" formControlName="oldpass" id="oldpass" placeholder="Senha antiga" required>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 mb-3">
+      <div class="form-group">
+        <label for="newpass">Nova senha</label>
+        <input type="password" class="form-control" formControlName="newpass" id="newpass" placeholder="Nova senha" required>
+      </div>
+    </div>
+    <button class="btn btn-success" type="submit">Atualizar</button>
+    <button class="btn btn-danger" type="button" (click)="change_pass()" style="margin-left: 1%">Cancelar</button>
+  </form>
 
   <button id="openModalEle" #openModalEle [hidden]="true" (click)="openModal(content)"></button>
 </div>
+<!-- /container -->
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
@@ -146,4 +215,3 @@
   </div>
 
 </ng-template>
-<!-- /container -->

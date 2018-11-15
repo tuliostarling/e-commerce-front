@@ -106,7 +106,7 @@ export class ListOneProductComponent implements OnInit {
   }
 
   getShipPrice(cepVal) {
-    if(cepVal === true) return this.shipBox === true;
+    if (cepVal === true) { return this.shipBox === true; }
 
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
     this.currentCep = cepVal.value;

@@ -1,6 +1,7 @@
 export interface InfoCepModel {
     cep: string;
     value: number;
+    adress: AdressModel;
 }
 
 export interface AdressModel {

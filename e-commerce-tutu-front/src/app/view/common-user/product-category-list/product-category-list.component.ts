@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductModel } from '../../../model/product/product';
 import { ProductService, CategoryService } from '../../../service';
 import { FormBuilder } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-category-list',
@@ -35,7 +36,7 @@ export class ProductCategoryListComponent implements OnInit {
     private apiService: ProductService,
     private apiServiceCategory: CategoryService,
     private acRoute: ActivatedRoute,
-    private modalService: NgbModal
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit() {
@@ -132,22 +133,22 @@ export class ProductCategoryListComponent implements OnInit {
     this.router.navigateByUrl(`/category_list/${this.idCategory}/${num}`);
   }
 
-  addProductToCart(id: number, content) {
+  addProductToCart(id: number) {
     this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
 
     this.apiService.addToCart(this.dadosCart).subscribe(res => {
       if (res != null) {
-        this.modalService.open(content, { centered: true });
+        this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
       }
     });
   }
 
-  addProductToWishList(id: number, content) {
-    this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id, amount: 1 });
+  addProductToWishList(id: number) {
+    this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id });
 
     this.apiService.addToWishList(this.dadosWish).subscribe(res => {
       if (res != null) {
-        this.modalService.open(content, { centered: true });
+        this.toastrService.success('Produto inserido na lista de desejos!', 'Sucesso!');
       }
     });
   }

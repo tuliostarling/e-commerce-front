@@ -12,14 +12,14 @@
         <div class="top">
           <ul>
             <li>
-              <a href="#">
-                <i class="fa fa-star-o" aria-hidden="true"></i>
+              <a href="javascript:void(0);">
+                <i class="fa fa-star-o" aria-hidden="true" (click)="addProductToWishList(i.id_subproduct)"></i>
               </a>
             </li>
 
             <li>
-              <a href="#">
-                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              <a href="javascript:void(0);">
+                <i class="fa fa-shopping-bag" aria-hidden="true" (click)="addProductToCart(i.id_subproduct);"></i>
               </a>
             </li>
           </ul>

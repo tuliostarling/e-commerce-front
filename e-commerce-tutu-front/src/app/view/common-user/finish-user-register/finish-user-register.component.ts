@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserCreateModel } from '../../../model/user/userCreate';
 
 import { ToastrService } from 'ngx-toastr';
+import { ShippingService } from '../../../service/shipping/shipping-api.service';
 
 @Component({
   selector: 'app-finish-user-register',
@@ -15,9 +16,14 @@ export class FinishUserRegisterComponent implements OnInit {
 
   formulario: FormGroup;
   id: number;
+  state: string;
+  city: string;
+  street: string;
+  neighborhood: string;
 
   constructor(
     public apiService: UserApiService,
+    public apiServiceCEP: ShippingService,
     private form: FormBuilder,
     public router: Router,
     private acRoute: ActivatedRoute,
@@ -33,6 +39,8 @@ export class FinishUserRegisterComponent implements OnInit {
       id: [this.id],
       cep: [null, Validators.required],
       cpf: [null, Validators.required],
+      city: [null, Validators.required],
+      state: [null, Validators.required],
       street: [null, Validators.required],
       neighborhood: [null, Validators.required],
       num: [null, Validators.required],
@@ -47,11 +55,22 @@ export class FinishUserRegisterComponent implements OnInit {
       if (res === null) { return this.toastrService.error('Erro ao atualizar dados', 'Erro!'); }
     });
 
-    this.toastrService.success('Dados atualizados!', 'Sucesso!');
+    this.toastrService.success('Dados atualizados, por favor saia e entre da sua conta!', 'Sucesso!');
     return this.home();
   }
 
   home() {
     this.router.navigateByUrl('/home');
+  }
+
+  onblur(evt: any) {
+    const cep = evt.target.value;
+
+    this.apiServiceCEP.getCepInfo(cep).subscribe((res) => {
+      this.state = res.adress.state;
+      this.city = res.adress.city;
+      this.street = res.adress.street;
+      this.neighborhood = res.adress.neighborhood;
+    });
   }
 }

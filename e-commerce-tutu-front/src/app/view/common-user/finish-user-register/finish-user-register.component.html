@@ -10,7 +10,19 @@
       <div class="col-sm-12 col-md-3 mb-3">
         <div class="form-group">
           <label for="cep">CEP</label>
-          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" required>
+          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" required (blur)="onblur($event)">
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="state">Estado</label>
+          <input type="text" class="form-control" formControlName="state" id="state" value="{{state}}" placeholder="Estado" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="city">Cidade</label>
+          <input type="text" class="form-control" formControlName="city" id="city" value="{{city}}" placeholder="Cidade" required>
         </div>
       </div>
     </div>
@@ -18,13 +30,13 @@
       <div class="col-sm-12 col-md-4 mb-3">
         <div class="form-group">
           <label for="street">Rua</label>
-          <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" required>
+          <input type="text" class="form-control" formControlName="street" id="street" value="{{street}}" placeholder="Rua" required>
         </div>
       </div>
       <div class="col-sm-12 col-md-4 mb-3">
         <div class="form-group">
           <label for="neighborhood">Bairro</label>
-          <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" required>
+          <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" value="{{neighborhood}}" placeholder="Bairro" required>
         </div>
       </div>
       <div class="col-sm-12 col-md-2 mb-3">
@@ -40,7 +52,7 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-success" type="submit">Atualizar</button>
+    <button class="btn btn-success" type="submit">Cadastrar</button>
     <button class="btn btn-danger" type="button" (click)="home()" style="margin-left: 1%">Cancelar</button>
   </form>
 </div>

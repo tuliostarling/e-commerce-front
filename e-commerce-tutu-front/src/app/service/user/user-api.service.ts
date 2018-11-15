@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { AppSettings } from '../../app.settings';
 import { UserLoginModel } from '../../model/user/userLogin';
-import { UserCreateModel } from '../../model/user/userCreate';
+import { UserCreateModel, UserChangePass } from '../../model/user/userCreate';
 
 @Injectable()
 export class UserApiService {
@@ -21,6 +21,10 @@ export class UserApiService {
 
     loginUser(dadosForm: UserLoginModel) {
         return this.http.post<UserLoginModel>(`${this.API_AUTH_URL}authlogin/`, dadosForm);
+    }
+
+    changePass(dadosForm: UserChangePass) {
+        return this.http.post<UserChangePass>(`${this.API_URL}/newpass/`, dadosForm);
     }
 
     createUser(dadosForm: UserCreateModel) {
