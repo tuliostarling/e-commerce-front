@@ -43,24 +43,43 @@
       </table>
 
 
-      <div class="row">
-        <div class="col-sm-12">
-          <form class="form-inline">
+      <div class="end">
+        <div class="row" class="col-sm-12">
+          <div *ngIf='shipBox === false' class="col-12" style="margin-top: 1%;">
+            <p>Frete para:
+              <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
+            </p>
+            <p>CEP:
+              <b>{{currentCep}}</b>
+            </p>
+            <p>Valor Sedex:
+              <b>R${{rowsShipping[0].Valor}}</b>
+            </p>
+            <p>Valor PAC:
+              <b>R${{rowsShipping[1].Valor}}</b>
+            </p>
+            <a class="btn">
+              <i (click)="getShipPrice(true)"></i> Escolher outro endereço
+            </a>
+          </div>
+
+          <form class="form-inline" *ngIf='shipBox === true'>
             <div class="col-xs-6 col-sm-6 col-md-4" id="inputLabelCEP">
               <div class="form-group">
                 <label id="labelCEP" for="cep">Calcule frete e prazo: </label>
-                <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP">
+                <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
               </div>
             </div>
             <div class="col-sm-2 col-md-2" id="btnCEP">
-              <button type="submit" class="btn btn-success">OK</button>
+              <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
             </div>
           </form>
+
         </div>
       </div>
 
-
     </div>
+    
     <div class="col-sm-12 col-md-4" style="background-color:#f7f7f7">
       <h5 style="margin-top:5%">Resumo do pedido</h5>
 
@@ -109,7 +128,8 @@
       <hr>
       <div style="text-align: center">
         <button class="btn btn-success" style="float: center">Continuar</button>
-        <p style="color: #949494; font-size: 12px; margin-top: 3%">Possui cupom? Você poderá usá-lo na etapa de pagamento.</p>
+        <p style="color: #949494; font-size: 12px; margin-top: 3%">Possui cupom? Você poderá usá-lo na etapa de
+          pagamento.</p>
       </div>
     </div>
   </div>

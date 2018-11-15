@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../../../service';
 import { CartModel } from '../../../model/cart/cart';
+import { ValueModel, AdressModel } from '../../../model/shipping/shipping';
+import { ShippingService } from '../../../service/shipping/shipping-api.service';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -21,7 +23,6 @@ export class CartComponent implements OnInit {
   qtdOpt = [];
   optSelected = [];
   qtdItens = [];
-  freight: number;
   total: number;
   sumQtdItems: number;
   installments: number;
@@ -29,9 +30,17 @@ export class CartComponent implements OnInit {
 
   arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   defaultPosition: number;
+
+
+  rowsShipping: Array<ValueModel>;
+  adressInfo: Array<AdressModel>;
+  shipBox: boolean;
+  currentCep: string;
+
   constructor(
     private router: Router,
     private apiService: ProductService,
+    private shipService: ShippingService,
     private toastrService: ToastrService
   ) { }
 
@@ -44,6 +53,7 @@ export class CartComponent implements OnInit {
     }
 
     this.getProducts();
+    this.getToken();
   }
 
   getProducts() {
@@ -58,16 +68,14 @@ export class CartComponent implements OnInit {
             this.defaultPosition = this.arr[i];
           }
         }
-
         this.idItem = this.cartRows[0].id_item;
-        this.freight = 20;
 
         for (const i of Object.keys(this.cartRows)) {
           this.qtdItens.push(this.cartRows[i].qtd);
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
-        this.total = this.finalValue + this.freight;
+        this.total = this.finalValue;//+ this.freight;
 
         if (this.total >= 80 && this.total < 140) {
           this.installments = 2;
@@ -88,8 +96,43 @@ export class CartComponent implements OnInit {
     });
   }
 
+
+  getShipPrice(cepVal) {
+    if (cepVal === true) return this.shipBox === true;
+
+    const validacep = /\d{2}\.\d{3}\-\d{3}/;
+    this.currentCep = cepVal.value;
+
+    if (validacep.test(this.currentCep)) {
+      const cep = this.currentCep.replace(/\D/g, '');
+      const obj = { cep: cep, value: this.finalValue };
+
+      this.shipService.getShippingValue(obj).subscribe((res) => {
+        if (res) {
+          this.rowsShipping = res.totalValue;
+          this.adressInfo = res.adress;
+          this.shipBox = false;
+        }
+      });
+    } else {
+      this.toastrService.error('CEP inválido', 'Erro!');
+    }
+  }
+
   sumItems(a, b) {
     return a + b;
+  }
+
+
+  getToken() {
+    const t = localStorage.getItem('token');
+
+    if (t != null) {
+      this.decodedToken = this.jwtDecode(t);
+      if (this.decodedToken.cep == null) {
+        this.shipBox = true;
+      } else { this.shipBox = false; }
+    }
   }
 
   jwtDecode(token) {

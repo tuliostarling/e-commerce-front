@@ -69,10 +69,18 @@
               <p>CEP:
                 <b>{{currentCep}}</b>
               </p>
-              <a href="javascript:getShipPrice()"> Escolher outro endereço </a>
+              <p>Valor Sedex:
+                <b>R${{rowsShipping[0].Valor}}</b>
+              </p>
+              <p>Valor PAC:
+                <b>R${{rowsShipping[1].Valor}}</b>
+              </p>
+              <a class="btn">
+                <i (click)="getShipPrice(true)"></i> Escolher outro endereço
+              </a>
             </div>
 
-            <form class="form-inline">
+            <form class="form-inline" *ngIf='shipBox === true'>
               <div class="col-xs-6 col-sm-6 col-md-4" id="inputLabelCEP">
                 <div class="form-group">
                   <label id="labelCEP" for="cep">Calcule frete e prazo: </label>

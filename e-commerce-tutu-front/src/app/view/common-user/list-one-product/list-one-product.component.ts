@@ -106,6 +106,8 @@ export class ListOneProductComponent implements OnInit {
   }
 
   getShipPrice(cepVal) {
+    if(cepVal === true) return this.shipBox === true;
+
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
     this.currentCep = cepVal.value;
 
@@ -117,7 +119,7 @@ export class ListOneProductComponent implements OnInit {
         if (res) {
           this.rowsShipping = res.totalValue;
           this.adressInfo = res.adress;
-          this.shipBox = true;
+          this.shipBox = false;
         }
       });
     } else {
