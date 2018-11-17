@@ -65,7 +65,8 @@ export class ProductCategoryListComponent implements OnInit {
 
         this.categoryName = res[0].category;
 
-        category.setAttribute('style', `background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${res[0].location_aws});`);
+        category.setAttribute('style', `background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${res[0].location_aws})
+                                center; background-size: cover; background-position: center center; background-repeat: no-repeat;`);
       }
     });
   }

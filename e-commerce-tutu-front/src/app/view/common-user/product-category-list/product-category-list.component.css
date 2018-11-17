@@ -103,8 +103,11 @@ img {
   background-position: center center;
   color: #fff;
   padding-top: 50px;
-  width: 100%; 
-  height: auto;
+}
+
+.responsive {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .bg-overlay p {
