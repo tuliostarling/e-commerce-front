@@ -6,7 +6,7 @@ import { DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
-import { ProductService } from '../../../service';
+import { ProductService, UserApiService } from '../../../service';
 import { CommentService } from '../../../service/comment/comment-api.service';
 import { ProductModel } from '../../../model/product/product';
 import { CommentModel } from '../../../model/comment/comment';
@@ -34,6 +34,7 @@ export class ListOneProductComponent implements OnInit {
   changeImgBool = false;
   installments: number;
   division: number;
+  isLogged: boolean;
 
   rowsComment: CommentModel;
   ratingStar: number;
@@ -41,6 +42,7 @@ export class ListOneProductComponent implements OnInit {
   formulario: FormGroup;
   showCommentBox = false;
   decodedToken: any;
+  id_user: number;
 
   rowsShipping: Array<ValueModel>;
   adressInfo: Array<AdressModel>;
@@ -52,6 +54,7 @@ export class ListOneProductComponent implements OnInit {
     private apiService: ProductService,
     private commentService: CommentService,
     private shippingService: ShippingService,
+    private userService: UserApiService,
     private form: FormBuilder,
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
@@ -70,6 +73,7 @@ export class ListOneProductComponent implements OnInit {
 
     this.getToken();
     this.getProducts();
+    this.getUser();
     this.getComments();
   }
 
@@ -108,12 +112,16 @@ export class ListOneProductComponent implements OnInit {
   getShipPrice(cepVal) {
     if (cepVal === true) { return this.shipBox === true; }
 
-    const validacep = /\d{2}\.\d{3}\-\d{3}/;
-    this.currentCep = cepVal.value;
+    if (cepVal.value === undefined) {
+      this.currentCep = cepVal;
+    } else {
+      this.currentCep = cepVal.value;
+    }
 
+    const validacep = /\d{2}\.\d{3}\-\d{3}/;
     if (validacep.test(this.currentCep)) {
       const cep = this.currentCep.replace(/\D/g, '');
-      const obj = { cep: cep, value: this.productPrice };
+      const obj = { cep: cep, value: 20 };
 
       this.shippingService.getShippingValue(obj).subscribe((res) => {
         if (res) {
@@ -125,6 +133,17 @@ export class ListOneProductComponent implements OnInit {
     } else {
       this.toastrService.error('CEP inválido', 'Erro!');
     }
+  }
+
+  getUser() {
+    this.userService.getListOne(this.id_user).subscribe((res) => {
+      if (res !== null) {
+        this.isLogged = true;
+        this.getShipPrice(res[0].cep);
+      } else {
+        this.isLogged = false;
+      }
+    });
   }
 
   getComments() {
@@ -151,6 +170,7 @@ export class ListOneProductComponent implements OnInit {
 
     if (t != null) {
       this.decodedToken = this.jwtDecode(t);
+      this.id_user = this.decodedToken.id;
       if (this.decodedToken.cep == null) {
         this.shipBox = true;
       } else { this.shipBox = false; }
@@ -184,5 +204,9 @@ export class ListOneProductComponent implements OnInit {
 
   openModal(content) {
     this.modalService.open(content, { centered: true });
+  }
+
+  finishRegister() {
+    this.router.navigateByUrl(`/finish_register/${this.id_user}`);
   }
 }

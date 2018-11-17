@@ -4,13 +4,13 @@
       <div class="col-sm-12 col-md-3 mb-3">
         <div class="form-group">
           <label for="cpf">CPF</label>
-          <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" required>
+          <input appCpf type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" maxlength="14" required>
         </div>
       </div>
       <div class="col-sm-12 col-md-3 mb-3">
         <div class="form-group">
           <label for="cep">CEP</label>
-          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" required (blur)="onblur($event)">
+          <input appCep type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" maxlength="10" required (blur)="onblur($event)">
         </div>
       </div>
       <div class="col-sm-12 col-md-2 mb-3">

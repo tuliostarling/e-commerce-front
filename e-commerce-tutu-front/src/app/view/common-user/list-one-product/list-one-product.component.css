@@ -51,6 +51,17 @@ a:hover {
     cursor:pointer;  
 }
 
+#complete-register {
+    color:#FE980F; 
+    text-decoration: none;
+}
+
+#complete-register:hover {
+    color:#000; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
+
 #imgThumb {
     width: 80px;
     height: 80px;

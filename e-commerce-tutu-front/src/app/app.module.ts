@@ -22,7 +22,7 @@ import { CountdownTimerModule } from 'ngx-countdown-timer';
 @NgModule({
   declarations: [
     AppComponent,
-    CountdownComponent,
+    CountdownComponent
   ],
   imports: [
     BrowserModule,

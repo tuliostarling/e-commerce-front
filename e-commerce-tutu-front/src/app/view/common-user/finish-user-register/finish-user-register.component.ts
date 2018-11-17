@@ -51,9 +51,15 @@ export class FinishUserRegisterComponent implements OnInit {
   onSubmit(form) {
     this.rowsUser = form.value;
 
-    this.apiService.update(this.rowsUser).subscribe((res) => {
-      if (res === null) { return this.toastrService.error('Erro ao atualizar dados', 'Erro!'); }
-    });
+    const validaCPFbool = this.validaCPF(this.rowsUser.cpf);
+
+    if (validaCPFbool === true) {
+      this.apiService.update(this.rowsUser).subscribe((res) => {
+        if (res === null) { return this.toastrService.error('Erro ao atualizar dados', 'Erro!'); }
+      });
+    } else {
+      return this.toastrService.error('CPF inválido, por favor digite novamente', 'Erro!');
+    }
 
     this.toastrService.success('Dados atualizados, por favor saia e entre da sua conta!', 'Sucesso!');
     return this.home();
@@ -72,5 +78,48 @@ export class FinishUserRegisterComponent implements OnInit {
       this.street = res.adress.street;
       this.neighborhood = res.adress.neighborhood;
     });
+  }
+
+  validaCPF(cpf: any) {
+    let numeros, digitos, soma, i, resultado, digitos_iguais;
+    digitos_iguais = 1;
+
+    cpf = cpf.replace(/[^a-zA-Z0-9]/g, '');
+
+    if (cpf.length < 11) { return false; }
+    for (i = 0; i < cpf.length - 1; i++) {
+      if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
+        digitos_iguais = 0;
+        break;
+      }
+    }
+    if (!digitos_iguais) {
+      numeros = cpf.substring(0, 9);
+      digitos = cpf.substring(9);
+      soma = 0;
+      for (i = 10; i > 1; i--) {
+        soma += numeros.charAt(10 - i) * i;
+      }
+
+      resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+      if (resultado.toString() !== digitos.charAt(0)) {
+        return false;
+      }
+
+      numeros = cpf.substring(0, 10);
+      soma = 0;
+      for (i = 11; i > 1; i--) {
+        soma += numeros.charAt(11 - i) * i;
+      }
+
+      resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+      if (resultado.toString() !== digitos.charAt(1)) {
+        return false;
+      }
+
+      return true;
+    } else {
+      return false;
+    }
   }
 }

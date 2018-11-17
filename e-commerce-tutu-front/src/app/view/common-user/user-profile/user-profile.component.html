@@ -13,7 +13,7 @@
       <div class="col-sm-12 col-md-3 mb-3">
         <div class="form-group">
           <label for="cpf">CPF</label>
-          <input type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" value="{{cpf}}" required>
+          <input appCpf type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" value="{{cpf}}" maxlength="14" required>
         </div>
       </div>
 
@@ -35,7 +35,7 @@
       <div class="col-sm-12 col-md-2 mb-3">
         <div class="form-group">
           <label for="cep">CEP</label>
-          <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required>
+          <input appCep type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" maxlength="10" (blur)="onblur($event)" required>
         </div>
       </div>
       <div class="col-sm-12 col-md-3 mb-3">

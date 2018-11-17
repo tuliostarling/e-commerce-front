@@ -15,6 +15,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { WishListComponent } from './wish-list/wish-list.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { FinishUserRegisterComponent } from './finish-user-register/finish-user-register.component';
+import { CepDirective } from 'src/app/directives/cep.directive';
+import { CpfDirective } from '../../directives/cpf.directive';
 
 @NgModule({
   imports: [
@@ -33,6 +35,8 @@ import { FinishUserRegisterComponent } from './finish-user-register/finish-user-
     WishListComponent,
     PromotionsComponent,
     FinishUserRegisterComponent,
+    CepDirective,
+    CpfDirective,
   ],
   exports: [
     HomeComponent,
