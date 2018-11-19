@@ -276,7 +276,7 @@ export class ProductRegisterComponent implements OnInit {
     if (totalImgs + totalImgInput > 5) { return this.toastrService.warning('Maximo de 5 imagens permitidas!', 'Atenção!'); }
 
     let arrImageInput = Array<any>();
-    arrImageInput = <any>fileInput.target.files;
+    arrImageInput = Array.from(fileInput.target.files);
 
     this.asyncForEach(arrImageInput, index);
   }
@@ -293,8 +293,14 @@ export class ProductRegisterComponent implements OnInit {
     }
   }
 
+  trackByFn(index) {
+    return index;
+  }
+
   removeFile(i: number, subIndex: number, id: string, key: string) {
     const index: number = this.rowsImagesObj[i];
+
+    if (id === undefined && key === undefined) return this.imagesToUpload.splice(subIndex, 1);
 
     if (index !== -1) {
       const size = this.rowsImagesObj[i].images.splice(subIndex, 1);
@@ -328,7 +334,7 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   handleFileSelect(fileInput: any) {
-    this.imagesToUpload = <any>fileInput.target.files;
+    this.imagesToUpload = Array.from(fileInput.target.files);
   }
 
   navToListCoup() {

@@ -79,11 +79,16 @@ export class CategoryRegisterComponent implements OnInit {
 
 
   handleFileSelect(fileInput: any) {
-    this.imagesToUpload = <any>fileInput.target.files;
+    this.imagesToUpload = Array.from(fileInput.target.files);
+
   }
 
-  removeFile(indexe) {
-    delete this.imagesToUpload[indexe];
+  trackByFn(index) {
+    return index;
+  }
+
+  removeFile(indexe, item) {
+    this.imagesToUpload.splice(indexe, 1);
   }
 
   navToListCat() {

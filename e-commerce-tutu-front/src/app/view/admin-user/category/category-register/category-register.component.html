@@ -32,7 +32,8 @@
           <div class="form-group">
             <label for="type">Banner da Categoria</label>
             <div class="inline-block">
-              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)" multiple />
+              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)"
+                multiple />
             </div>
           </div>
         </div>
@@ -47,7 +48,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of imagesToUpload;let i=index">
+            <tr *ngFor="let item of imagesToUpload;let i=index; trackBy: trackByFn">
               <td>
                 <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
                   <div class="previewIcon" [ngfBackground]="item"></div>
