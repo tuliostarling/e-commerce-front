@@ -36,7 +36,7 @@
           <hr style="margin-top: 3%; margin-bottom: 5%">
 
           <div class="row">
-            <div class="col-6" style="text-align: center; margin-top: 1%;">
+            <div class="col-6" id="product-price" style="text-align: center; margin-top: 2%;">
               <h5>
                 <b>R$ {{productPrice}}</b>
               </h5>
@@ -47,7 +47,7 @@
             </div>
           </div>
 
-          <hr style="margin-top: 5%">
+          <hr style="margin-top: 4%">
 
           <div class="row" style="margin-bottom: -4%">
             <div class="col-xs-2 col-sm-2 col-md-1">
@@ -64,8 +64,8 @@
 
         <div class="end">
           <div class="row" class="col-sm-12">
-            <div *ngIf='shipBox === false' class="col-12" style="margin-top: 1%;">
-              <p>Frete para:
+            <div *ngIf='shipBox === false && adressInfo != undefined' class="col-12" style="margin-top: 1%;">
+              <p>Endereço:
                 <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
               </p>
               <p>CEP:
@@ -77,19 +77,34 @@
               <p>Valor PAC:
                 <b>R${{rowsShipping[1].Valor}}</b>
               </p>
-              <a class="btn">
+              <!--a class="btn">
                 <i (click)="getShipPrice(true)"></i> Escolher outro endereço
-              </a>
+              </a-->
+
+              <div class="row" style="margin-top: 3%;">
+                <form class="form-inline">
+                  <div class="col-xs-6 col-sm-6 col-md-6" id="inputLabelCEP">
+                    <div class="form-group">
+                      <label id="labelCEP" for="cep">Calcule frete: </label>
+                      <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-md-2" id="btnCEP">
+                    <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
+                  </div>
+                </form>
+              </div>
+
             </div>
 
             <div *ngIf='shipBox === true'>
               <a *ngIf="isLogged == true" id="complete-register" (click)="finishRegister()">Seu cadastro está incompleto. Clique aqui e complete-o.</a>
-              
+
               <div class="row" style="margin-top: 3%;">
                 <form class="form-inline">
-                  <div class="col-xs-6 col-sm-6 col-md-5" id="inputLabelCEP">
+                  <div class="col-xs-6 col-sm-6 col-md-6" id="inputLabelCEP">
                     <div class="form-group">
-                      <label id="labelCEP" for="cep">Calcule frete e prazo: </label>
+                      <label id="labelCEP" for="cep">Calcule frete: </label>
                       <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
                     </div>
                   </div>
@@ -100,7 +115,26 @@
               </div>
             </div>
 
-            <a *ngIf="isLogged == false" id="complete-register">Faça seu cadastro clicando aqui.</a>
+            <div *ngIf="isLogged == false">
+              <p>Faça seu cadastro clicando
+                <a id="complete-register">aqui.</a>
+              </p>
+
+              <div class="row" style="margin-top: 3%;">
+                <form class="form-inline">
+                  <div class="col-xs-6 col-sm-2 col-md-6" id="inputLabelCEP">
+                    <div class="form-group">
+                      <label id="labelCEP" for="cep">Calcule frete: </label>
+                      <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-2" id="btnCEP">
+                    <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -204,7 +238,7 @@
 
         <hr style="margin-top: 1%; margin-bottom: 3%">
 
-        <div class="row">
+        <div class="row" style="margin-bottom: 3%;">
           <div class="container" *ngIf='showCommentBox === true'>
             <form role="form" [formGroup]="formulario" #form="ngForm" (ngSubmit)="onSubmit(formulario)">
               <div class="form-group">
@@ -217,21 +251,29 @@
           </div>
         </div>
 
-        <div class="rows" *ngFor='let i of rowsComment'>
-          <div id="commentBox" class="rows col-1" style="margin-top: 1%;">
-            <h5>{{i.name}}</h5>
-            <div class="col-3" style="margin-top: 0.3%">
+        <div class="container">
+          <div class="row" *ngFor='let i of rowsComment' id="commentBox">
+            <div class="col-md-6" style="margin-top: 1%;">
+              <h5 id="nameComment">{{i.name}}</h5>
+            </div>
+            <div class="col-md-5" id="starsComment">
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
               <i class="fa fa-star"></i>
               <i class="fa fa-star-o"></i>
             </div>
-            <p style="text-align:right">{{i.created_at | date: "dd/MM/yyyy"}}</p>
-          </div>
-          <p>{{i.comment}}</p>
-        </div>
+            <div class="col-md-1">
+              <p id="dateComment">{{i.created_at | date: "dd/MM/yyyy"}}</p>
+            </div>
 
+            <div id="avaliationComment" class="row">
+              <div class="col-md-12">
+                <p>{{i.comment}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>
