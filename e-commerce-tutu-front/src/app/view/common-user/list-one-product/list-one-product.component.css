@@ -99,6 +99,10 @@ tr {
     text-align: center;
 }
 
+#totalStars {
+    margin-top: 0.3%;
+}
+
 #commentBox {
     border-top: 1px solid #f2f2f2;
     border-bottom: 1px solid #CCCCCC;
@@ -126,6 +130,48 @@ tr {
     margin-right: 1%;
 }
 
+#hrComment {
+    margin-top: 1%;
+    margin-bottom: 3%
+}
+
+/* stars - BEGIN */
+fieldset, label { margin: 0; padding: 0; }
+.rating { 
+  border: none;
+  float: left;
+}
+
+.rating > input { display: none; } 
+.rating > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  }
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+
+/* stars - END */
+
 @media only screen and (max-width: 768px) {
     .images {
         margin-top: -5%;
@@ -136,10 +182,6 @@ tr {
         width: 23%;
     }
     
-    /* #price-text {
-        margin-bottom: -5%;
-    } */
-
     #btnCEP {
         margin-top: -23.3%;
         margin-left: 73%;
@@ -169,5 +211,29 @@ tr {
     
     #dateComment {
         margin-top: -3%;
+    }
+
+    #avalTitle {
+        margin-top: 2%;
+        margin-bottom: -2%;
+    }
+
+    #drop-down {
+        width: 74%;
+    }
+
+    #commentBtn {
+        margin-top: -29.7%;
+    }
+
+    #totalStars {
+        margin-top: -9%;
+        text-align: right;
+        margin-bottom: 8%;
+    }
+
+    #hrComment {
+        margin-top: -3%;
+        margin-bottom: 4%
     }
 }

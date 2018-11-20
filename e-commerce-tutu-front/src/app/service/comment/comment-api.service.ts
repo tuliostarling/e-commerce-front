@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { CommentModel } from '../../model/comment/comment';
+import { CommentModel, RequestCommentModel } from '../../model/comment/comment';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class CommentService {
     ) { }
 
     getList(id: number) {
-        return this.http.get<CommentModel>(`${this.API_URL}getComment/${id}`);
+        return this.http.get<RequestCommentModel>(`${this.API_URL}getComment/${id}`);
     }
 
     create(dadosForm: CommentModel) {

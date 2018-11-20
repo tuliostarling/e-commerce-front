@@ -36,7 +36,9 @@ export class ListOneProductComponent implements OnInit {
   division: number;
   isLogged: boolean;
 
-  rowsComment: CommentModel;
+  rowsComment: Array<CommentModel>;
+  totalComment: number;
+  avgRating: number;
   ratingStar: number;
   commentForm: CommentModel;
   formulario: FormGroup;
@@ -150,14 +152,23 @@ export class ListOneProductComponent implements OnInit {
 
   getComments() {
     this.commentService.getList(this.idProduct).subscribe((res) => {
-      if (res) { return this.rowsComment = res; }
+      if (res) {
+        this.avgRating = res.avgRating[0].avg;
+        this.totalComment = res.total[0].count;
+        this.rowsComment = res.rows;
+
+        // Need to finish the logic of showing the evaluation through stars
+        //
+        // for (const i of Object.keys(this.rowsComment)) {
+        //   console.log(this.rowsComment[i].rating);
+        // }
+      }
     });
   }
 
   onSubmit(form: FormGroup) {
     this.formulario.get('id_user').setValue(this.decodedToken.id);
     this.formulario.get('id_subproduct').setValue(this.idProduct);
-    this.formulario.get('rating').setValue(3);
     this.commentForm = form.value;
     this.commentService.create(this.commentForm).subscribe((res) => {
       if (res) {

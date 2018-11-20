@@ -28,7 +28,7 @@
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
                 <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i> (1)
+                <i class="fa fa-star-o"></i> ({{totalComment}})
               </a>
             </div>
           </div>
@@ -204,7 +204,7 @@
       <div id="aval" class="aval">
         <div class="row">
           <div class="col-12">
-            <h4 style="margin-top: 3%">Avaliações</h4>
+            <h4 id="avalTitle">Avaliações</h4>
           </div>
         </div>
 
@@ -212,14 +212,14 @@
 
         <div class="row" style="margin-top: 3%">
           <div class="col-sm-1 col-md-1" id="aval">
-            <h4>4.0</h4>
+            <h4>{{avgRating}}</h4>
           </div>
-          <div class="col-sm-3 col-md-3" style="margin-top: 0.3%" id="stars">
+          <div class="col-sm-3 col-md-3" id="totalStars">
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i> (1)
+            <i class="fa fa-star-o"></i> ({{totalComment}})
           </div>
           <div class="col-sm-5 col-md-5" id="drop-down">
             <div class="form-group">
@@ -232,17 +232,42 @@
             </div>
           </div>
           <div class="col-sm-3 col-md-3" id="btn-aval" style="text-align: right">
-            <button *ngIf='showCommentBox === false' class="btn btn-primary" (click)="showBox();">Avaliar</button>
+            <button *ngIf='showCommentBox === false' class="btn btn-primary" id="commentBtn" (click)="showBox();">Avaliar</button>
           </div>
         </div>
 
-        <hr style="margin-top: 1%; margin-bottom: 3%">
+        <hr id="hrComment">
 
         <div class="row" style="margin-bottom: 3%;">
           <div class="container" *ngIf='showCommentBox === true'>
             <form role="form" [formGroup]="formulario" #form="ngForm" (ngSubmit)="onSubmit(formulario)">
               <div class="form-group">
-                <label for="comment">Avaliação</label>
+                <div class="float-right">
+                  <fieldset class="rating">
+                    <input type="radio" id="star5" formControlName="rating" name="rating" value="5" />
+                    <label class="full" for="star5"></label>
+                    <input type="radio" id="star4half" formControlName="rating" name="rating" value="4.5" />
+                    <label class="half" for="star4half"></label>
+                    <input type="radio" id="star4" formControlName="rating" name="rating" value="4" />
+                    <label class="full" for="star4"></label>
+                    <input type="radio" id="star3half" formControlName="rating" name="rating" value="3.5" />
+                    <label class="half" for="star3half"></label>
+                    <input type="radio" id="star3" formControlName="rating" name="rating" value="3" />
+                    <label class="full" for="star3"></label>
+                    <input type="radio" id="star2half" formControlName="rating" name="rating" value="2.5" />
+                    <label class="half" for="star2half"></label>
+                    <input type="radio" id="star2" formControlName="rating" name="rating" value="2" />
+                    <label class="full" for="star2"></label>
+                    <input type="radio" id="star1half" formControlName="rating" name="rating" value="1.5" />
+                    <label class="half" for="star1half"></label>
+                    <input type="radio" id="star1" formControlName="rating" name="rating" value="1" />
+                    <label class="full" for="star1"></label>
+                    <input type="radio" id="starhalf" formControlName="rating" name="rating" value="0.5" />
+                    <label class="half" for="starhalf"></label>
+                  </fieldset>
+                </div>
+
+                <label for="comment" style="margin-top: 1%">Avaliação</label>
                 <textarea class="form-control" id="comment" formControlName="comment" rows="3"></textarea>
               </div>
               <button class="btn btn-danger float-right" (click)="showBox(); form.reset()" style="margin-left: 1%">Cancelar</button>

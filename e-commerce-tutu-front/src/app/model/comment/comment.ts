@@ -6,3 +6,9 @@ export interface CommentModel {
     rating: number;
     created_at: Date;
 }
+
+export interface RequestCommentModel {
+    avgRating: number;
+    total: number;
+    rows: Array<CommentModel>;
+}
