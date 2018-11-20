@@ -138,9 +138,8 @@ export class ProductCategoryListComponent implements OnInit {
     this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
 
     this.apiService.addToCart(this.dadosCart).subscribe(res => {
-      if (res != null) {
-        this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
-      }
+      if (res.sucess === null) return this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
+      else if (res.error) return this.toastrService.warning('Produto ja está no carrinho', 'Aviso!');
     });
   }
 
@@ -148,7 +147,7 @@ export class ProductCategoryListComponent implements OnInit {
     this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id });
 
     this.apiService.addToWishList(this.dadosWish).subscribe(res => {
-      if (res != null) {
+      if (res !== null) {
         this.toastrService.success('Produto inserido na lista de desejos!', 'Sucesso!');
       }
     });

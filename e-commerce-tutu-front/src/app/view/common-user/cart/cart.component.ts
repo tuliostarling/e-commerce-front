@@ -141,7 +141,7 @@ export class CartComponent implements OnInit {
     return JSON.parse(window.atob(base64));
   }
 
-  updateAmout(dados, selectValueAux) {
+  updateAmount(dados, selectValueAux) {
     dados.push({ amount: selectValueAux, id_item: this.idItem });
 
     this.apiService.updateAmount(dados).subscribe(res => {
@@ -172,6 +172,6 @@ export class CartComponent implements OnInit {
   change(event: any) {
     this.selectValue = event.value;
 
-    this.updateAmout([], this.selectValue);
+    this.updateAmount([], this.selectValue);
   }
 }

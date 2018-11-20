@@ -78,7 +78,7 @@ export class ProductService {
     }
 
     addToCart(dadosForm: any) {
-        return this.http.post<ProductModel>(`${this.API_URL_CART}addCart/`, dadosForm);
+        return this.http.post<any>(`${this.API_URL_CART}addCart/`, dadosForm);
     }
 
     removeFromCart(id: number) {
