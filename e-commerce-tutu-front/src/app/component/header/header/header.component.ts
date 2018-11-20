@@ -32,7 +32,13 @@ export class HeaderComponent implements OnInit {
     if (t != null) {
       this.decodedToken = this.jwtDecode(t);
       this.logged = true;
-      this.userName = this.decodedToken.name;
+
+      // check if the name has more than 2 words
+      if (this.decodedToken.name.trim().indexOf(' ') !== -1) {
+        this.userName = this.decodedToken.name.split(' ').slice(0, 2).join(' ');
+      } else {
+        this.userName = this.decodedToken.name;
+      }
       this.userNameDecoded = decodeURIComponent(escape(this.userName));
 
       if (this.decodedToken.admin === true) {
@@ -101,7 +107,7 @@ export class HeaderComponent implements OnInit {
   }
 
   registerCoupon() {
-    this.router.navigateByUrl('/coupon_list/0' );
+    this.router.navigateByUrl('/coupon_list/0');
   }
 
   registerProduct() {

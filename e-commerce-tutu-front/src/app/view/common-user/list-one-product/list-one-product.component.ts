@@ -136,14 +136,16 @@ export class ListOneProductComponent implements OnInit {
   }
 
   getUser() {
-    this.userService.getListOne(this.id_user).subscribe((res) => {
-      if (res !== null) {
-        this.isLogged = true;
-        this.getShipPrice(res[0].cep);
-      } else {
-        this.isLogged = false;
-      }
-    });
+    if (this.id_user !== undefined) {
+      this.isLogged = true;
+      this.userService.getListOne(this.id_user).subscribe((res) => {
+        if (res !== null) {
+          this.getShipPrice(res[0].cep);
+        }
+      });
+    } else {
+      this.isLogged = false;
+    }
   }
 
   getComments() {
