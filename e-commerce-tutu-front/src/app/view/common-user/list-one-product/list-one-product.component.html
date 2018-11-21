@@ -24,6 +24,13 @@
             </div>
             <div class="col-6" style="text-align: right">
               <a>
+                <div *ngIf="avgRating == 0">
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
                 <div *ngIf="avgRating == 0.5">
                   <i class="fa fa-star-half-o"></i>
                   <i class="fa fa-star-o"></i>
