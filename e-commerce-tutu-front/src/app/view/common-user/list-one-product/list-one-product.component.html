@@ -24,11 +24,76 @@
             </div>
             <div class="col-6" style="text-align: right">
               <a>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i> ({{totalComment}})
+                <div *ngIf="avgRating == 0.5">
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 1">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 1.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 2">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 2.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 3">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 3.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 4">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 4.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i> ({{totalComment}})
+                </div>
               </a>
             </div>
           </div>
@@ -64,7 +129,7 @@
 
         <div class="end">
           <div class="row" class="col-sm-12">
-            <div *ngIf='shipBox === false && adressInfo != undefined' class="col-12" style="margin-top: 1%;">
+            <div *ngIf='shipBox === false && finishRegisterBool == false && adressInfo != undefined' class="col-12" style="margin-top: 1%;">
               <p>Endereço:
                 <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
               </p>
@@ -81,7 +146,7 @@
                 <i (click)="getShipPrice(true)"></i> Escolher outro endereço
               </a-->
 
-              <div class="row" style="margin-top: 3%;">
+              <div class="row" style="margin-top: 3%;" *ngIf="isLogged == true ">
                 <form class="form-inline">
                   <div class="col-xs-6 col-sm-6 col-md-6" id="inputLabelCEP">
                     <div class="form-group">
@@ -97,8 +162,26 @@
 
             </div>
 
-            <div *ngIf='shipBox === true'>
-              <a *ngIf="isLogged == true" id="complete-register" (click)="finishRegister()">Seu cadastro está incompleto. Clique aqui e complete-o.</a>
+            <div *ngIf='finishRegisterBool == true && isLogged == true'>
+              <div *ngIf='shipBox == false' class="col-12" style="margin-top: 1%;">
+
+                <p>Endereço:
+                  <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
+                </p>
+                <p>CEP:
+                  <b>{{currentCep}}</b>
+                </p>
+                <p>Valor Sedex:
+                  <b>R${{rowsShipping[0].Valor}}</b>
+                </p>
+                <p>Valor PAC:
+                  <b>R${{rowsShipping[1].Valor}}</b>
+                </p>
+                <!--a class="btn">
+                    <i (click)="getShipPrice(true)"></i> Escolher outro endereço
+                  </a-->
+
+              </div>
 
               <div class="row" style="margin-top: 3%;">
                 <form class="form-inline">
@@ -113,13 +196,12 @@
                   </div>
                 </form>
               </div>
+
+              <p style="margin-top: 3%">Seu cadastro está incompleto. Clique
+                <a id="complete-register" (click)="finishRegister()"> aqui </a>e complete-o</p>
             </div>
 
             <div *ngIf="isLogged == false">
-              <p>Faça seu cadastro clicando
-                <a id="complete-register">aqui.</a>
-              </p>
-
               <div class="row" style="margin-top: 3%;">
                 <form class="form-inline">
                   <div class="col-xs-6 col-sm-2 col-md-6" id="inputLabelCEP">
@@ -133,6 +215,10 @@
                   </div>
                 </form>
               </div>
+
+              <p style="margin-top: 3%">Faça seu cadastro clicando
+                <a id="complete-register">aqui.</a>
+              </p>
             </div>
 
           </div>
@@ -211,17 +297,7 @@
         <hr>
 
         <div class="row" style="margin-top: 3%">
-          <div class="col-sm-1 col-md-1" id="aval">
-            <h4>{{avgRating}}</h4>
-          </div>
-          <div class="col-sm-3 col-md-3" id="totalStars">
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i> ({{totalComment}})
-          </div>
-          <div class="col-sm-5 col-md-5" id="drop-down">
+          <div class="col-sm-5 col-md-6" id="drop-down">
             <div class="form-group">
               <select class="form-control">
                 <option selected>Avaliações mais recentes</option>
@@ -231,7 +307,7 @@
               </select>
             </div>
           </div>
-          <div class="col-sm-3 col-md-3" id="btn-aval" style="text-align: right">
+          <div class="col-sm-3 col-md-6" id="btn-aval" style="text-align: right">
             <button *ngIf='showCommentBox === false' class="btn btn-primary" id="commentBtn" (click)="showBox();">Avaliar</button>
           </div>
         </div>
@@ -282,11 +358,76 @@
               <h5 id="nameComment">{{i.name}}</h5>
             </div>
             <div class="col-md-5" id="starsComment">
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star"></i>
-              <i class="fa fa-star-o"></i>
+              <div *ngIf="i.rating == 0.5">
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 1">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 1.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 2">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 2.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 3">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 3.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 4">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 4.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+              </div>
+              <div *ngIf="i.rating == 5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
             </div>
             <div class="col-md-1">
               <p id="dateComment">{{i.created_at | date: "dd/MM/yyyy"}}</p>

@@ -48,7 +48,8 @@ export class ListOneProductComponent implements OnInit {
 
   rowsShipping: Array<ValueModel>;
   adressInfo: Array<AdressModel>;
-  shipBox: boolean;
+  shipBox = true;
+  finishRegisterBool = false;
   currentCep: string;
 
   constructor(
@@ -114,26 +115,29 @@ export class ListOneProductComponent implements OnInit {
   getShipPrice(cepVal) {
     if (cepVal === true) { return this.shipBox === true; }
 
-    if (cepVal.value === undefined) {
-      this.currentCep = cepVal;
-    } else {
-      this.currentCep = cepVal.value;
-    }
+    if (cepVal !== null) {
+      if (cepVal.value === undefined) {
+        this.currentCep = cepVal;
+      } else {
+        this.currentCep = cepVal.value;
+      }
 
-    const validacep = /\d{2}\.\d{3}\-\d{3}/;
-    if (validacep.test(this.currentCep)) {
-      const cep = this.currentCep.replace(/\D/g, '');
-      const obj = { cep: cep, value: 20 };
 
-      this.shippingService.getShippingValue(obj).subscribe((res) => {
-        if (res) {
-          this.rowsShipping = res.totalValue;
-          this.adressInfo = res.adress;
-          this.shipBox = false;
-        }
-      });
-    } else {
-      this.toastrService.error('CEP inválido', 'Erro!');
+      const validacep = /\d{2}\.\d{3}\-\d{3}/;
+      if (validacep.test(this.currentCep)) {
+        const cep = this.currentCep.replace(/\D/g, '');
+        const obj = { cep: cep, value: 20 };
+
+        this.shippingService.getShippingValue(obj).subscribe((res) => {
+          if (res) {
+            this.rowsShipping = res.totalValue;
+            this.adressInfo = res.adress;
+            this.shipBox = false;
+          }
+        });
+      } else {
+        this.toastrService.error('CEP inválido', 'Erro!');
+      }
     }
   }
 
@@ -153,15 +157,9 @@ export class ListOneProductComponent implements OnInit {
   getComments() {
     this.commentService.getList(this.idProduct).subscribe((res) => {
       if (res) {
-        this.avgRating = res.avgRating[0].avg;
+        this.avgRating = Math.round(res.avgRating[0].avg);
         this.totalComment = res.total[0].count;
         this.rowsComment = res.rows;
-
-        // Need to finish the logic of showing the evaluation through stars
-        //
-        // for (const i of Object.keys(this.rowsComment)) {
-        //   console.log(this.rowsComment[i].rating);
-        // }
       }
     });
   }
@@ -185,8 +183,8 @@ export class ListOneProductComponent implements OnInit {
       this.decodedToken = this.jwtDecode(t);
       this.id_user = this.decodedToken.id;
       if (this.decodedToken.cep == null) {
-        this.shipBox = true;
-      } else { this.shipBox = false; }
+        this.finishRegisterBool = true;
+      } else { this.finishRegisterBool = false; }
     }
   }
 
