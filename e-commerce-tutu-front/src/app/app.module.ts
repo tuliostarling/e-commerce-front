@@ -18,11 +18,15 @@ import { ComponentModule } from './component/component.module';
 import { AppComponent } from './app.component';
 import { CountdownComponent } from './countdown/countdown.component';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
+import { SucessPaymentComponent } from './sucess-payment/sucess-payment.component';
+import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CountdownComponent
+    CountdownComponent,
+    SucessPaymentComponent,
+    CancelPaymentComponent
   ],
   imports: [
     BrowserModule,

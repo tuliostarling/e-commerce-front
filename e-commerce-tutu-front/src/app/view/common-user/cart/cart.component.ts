@@ -4,6 +4,8 @@ import { ProductService } from '../../../service';
 import { CartModel } from '../../../model/cart/cart';
 import { ValueModel, AdressModel } from '../../../model/shipping/shipping';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
+import { PaymentService } from '../../../service/payment/payment-api.service';
+
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -29,8 +31,6 @@ export class CartComponent implements OnInit {
   division: number;
 
   arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  defaultPosition: number;
-
 
   rowsShipping: Array<ValueModel>;
   adressInfo: Array<AdressModel>;
@@ -41,6 +41,7 @@ export class CartComponent implements OnInit {
     private router: Router,
     private apiService: ProductService,
     private shipService: ShippingService,
+    private paymentService: PaymentService,
     private toastrService: ToastrService
   ) { }
 
@@ -63,13 +64,6 @@ export class CartComponent implements OnInit {
         this.finalValue = res.pricesObj.finalValue;
         this.qtdOpt = res.qtdOptions;
 
-        for (let i = 0; i < this.arr.length; i++) {
-          if (this.cartRows[0].qtd === this.arr[i]) {
-            this.defaultPosition = this.arr[i];
-          }
-        }
-        this.idItem = this.cartRows[0].id_item;
-
         for (const i of Object.keys(this.cartRows)) {
           this.qtdItens.push(this.cartRows[i].qtd);
         }
@@ -89,13 +83,24 @@ export class CartComponent implements OnInit {
         } else {
           this.installments = 1;
         }
-
-        // const toot = this.cartRows.map(x => x.qtd).reduce((acc, curr) => acc += curr - 1, 0);
-        // console.log(toot);
       }
     });
   }
 
+  finishPayment() {
+    console.log(this.decodedToken)
+    if (this.decodedToken.cep == null) return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`);
+
+    let paymentObj = {
+      cartItem: this.cartRows,
+      price: this.total
+    }
+
+    this.paymentService.payCart(paymentObj).subscribe((res) => {
+      console.log(res);
+      if (res != null) window.location.href = res.redirect;
+    })
+  }
 
   getShipPrice(cepVal) {
     if (cepVal === true) { return this.shipBox === true; }
@@ -123,7 +128,6 @@ export class CartComponent implements OnInit {
     return a + b;
   }
 
-
   getToken() {
     const t = localStorage.getItem('token');
 
@@ -141,8 +145,8 @@ export class CartComponent implements OnInit {
     return JSON.parse(window.atob(base64));
   }
 
-  updateAmount(dados, selectValueAux) {
-    dados.push({ amount: selectValueAux, id_item: this.idItem });
+  updateAmount(dados, selectValueAux, idItem) {
+    dados.push({ amount: selectValueAux, id_item_cart: idItem });
 
     this.apiService.updateAmount(dados).subscribe(res => {
       if (res == null) {
@@ -169,9 +173,8 @@ export class CartComponent implements OnInit {
     });
   }
 
-  change(event: any) {
+  change(event: any, id) {
     this.selectValue = event.value;
-
-    this.updateAmount([], this.selectValue);
+    this.updateAmount([], this.selectValue, id);
   }
 }

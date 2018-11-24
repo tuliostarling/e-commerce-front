@@ -135,12 +135,16 @@ export class ProductCategoryListComponent implements OnInit {
   }
 
   addProductToCart(id: number) {
-    this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
-
-    this.apiService.addToCart(this.dadosCart).subscribe(res => {
-      if (res.sucess === null) return this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
-      else if (res.error) return this.toastrService.warning('Produto ja está no carrinho', 'Aviso!');
-    });
+    if (this.decodedToken != null) {
+      this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
+      this.apiService.addToCart(this.dadosCart).subscribe(res => {
+        this.dadosCart = [];
+        if (res.sucess === true) return this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
+        else if (res.error) return this.toastrService.warning('Produto ja está no carrinho', 'Aviso!');
+      });
+    }else {
+      return this.toastrService.warning('Favor criar uma conta para ter seu carrinho !', 'Aviso!');
+    }
   }
 
   addProductToWishList(id: number) {

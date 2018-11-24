@@ -26,9 +26,9 @@
               </div>
             </td>
             <td>
-              <select (change)="change($event.target)">
+              <select (change)="change($event.target , i.id_item_cart)">
                 <ng-container>
-                  <option *ngFor="let j of arr;let i = index" [selected]="j === defaultPosition" value="{{j}}">{{j}}</option>
+                  <option *ngFor="let j of arr;let k = index" [selected]="j === i.qtd" value="{{j}}">{{j}}</option>
                 </ng-container>
               </select>
             </td>
@@ -96,7 +96,7 @@
           <p style="font-size: 15px">Frete</p>
         </div>
         <div class="col-6">
-          <p style="float: right; font-size: 15px">R$ {{freight}},00</p>
+          <!-->p style="float: right; font-size: 15px">R$ {{freight}},00</p-->
         </div>
       </div>
       <hr>
@@ -127,7 +127,7 @@
 
       <hr>
       <div style="text-align: center">
-        <button class="btn btn-success" style="float: center">Continuar</button>
+        <button class="btn btn-success" style="float: center" (click)="finishPayment()">Continuar</button>
         <p style="color: #949494; font-size: 12px; margin-top: 3%">Possui cupom? Você poderá usá-lo na etapa de
           pagamento.</p>
       </div>
