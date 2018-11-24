@@ -16,6 +16,8 @@ import { DiscountCouponRegisterComponent } from './discount-coupon/discount-coup
 import { ProductListComponent } from './product/product-list/product-list.component';
 import { ProductRegisterComponent } from './product/product-register/product-register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeControllerListComponent } from './home-controller/home-controller-list/home-controller-list.component';
+import { HomeControllerRegisterComponent } from './home-controller/home-controller-register/home-controller-register.component';
 
 @NgModule({
   imports: [
@@ -33,7 +35,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     DiscountCouponRegisterComponent,
     ProductListComponent,
     ProductRegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    HomeControllerListComponent,
+    HomeControllerRegisterComponent
   ],
   exports: [
     CategoryRegisterComponent,

@@ -1,0 +1,57 @@
+<!--div class="container">
+  <div class="jumbotron">
+    <h2 class="h2-text">Atualizar {{nameType}}</h2>
+  </div>
+
+  <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" *ngIf="idType == 1">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <div class="form-group">
+            <label for="type">Imagens Carousel</label>
+            <div class="inline-block">
+              <input type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)" multiple />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 40px">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of imagesToUpload;let i=index; trackBy: trackByFn">
+              <td>
+                <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                  <div class="previewIcon" [ngfBackground]="item"></div>
+                </div>
+                <strong>{{ item.name }}</strong>
+              </td>
+              <td nowrap>
+                <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(i,item)">
+                  <span class="fa fa-trash"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <button id="add" type="submit" class="btn btn-success">Cadastrar</button>
+      <button id="cancel" type="button" class="btn btn-danger" (click)="returnToList()">Cancelar</button>
+    </div>
+  </form>
+
+  <div class="container" *ngIf="idType == 2">
+    <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
+      <div class="row">
+
+      </div>
+    </form>
+  </div>
+</div-->

@@ -133,4 +133,8 @@ export class HeaderComponent implements OnInit {
   promotions() {
     this.router.navigateByUrl('/promotions/0');
   }
+
+  home_controller() {
+    this.router.navigateByUrl('/home_controller_list');
+  }
 }

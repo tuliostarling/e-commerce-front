@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="h2-text">Home Controller</h2>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6" *ngFor="let i of rows">
+      <div class="container" id="innerContainer" (click)="navToEdit(i.id)">
+        <p id="text-inner-container">{{i.type}}</p>
+      </div>
+    </div>
+  </div>
+
+</div>

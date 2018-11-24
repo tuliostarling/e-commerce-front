@@ -1,0 +1,19 @@
+.h2-text {
+    text-align: center;
+    padding: 3%;
+}
+
+#add {
+    margin-right: 1%;
+    margin-bottom: 2%;
+}
+
+#cancel {    
+    margin-bottom: 2%; 
+}
+
+.previewIcon{
+    width:100px;height:100px;
+    background-size:cover;
+    background-repeat:no-repeat;
+}

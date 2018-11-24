@@ -1,0 +1,27 @@
+.h2-text {
+    text-align: center;
+    padding: 3%;
+}
+
+.row {
+    margin-bottom: 2%;
+}
+
+#innerContainer {
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 1px solid #CCCCCC;
+    border-left: 1px solid #e1e1e1;
+    border-right: 1px solid #e1e1e1;
+    border-radius: 20px;
+    margin-bottom: 2%;
+    text-align: center;
+}
+
+#innerContainer:hover{
+    background-color: #e1e1e1;
+    cursor: pointer;
+}
+
+#text-inner-container {
+    margin-top: 3%;
+}

@@ -22,6 +22,10 @@ import { WishListComponent } from './view/common-user/wish-list/wish-list.compon
 import { PromotionsComponent } from './view/common-user/promotions/promotions.component';
 import { ConfirmRegisterComponent } from './component/confirm-register/confirm-register.component';
 import { FinishUserRegisterComponent } from './view/common-user/finish-user-register/finish-user-register.component';
+import { HomeControllerListComponent } from './view/admin-user/home-controller/home-controller-list/home-controller-list.component';
+import {
+    HomeControllerRegisterComponent
+} from './view/admin-user/home-controller/home-controller-register/home-controller-register.component';
 
 
 export const ROUTES: Routes = [
@@ -45,5 +49,7 @@ export const ROUTES: Routes = [
     { path: 'wish_list', component: WishListComponent },
     { path: 'promotions/:page', component: PromotionsComponent },
     { path: 'confirm/:hex', component: ConfirmRegisterComponent },
-    { path: 'finish_register/:id', component: FinishUserRegisterComponent }
+    { path: 'finish_register/:id', component: FinishUserRegisterComponent },
+    { path: 'home_controller_list', component: HomeControllerListComponent },
+    { path: 'home_controller_edit/:id', component: HomeControllerRegisterComponent },
 ];
