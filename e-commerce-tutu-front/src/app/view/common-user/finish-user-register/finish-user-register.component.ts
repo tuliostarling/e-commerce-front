@@ -44,7 +44,6 @@ export class FinishUserRegisterComponent implements OnInit {
         pairwise()
       ).subscribe((e: any) => {
         this.previousUrl = e[0].urlAfterRedirects;
-        console.log(this.previousUrl);
       });
 
     this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
@@ -74,8 +73,7 @@ export class FinishUserRegisterComponent implements OnInit {
     } else {
       return this.toastrService.error('CPF inválido, por favor digite novamente', 'Erro!');
     }
-    console.log(this.previousUrl);
-    console.log(this.previousUrl === '/cart');
+    
     if (this.previousUrl === '/cart') return this.router.navigateByUrl('/cart');
 
     this.toastrService.success('Dados atualizados, por favor saia e entre da sua conta!', 'Sucesso!');

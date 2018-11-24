@@ -18,15 +18,12 @@ import { ComponentModule } from './component/component.module';
 import { AppComponent } from './app.component';
 import { CountdownComponent } from './countdown/countdown.component';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
-import { SucessPaymentComponent } from './sucess-payment/sucess-payment.component';
-import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
+import { PaymentService } from './service/payment/payment-api.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CountdownComponent,
-    SucessPaymentComponent,
-    CancelPaymentComponent
+    CountdownComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +33,7 @@ import { CancelPaymentComponent } from './cancel-payment/cancel-payment.componen
     ComponentModule,
     CountdownTimerModule
   ],
-  providers: [UserApiService, HttpClientModule, CategoryService, CouponService, ProductService, CommentService, ShippingService],
+  providers: [UserApiService, HttpClientModule, CategoryService, CouponService, ProductService, CommentService, ShippingService, PaymentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -20,7 +20,11 @@ export class PaymentService {
 
 
     paymentSucess(sucessInfo){
-        return this.http.post<any>(`${this.API_URL}/`,sucessInfo);
+        return this.http.post<any>(`${this.API_URL}sucessPay/`,sucessInfo);
+    }
+
+    paymentCancel(cancelInfo){
+        return this.http.post<any>(`${this.API_URL}/cancelPay`,cancelInfo);
     }
 
 }

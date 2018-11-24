@@ -17,6 +17,8 @@ import { PromotionsComponent } from './promotions/promotions.component';
 import { FinishUserRegisterComponent } from './finish-user-register/finish-user-register.component';
 import { CepDirective } from 'src/app/directives/cep.directive';
 import { CpfDirective } from '../../directives/cpf.directive';
+import { SucessPaymentComponent } from './sucess-payment/sucess-payment.component';
+import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
 
 @NgModule({
   imports: [
@@ -37,6 +39,8 @@ import { CpfDirective } from '../../directives/cpf.directive';
     FinishUserRegisterComponent,
     CepDirective,
     CpfDirective,
+    SucessPaymentComponent,
+    CancelPaymentComponent,
   ],
   exports: [
     HomeComponent,
