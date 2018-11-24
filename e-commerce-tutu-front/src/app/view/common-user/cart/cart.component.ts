@@ -88,16 +88,17 @@ export class CartComponent implements OnInit {
   }
 
   finishPayment() {
-    console.log(this.decodedToken)
     if (this.decodedToken.cep == null) return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`);
 
     let paymentObj = {
       cartItem: this.cartRows,
-      price: this.total
+      price: this.total,
+      subTotal: this.finalValue,
+      shipping: this.rowsShipping[0].Valor,
+      idUser: this.decodedToken.id
     }
 
     this.paymentService.payCart(paymentObj).subscribe((res) => {
-      console.log(res);
       if (res != null) window.location.href = res.redirect;
     })
   }
@@ -106,7 +107,9 @@ export class CartComponent implements OnInit {
     if (cepVal === true) { return this.shipBox === true; }
 
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
-    this.currentCep = cepVal.value;
+    this.currentCep = cepVal.value || cepVal;
+
+    if (this.currentCep.indexOf('-') > -1 == false) this.currentCep = this.maskCEP(this.currentCep);
 
     if (validacep.test(this.currentCep)) {
       const cep = this.currentCep.replace(/\D/g, '');
@@ -116,12 +119,20 @@ export class CartComponent implements OnInit {
         if (res) {
           this.rowsShipping = res.totalValue;
           this.adressInfo = res.adress;
+          this.total = this.total + this.rowsShipping[0].Valor;
           this.shipBox = false;
         }
       });
     } else {
       this.toastrService.error('CEP inválido', 'Erro!');
     }
+  }
+
+  maskCEP(cep) {
+    cep = cep.replace(/\D/g, "")
+    cep = cep.replace(/^(\d{2})(\d)/, "$1.$2")
+    cep = cep.replace(/\.(\d{3})(\d)/, ".$1-$2")
+    return cep
   }
 
   sumItems(a, b) {
@@ -135,7 +146,9 @@ export class CartComponent implements OnInit {
       this.decodedToken = this.jwtDecode(t);
       if (this.decodedToken.cep == null) {
         this.shipBox = true;
-      } else { this.shipBox = false; }
+      } else {
+        this.getShipPrice(this.decodedToken.cep);
+      }
     }
   }
 

@@ -88,7 +88,7 @@
           <p id="subtotalText">Subtotal ({{sumQtdItems}} produto(s))</p>
         </div>
         <div class="col-6">
-          <p style="float: right; color: #949494; font-size: 15px">R$ {{finalValue}},00</p>
+          <p style="float: right; color: #949494; font-size: 15px">R$ {{finalValue}}</p>
         </div>
       </div>
       <div class="row" style="margin-bottom: -5%">
@@ -108,7 +108,7 @@
         </div>
         <div class="col-6">
           <p style="float: right; font-size: 15px">
-            <b>R$ {{total}},00</b>
+            <b>R$ {{total}}</b>
           </p>
         </div>
       </div>
@@ -118,10 +118,10 @@
           <i id="iconCredit" class="fa fa-credit-card fa-2x"></i>
         </div>
         <div class="col-10 float-right" style="margin-top: 1%;" *ngIf="installments != 1">
-          <p>R${{total}},00 por {{installments}}x de R${{division}},00</p>
+          <p>R${{total}} por {{installments}}x de R${{division}}</p>
         </div>
         <div class="col-10" style="margin-top: 1%" *ngIf="installments == 1">
-          <p>R$ {{total}},00. Pagamento a vista</p>
+          <p>R$ {{total}}. Pagamento a vista</p>
         </div>
       </div>
 
