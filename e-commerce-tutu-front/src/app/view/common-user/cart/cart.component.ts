@@ -23,7 +23,6 @@ export class CartComponent implements OnInit {
   selectValue: number;
   finalValue: number;
   qtdOpt = [];
-  optSelected = [];
   qtdItens = [];
   total: number;
   sumQtdItems: number;
@@ -36,6 +35,8 @@ export class CartComponent implements OnInit {
   adressInfo: Array<AdressModel>;
   shipBox: boolean;
   currentCep: string;
+
+  emptyCart: boolean;
 
   constructor(
     private router: Router,
@@ -60,6 +61,7 @@ export class CartComponent implements OnInit {
   getProducts() {
     this.apiService.getProductsCart(this.idCart).subscribe(res => {
       if (res != null) {
+        this.emptyCart === false;
         this.cartRows = res.rows;
         this.finalValue = res.pricesObj.finalValue;
         this.qtdOpt = res.qtdOptions;
@@ -69,7 +71,7 @@ export class CartComponent implements OnInit {
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
-        this.total = this.finalValue; // + this.freight;
+        this.total = this.finalValue;
 
         if (this.total >= 80 && this.total < 140) {
           this.installments = 2;
@@ -83,6 +85,8 @@ export class CartComponent implements OnInit {
         } else {
           this.installments = 1;
         }
+      }else {
+        this.emptyCart === true
       }
     });
   }
@@ -95,7 +99,8 @@ export class CartComponent implements OnInit {
       price: this.total,
       subTotal: this.finalValue,
       shipping: this.rowsShipping[0].Valor,
-      idUser: this.decodedToken.id
+      idUser: this.decodedToken.id,
+      adress: this.adressInfo
     }
 
     this.paymentService.payCart(paymentObj).subscribe((res) => {

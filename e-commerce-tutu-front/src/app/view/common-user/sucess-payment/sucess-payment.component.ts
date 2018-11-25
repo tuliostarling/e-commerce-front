@@ -13,6 +13,7 @@ export class SucessPaymentComponent implements OnInit {
   paymentParams: any;
   decodedToken: any;
   idUser: number;
+  idCart: number;
 
   constructor(
     private router: Router,
@@ -30,7 +31,8 @@ export class SucessPaymentComponent implements OnInit {
   executePayment() {
     const payObj = {
       user: this.idUser,
-      payment: this.paymentParams
+      payment: this.paymentParams,
+      cart: this.idCart,
     }
 
     this.paymentService.paymentSucess(payObj).subscribe(res => {
@@ -44,6 +46,7 @@ export class SucessPaymentComponent implements OnInit {
     if (t != null) {
       this.decodedToken = this.jwtDecode(t);
       this.idUser = this.decodedToken.id;
+      this.idCart = this.decodedToken.cart;
     }
   }
 
@@ -52,7 +55,5 @@ export class SucessPaymentComponent implements OnInit {
     const base64 = base64Url.replace('-', '+').replace('_', '/');
     return JSON.parse(window.atob(base64));
   }
-
-
 
 }

@@ -2,6 +2,7 @@
   <div class="content" style="margin-top: 2%">
     <p id="title">Carrinho</p>
     <hr id="line">
+    <p *ngIf='emptyCart === true'> Não há nenhum produto no carrinho!</p>
   </div>
 
   <div class="row" style="margin-top: 5%; margin-bottom: 2%">
@@ -79,7 +80,7 @@
       </div>
 
     </div>
-    
+
     <div class="col-sm-12 col-md-4" style="background-color:#f7f7f7">
       <h5 style="margin-top:5%">Resumo do pedido</h5>
 
