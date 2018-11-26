@@ -20,6 +20,9 @@ import { CountdownComponent } from './countdown/countdown.component';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
 import { PaymentService } from './service/payment/payment-api.service';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpInterceptorError } from './auth/http.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,21 @@ import { PaymentService } from './service/payment/payment-api.service';
     ComponentModule,
     CountdownTimerModule
   ],
-  providers: [UserApiService, HttpClientModule, CategoryService, CouponService, ProductService, CommentService, ShippingService, PaymentService],
+  providers: [
+    UserApiService,
+    HttpClientModule,
+    CategoryService,
+    CouponService,
+    ProductService,
+    CommentService,
+    ShippingService,
+    PaymentService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorError,
+      multi: true
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

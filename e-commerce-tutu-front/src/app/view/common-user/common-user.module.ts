@@ -19,6 +19,7 @@ import { CepDirective } from 'src/app/directives/cep.directive';
 import { CpfDirective } from '../../directives/cpf.directive';
 import { SucessPaymentComponent } from './sucess-payment/sucess-payment.component';
 import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
+import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { CancelPaymentComponent } from './cancel-payment/cancel-payment.componen
     CpfDirective,
     SucessPaymentComponent,
     CancelPaymentComponent,
+    OrderDetailsComponent,
   ],
   exports: [
     HomeComponent,

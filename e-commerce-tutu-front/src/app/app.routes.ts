@@ -27,8 +27,9 @@ import {
     HomeControllerRegisterComponent
 } from './view/admin-user/home-controller/home-controller-register/home-controller-register.component';
 
-import { SucessPaymentComponent } from './view/common-user/sucess-payment/sucess-payment.component'
-import { CancelPaymentComponent } from './view/common-user/cancel-payment/cancel-payment.component'
+import { SucessPaymentComponent } from './view/common-user/sucess-payment/sucess-payment.component';
+import { CancelPaymentComponent } from './view/common-user/cancel-payment/cancel-payment.component';
+import { OrderDetailsComponent } from './view/common-user/order-details/order-details.component';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'countdown', pathMatch: 'full' },
@@ -55,5 +56,6 @@ export const ROUTES: Routes = [
     { path: 'home_controller_list', component: HomeControllerListComponent },
     { path: 'home_controller_edit/:id', component: HomeControllerRegisterComponent },
     { path: 'sucess_payment', component: SucessPaymentComponent },
-    { path: 'cancel_payment', component: CancelPaymentComponent }
+    { path: 'cancel_payment', component: CancelPaymentComponent },
+    { path: 'order_details', component: OrderDetailsComponent }
 ];

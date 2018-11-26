@@ -33,7 +33,7 @@ export class SucessPaymentComponent implements OnInit {
       user: this.idUser,
       payment: this.paymentParams,
       cart: this.idCart,
-    }
+    };
 
     this.paymentService.paymentSucess(payObj).subscribe(res => {
       console.log(res);
