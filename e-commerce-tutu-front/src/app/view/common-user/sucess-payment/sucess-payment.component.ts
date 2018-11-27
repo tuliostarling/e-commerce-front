@@ -35,8 +35,8 @@ export class SucessPaymentComponent implements OnInit {
       cart: this.idCart,
     };
 
-    this.paymentService.paymentSucess(payObj).subscribe(res => {
-      console.log(res);
+    this.paymentService.paymentSucess(payObj).subscribe((res) => {
+      if (res != null) return this.router.navigateByUrl(`/order_details/${res}`);
     });
   }
 

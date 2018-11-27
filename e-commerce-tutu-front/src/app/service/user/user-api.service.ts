@@ -39,4 +39,13 @@ export class UserApiService {
         return this.http.get<any>(`${AppSettings.API_ENDPOINT}confirm/${hash}`);
     }
 
+    getUserPurchases(id: number) {
+        return this.http.post<any>(`${this.API_URL}purchases/`,id);
+    }
+
+    getUserPurchaseDetail(id: number) {
+        return this.http.post<any>(`${this.API_URL}getPurchase/`,id);
+    }
+
+
 }

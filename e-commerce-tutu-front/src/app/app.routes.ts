@@ -57,5 +57,5 @@ export const ROUTES: Routes = [
     { path: 'home_controller_edit/:id', component: HomeControllerRegisterComponent },
     { path: 'sucess_payment', component: SucessPaymentComponent },
     { path: 'cancel_payment', component: CancelPaymentComponent },
-    { path: 'order_details', component: OrderDetailsComponent }
+    { path: 'order_details/:id', component: OrderDetailsComponent }
 ];
