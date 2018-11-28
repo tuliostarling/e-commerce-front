@@ -5,6 +5,7 @@ import { CartModel } from '../../../model/cart/cart';
 import { ValueModel, AdressModel } from '../../../model/shipping/shipping';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { PaymentService } from '../../../service/payment/payment-api.service';
+import { UserApiService } from '../../../service/user/user-api.service';
 
 
 import { ToastrService } from 'ngx-toastr';
@@ -38,12 +39,16 @@ export class CartComponent implements OnInit {
 
   emptyCart: boolean;
 
+  couponDiscount: any;
+  discountValue: number;
+
   constructor(
     private router: Router,
     private apiService: ProductService,
     private shipService: ShippingService,
     private paymentService: PaymentService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private userService: UserApiService
   ) { }
 
   ngOnInit() {
@@ -54,6 +59,7 @@ export class CartComponent implements OnInit {
       this.idCart = this.decodedToken.cart;
     }
 
+    this.getUserCoupon();
     this.getProducts();
     this.getToken();
   }
@@ -71,7 +77,13 @@ export class CartComponent implements OnInit {
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
-        this.total = this.finalValue;
+        if (this.couponDiscount.value <= 0) this.total = this.finalValue;
+        else {
+          this.discountValue = this.finalValue * (this.couponDiscount.value / 100);
+          this.finalValue = this.finalValue - this.discountValue;
+          this.finalValue = parseFloat(this.finalValue.toFixed(2));
+          this.total = this.finalValue;
+        }
 
         if (this.total >= 80 && this.total < 140) {
           this.installments = 2;
@@ -85,7 +97,7 @@ export class CartComponent implements OnInit {
         } else {
           this.installments = 1;
         }
-      }else {
+      } else {
         this.emptyCart === true
       }
     });
@@ -94,13 +106,16 @@ export class CartComponent implements OnInit {
   finishPayment() {
     if (this.decodedToken.cep == null) return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`);
 
+    this.couponDiscount.price = -Math.abs(this.discountValue);
+
     let paymentObj = {
       cartItem: this.cartRows,
       price: this.total,
       subTotal: this.finalValue,
       shipping: this.rowsShipping[0].Valor,
       idUser: this.decodedToken.id,
-      adress: this.adressInfo
+      adress: this.adressInfo,
+      discount: this.couponDiscount
     }
 
     this.paymentService.payCart(paymentObj).subscribe((res) => {
@@ -125,12 +140,28 @@ export class CartComponent implements OnInit {
           this.rowsShipping = res.totalValue;
           this.adressInfo = res.adress;
           this.total = this.total + this.rowsShipping[0].Valor;
+          this.total = parseFloat(this.total.toFixed(2));
           this.shipBox = false;
         }
       });
     } else {
       this.toastrService.error('CEP inválido', 'Erro!');
     }
+  }
+
+  verifyCoupon() {
+    let teste = 'teste';
+    this.userService.verifyCoupon(teste).subscribe(res => {
+
+    });
+  }
+
+  getUserCoupon() {
+    const id = this.decodedToken.id;
+
+    this.userService.getUserCoupon(id).subscribe(res => {
+      if (res != null) this.couponDiscount = res;
+    });
   }
 
   maskCEP(cep) {
