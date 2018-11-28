@@ -7,6 +7,8 @@ import { FormBuilder } from '@angular/forms';
 
 import { ToastrService } from 'ngx-toastr';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-product-category-list',
   templateUrl: './product-category-list.component.html',
@@ -36,12 +38,14 @@ export class ProductCategoryListComponent implements OnInit {
     private apiService: ProductService,
     private apiServiceCategory: CategoryService,
     private acRoute: ActivatedRoute,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
     this.acRoute.url
       .subscribe(_ => {
+        this.spinnerService.show();
         this.idCategory = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
@@ -81,6 +85,7 @@ export class ProductCategoryListComponent implements OnInit {
         // this.oldPrice = this.rowsProduct.oldPrice;
 
         this.makeArrNavLinks();
+        this.spinnerService.hide();
       }
     });
   }
@@ -136,22 +141,30 @@ export class ProductCategoryListComponent implements OnInit {
 
   addProductToCart(id: number) {
     if (this.decodedToken != null) {
+      this.spinnerService.show();
       this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
       this.apiService.addToCart(this.dadosCart).subscribe(res => {
         this.dadosCart = [];
-        if (res.sucess === true) return this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
-        else if (res.error) return this.toastrService.warning('Produto ja está no carrinho', 'Aviso!');
+        if (res.sucess === true) {
+          this.spinnerService.hide();
+          return this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
+        } else if (res.error) {
+          this.spinnerService.hide();
+          return this.toastrService.warning('Produto ja está no carrinho', 'Aviso!');
+        }
       });
-    }else {
+    } else {
       return this.toastrService.warning('Favor criar uma conta para ter seu carrinho !', 'Aviso!');
     }
   }
 
   addProductToWishList(id: number) {
+    this.spinnerService.show();
     this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id });
 
     this.apiService.addToWishList(this.dadosWish).subscribe(res => {
       if (res !== null) {
+        this.spinnerService.hide();
         this.toastrService.success('Produto inserido na lista de desejos!', 'Sucesso!');
       }
     });

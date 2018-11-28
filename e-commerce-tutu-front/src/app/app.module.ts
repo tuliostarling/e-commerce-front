@@ -18,6 +18,8 @@ import { ComponentModule } from './component/component.module';
 import { AppComponent } from './app.component';
 import { CountdownComponent } from './countdown/countdown.component';
 import { CountdownTimerModule } from 'ngx-countdown-timer';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+
 import { PaymentService } from './service/payment/payment-api.service';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,7 +36,8 @@ import { HttpInterceptorError } from './auth/http.interceptor';
     HttpClientModule,
     ViewModule,
     ComponentModule,
-    CountdownTimerModule
+    CountdownTimerModule,
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [
     UserApiService,

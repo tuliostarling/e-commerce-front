@@ -5,6 +5,8 @@ import { ProductService } from '../../../service';
 import { ProductModel } from '../../../model/product/product';
 import { ToastrService } from 'ngx-toastr';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-promotions',
   templateUrl: './promotions.component.html',
@@ -29,10 +31,12 @@ export class PromotionsComponent implements OnInit {
     private router: Router,
     private apiService: ProductService,
     private acRoute: ActivatedRoute,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.acRoute.url
       .subscribe(_ => {
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
@@ -56,6 +60,7 @@ export class PromotionsComponent implements OnInit {
         this.totalSubProducts = res.total[0].count;
 
         this.makeArrNavLinks();
+        this.spinnerService.hide();
       }
     });
   }

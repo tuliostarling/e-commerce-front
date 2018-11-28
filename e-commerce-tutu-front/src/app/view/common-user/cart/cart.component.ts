@@ -6,6 +6,7 @@ import { ValueModel, AdressModel } from '../../../model/shipping/shipping';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { PaymentService } from '../../../service/payment/payment-api.service';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -43,10 +44,12 @@ export class CartComponent implements OnInit {
     private apiService: ProductService,
     private shipService: ShippingService,
     private paymentService: PaymentService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     const t = localStorage.getItem('token');
 
     if (t != null) {
@@ -61,7 +64,7 @@ export class CartComponent implements OnInit {
   getProducts() {
     this.apiService.getProductsCart(this.idCart).subscribe(res => {
       if (res != null) {
-        this.emptyCart === false;
+        this.emptyCart = false;
         this.cartRows = res.rows;
         this.finalValue = res.pricesObj.finalValue;
         this.qtdOpt = res.qtdOptions;
@@ -85,27 +88,27 @@ export class CartComponent implements OnInit {
         } else {
           this.installments = 1;
         }
-      }else {
-        this.emptyCart === true
+      } else {
+        this.emptyCart = true;
       }
     });
   }
 
   finishPayment() {
-    if (this.decodedToken.cep == null) return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`);
+    if (this.decodedToken.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`); }
 
-    let paymentObj = {
+    const paymentObj = {
       cartItem: this.cartRows,
       price: this.total,
       subTotal: this.finalValue,
       shipping: this.rowsShipping[0].Valor,
       idUser: this.decodedToken.id,
       adress: this.adressInfo
-    }
+    };
 
     this.paymentService.payCart(paymentObj).subscribe((res) => {
-      if (res != null) window.location.href = res.redirect;
-    })
+      if (res != null) { window.location.href = res.redirect; }
+    });
   }
 
   getShipPrice(cepVal) {
@@ -114,7 +117,7 @@ export class CartComponent implements OnInit {
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
     this.currentCep = cepVal.value || cepVal;
 
-    if (this.currentCep.indexOf('-') > -1 == false) this.currentCep = this.maskCEP(this.currentCep);
+    if (this.currentCep.indexOf('-') > -1 === false) { this.currentCep = this.maskCEP(this.currentCep); }
 
     if (validacep.test(this.currentCep)) {
       const cep = this.currentCep.replace(/\D/g, '');
@@ -126,6 +129,7 @@ export class CartComponent implements OnInit {
           this.adressInfo = res.adress;
           this.total = this.total + this.rowsShipping[0].Valor;
           this.shipBox = false;
+          this.spinnerService.hide();
         }
       });
     } else {
@@ -134,10 +138,10 @@ export class CartComponent implements OnInit {
   }
 
   maskCEP(cep) {
-    cep = cep.replace(/\D/g, "")
-    cep = cep.replace(/^(\d{2})(\d)/, "$1.$2")
-    cep = cep.replace(/\.(\d{3})(\d)/, ".$1-$2")
-    return cep
+    cep = cep.replace(/\D/g, '');
+    cep = cep.replace(/^(\d{2})(\d)/, '$1.$2');
+    cep = cep.replace(/\.(\d{3})(\d)/, '.$1-$2');
+    return cep;
   }
 
   sumItems(a, b) {

@@ -5,6 +5,7 @@ import { CouponService } from '../../../../service/discount-coupon/coupon-api.se
 import { CouponModel } from '../../../../model/discount-coupon/coupon';
 
 import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-discount-coupon-list',
@@ -22,7 +23,8 @@ export class DiscountCouponListComponent implements OnInit {
     public apiService: CouponService,
     private acRoute: ActivatedRoute,
     public router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   public rowsCoupon: Array<CouponModel>;
@@ -31,6 +33,7 @@ export class DiscountCouponListComponent implements OnInit {
   ngOnInit() {
     this.acRoute.url
       .subscribe(_ => {
+        this.spinnerService.show();
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
         this.getListAll();
@@ -43,6 +46,7 @@ export class DiscountCouponListComponent implements OnInit {
       this.totalCoupons = res.total[0].count;
 
       this.makeArrNavLinks();
+      this.spinnerService.hide();
     });
   }
 
@@ -55,12 +59,15 @@ export class DiscountCouponListComponent implements OnInit {
   }
 
   delete(id: number) {
+    this.spinnerService.show();
     this.apiService.delete(id).subscribe((res) => {
       if (res) {
         this.toastrService.success('Cumpom deletado!', 'Sucesso!');
+        this.spinnerService.hide();
         return this.ngOnInit();
       }
 
+      this.spinnerService.hide();
       return this.toastrService.error('Erro ao deletar cumpom', 'Erro!');
     });
   }

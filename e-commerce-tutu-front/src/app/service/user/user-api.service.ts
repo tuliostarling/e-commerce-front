@@ -40,11 +40,11 @@ export class UserApiService {
     }
 
     getUserPurchases(id: number) {
-        return this.http.post<any>(`${this.API_URL}purchases/`,id);
+        return this.http.post<any>(`${this.API_URL}purchases/`, id);
     }
 
     getUserPurchaseDetail(id: number) {
-        return this.http.post<any>(`${this.API_URL}getPurchase/`,id);
+        return this.http.post<any>(`${this.API_URL}getPurchase/`, id);
     }
 
 

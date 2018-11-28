@@ -9,6 +9,8 @@ import { UserCreateModel } from '../../../model/user/userCreate';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
@@ -45,12 +47,14 @@ export class UserProfileComponent implements OnInit {
     public router: Router,
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   public rowsUser: UserCreateModel;
 
   ngOnInit() {
+    this.spinnerService.show();
     this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
 
     const t = localStorage.getItem('token');
@@ -66,17 +70,19 @@ export class UserProfileComponent implements OnInit {
 
     this.apiService.getListOne(this.id).subscribe((res) => {
       this.rowsUser = res;
-
-      this.name = this.rowsUser[0].name;
-      this.email = this.rowsUser[0].email;
-      this.cep = this.rowsUser[0].cep;
-      this.cpf = this.rowsUser[0].cpf;
-      this.num = this.rowsUser[0].num;
-      this.comp = this.rowsUser[0].comp;
-      this.state = this.rowsUser[0].state;
-      this.city = this.rowsUser[0].city;
-      this.street = this.rowsUser[0].street;
-      this.neighborhood = this.rowsUser[0].neighborhood;
+      if (res != null) {
+        this.name = this.rowsUser[0].name;
+        this.email = this.rowsUser[0].email;
+        this.cep = this.rowsUser[0].cep;
+        this.cpf = this.rowsUser[0].cpf;
+        this.num = this.rowsUser[0].num;
+        this.comp = this.rowsUser[0].comp;
+        this.state = this.rowsUser[0].state;
+        this.city = this.rowsUser[0].city;
+        this.street = this.rowsUser[0].street;
+        this.neighborhood = this.rowsUser[0].neighborhood;
+        this.spinnerService.hide();
+      }
     });
 
     this.formulario = this.form.group({
@@ -107,6 +113,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   onSubmit(form) {
+    this.spinnerService.show();
     this.attForm();
     this.rowsUser = form.value;
 
@@ -118,6 +125,7 @@ export class UserProfileComponent implements OnInit {
 
         this.toastrService.success('Dados atualizados!', 'Sucesso!');
         this.update = false;
+        this.spinnerService.hide();
         return this.ngOnInit();
       });
     } else {
