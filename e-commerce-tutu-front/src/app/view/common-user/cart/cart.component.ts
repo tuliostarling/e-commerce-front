@@ -39,7 +39,7 @@ export class CartComponent implements OnInit {
 
   emptyCart: boolean;
 
-  couponDiscount: any;
+  couponDiscount: any = null;
   discountValue: number;
 
   constructor(
@@ -77,7 +77,7 @@ export class CartComponent implements OnInit {
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
-        if (this.couponDiscount.value <= 0) this.total = this.finalValue;
+        if (this.couponDiscount === null) this.total = this.finalValue;
         else {
           this.discountValue = this.finalValue * (this.couponDiscount.value / 100);
           this.finalValue = this.finalValue - this.discountValue;
@@ -106,7 +106,7 @@ export class CartComponent implements OnInit {
   finishPayment() {
     if (this.decodedToken.cep == null) return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`);
 
-    this.couponDiscount.price = -Math.abs(this.discountValue);
+    if (this.couponDiscount != null) this.couponDiscount.price = -Math.abs(this.discountValue);
 
     let paymentObj = {
       cartItem: this.cartRows,
