@@ -7,6 +7,7 @@ import { ShippingService } from '../../../service/shipping/shipping-api.service'
 import { PaymentService } from '../../../service/payment/payment-api.service';
 import { UserApiService } from '../../../service/user/user-api.service';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -48,10 +49,12 @@ export class CartComponent implements OnInit {
     private shipService: ShippingService,
     private paymentService: PaymentService,
     private toastrService: ToastrService,
-    private userService: UserApiService
+    private userService: UserApiService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     const t = localStorage.getItem('token');
 
     if (t != null) {
@@ -67,7 +70,7 @@ export class CartComponent implements OnInit {
   getProducts() {
     this.apiService.getProductsCart(this.idCart).subscribe(res => {
       if (res != null) {
-        this.emptyCart === false;
+        this.emptyCart = false;
         this.cartRows = res.rows;
         this.finalValue = res.pricesObj.finalValue;
         this.qtdOpt = res.qtdOptions;
@@ -104,7 +107,7 @@ export class CartComponent implements OnInit {
   }
 
   finishPayment() {
-    if (this.decodedToken.cep == null) return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`);
+    if (this.decodedToken.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`); }
 
     if (this.couponDiscount != null) this.couponDiscount.price = -Math.abs(this.discountValue);
 
@@ -119,8 +122,8 @@ export class CartComponent implements OnInit {
     }
 
     this.paymentService.payCart(paymentObj).subscribe((res) => {
-      if (res != null) window.location.href = res.redirect;
-    })
+      if (res != null) { window.location.href = res.redirect; }
+    });
   }
 
   getShipPrice(cepVal) {
@@ -129,7 +132,7 @@ export class CartComponent implements OnInit {
     const validacep = /\d{2}\.\d{3}\-\d{3}/;
     this.currentCep = cepVal.value || cepVal;
 
-    if (this.currentCep.indexOf('-') > -1 == false) this.currentCep = this.maskCEP(this.currentCep);
+    if (this.currentCep.indexOf('-') > -1 === false) { this.currentCep = this.maskCEP(this.currentCep); }
 
     if (validacep.test(this.currentCep)) {
       const cep = this.currentCep.replace(/\D/g, '');
@@ -142,6 +145,7 @@ export class CartComponent implements OnInit {
           this.total = this.total + this.rowsShipping[0].Valor;
           this.total = parseFloat(this.total.toFixed(2));
           this.shipBox = false;
+          this.spinnerService.hide();
         }
       });
     } else {
@@ -165,10 +169,10 @@ export class CartComponent implements OnInit {
   }
 
   maskCEP(cep) {
-    cep = cep.replace(/\D/g, "")
-    cep = cep.replace(/^(\d{2})(\d)/, "$1.$2")
-    cep = cep.replace(/\.(\d{3})(\d)/, ".$1-$2")
-    return cep
+    cep = cep.replace(/\D/g, '');
+    cep = cep.replace(/^(\d{2})(\d)/, '$1.$2');
+    cep = cep.replace(/\.(\d{3})(\d)/, '.$1-$2');
+    return cep;
   }
 
   sumItems(a, b) {

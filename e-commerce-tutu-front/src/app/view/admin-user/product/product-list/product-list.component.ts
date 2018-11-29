@@ -5,6 +5,7 @@ import { ProductService } from '../../../../service/product/product-api.service'
 import { ProductModel } from '../../../../model/product/product';
 
 import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-product-list',
@@ -22,13 +23,15 @@ export class ProductListComponent implements OnInit {
     public apiService: ProductService,
     public acRoute: ActivatedRoute,
     public router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   public rowsProducts: Array<ProductModel>;
   totalProducts: number;
 
   ngOnInit() {
+    this.spinnerService.show();
     this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
     this.getProducts();
@@ -42,6 +45,7 @@ export class ProductListComponent implements OnInit {
           this.totalProducts = res.total[0].count;
 
           this.makeArrNavLinks();
+          this.spinnerService.hide();
         });
       });
   }
@@ -56,11 +60,14 @@ export class ProductListComponent implements OnInit {
 
   // Criar Modal de confirmação paara deletar.
   deleteProduct(id: number) {
+    this.spinnerService.show();
     this.apiService.delete(id).subscribe((res) => {
       if (res) {
         this.toastrService.success('Produto deletado!', 'Sucesso!');
+        this.spinnerService.hide();
         return this.ngOnInit();
       }
+      this.spinnerService.hide();
       return this.toastrService.error('Erro ao deletar produto', 'Erro!');
     });
   }
@@ -97,16 +104,16 @@ export class ProductListComponent implements OnInit {
   btnClickNext() {
     this.page += 1;
 
-    this.router.navigateByUrl(`/coupon_list/${this.page}`);
+    this.router.navigateByUrl(`/product_list/${this.page}`);
   }
 
   btnClickPrevious() {
     this.page -= 1;
 
-    this.router.navigateByUrl(`/coupon_list/${this.page}`);
+    this.router.navigateByUrl(`/product_list/${this.page}`);
   }
 
   changePage(num: number) {
-    this.router.navigateByUrl(`/coupon_list/${num}`);
+    this.router.navigateByUrl(`/product_list/${num}`);
   }
 }

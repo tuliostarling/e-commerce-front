@@ -8,6 +8,7 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ProductModel, SubProductModel } from '../../../../model/product/product';
 import { ProductService } from '../../../../service/product/product-api.service';
@@ -61,7 +62,8 @@ export class ProductRegisterComponent implements OnInit {
     private form: FormBuilder,
     private router: Router,
     public acRoute: ActivatedRoute,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
@@ -73,6 +75,7 @@ export class ProductRegisterComponent implements OnInit {
         this.acRoute.params
           .subscribe((params: any) => {
             if (params.hasOwnProperty('id') && params.hasOwnProperty('page')) {
+              this.spinnerService.show();
               this.idProduct = params.id;
               this.mode = 'Cadastrar Subproduto';
             } else {
@@ -101,7 +104,9 @@ export class ProductRegisterComponent implements OnInit {
         });
 
         this.getCategory();
-        this.getProduct();
+        if (this.idProduct !== undefined) {
+          this.getProduct();
+        }
       });
   }
 
@@ -129,6 +134,7 @@ export class ProductRegisterComponent implements OnInit {
         this.rowsImagesObj = res.images.map(x => ({ images: x.images }));
 
         this.makeArrNavLinks();
+        this.spinnerService.hide();
       });
     });
   }
@@ -172,14 +178,18 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
+    this.spinnerService.show();
     this.createProductModel = form.value;
 
     if (this.mode === 'Cadastrar') {
       this.apiService.create(this.createProductModel).subscribe(res => {
         if (res) {
           this.toastrService.success('Producto cadastrado!', 'Sucesso!');
+          this.spinnerService.hide();
           return this.navToListCoup();
         }
+
+        this.spinnerService.hide();
         return this.toastrService.error('Erro ao cadastrar.', 'Erro!');
       });
     }
@@ -199,8 +209,11 @@ export class ProductRegisterComponent implements OnInit {
           if (resImg != null) {
             this.toastrService.success('SubProduto cadastrado!', 'Sucesso!');
             this.cleanAcordion(form);
+            this.spinnerService.hide();
             return this.ngOnInit();
           } else {
+
+            this.spinnerService.hide();
             return this.toastrService.error('Erro ao cadastrar imagem.', 'Erro!');
           }
         });
@@ -219,8 +232,14 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   updateMainProduct(form) {
+    this.spinnerService.show();
     this.apiService.update(form.value, this.idMainProduct).subscribe((res) => {
-      if (res) { return this.ngOnInit(); }
+      if (res) {
+        this.spinnerService.hide();
+        return this.ngOnInit();
+      }
+
+      this.spinnerService.hide();
       return this.toastrService.error('Erro ao atualizar produto.', 'Erro!');
     });
   }
@@ -240,6 +259,7 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   updateSubProduct(index: number) {
+    this.spinnerService.show();
     const control = <FormArray>this.formularioSubProduct.controls['formSubProducts'];
     const id = control.at(index).value.id;
     const subProductObj = control.at(index).value;
@@ -249,7 +269,10 @@ export class ProductRegisterComponent implements OnInit {
 
         if (this.formData.get('key') == null && this.formData.get('id') == null && this.formData.get('file') != null) {
           this.apiService.addImage(this.formData, id).subscribe((data) => {
-            if (data) { return this.toastrService.success('Variação atualizada com sucesso!', 'Sucesso!'); }
+            if (data) {
+              this.spinnerService.hide();
+              return this.toastrService.success('Variação atualizada com sucesso!', 'Sucesso!');
+            }
           });
 
         } else {
@@ -258,8 +281,10 @@ export class ProductRegisterComponent implements OnInit {
               this.toastrService.success('Variação atualizada com sucesso!', 'Sucesso!');
               this.formData.delete('key');
               this.formData.delete('id');
+              this.spinnerService.hide();
               return this.ngOnInit();
             }
+            this.spinnerService.hide();
             this.toastrService.error('Erro ao atualizar variação.', 'Erro!');
           });
         }
@@ -300,7 +325,7 @@ export class ProductRegisterComponent implements OnInit {
   removeFile(i: number, subIndex: number, id: string, key: string) {
     const index: number = this.rowsImagesObj[i];
 
-    if (id === undefined && key === undefined) return this.imagesToUpload.splice(subIndex, 1);
+    if (id === undefined && key === undefined) { return this.imagesToUpload.splice(subIndex, 1); }
 
     if (index !== -1) {
       const size = this.rowsImagesObj[i].images.splice(subIndex, 1);
@@ -309,14 +334,18 @@ export class ProductRegisterComponent implements OnInit {
   }
 
   removeSubProduct(index: number) {
+    this.spinnerService.show();
     const control = <FormArray>this.formularioSubProduct.controls['formSubProducts'];
     const id = control.at(index).value.id;
 
     this.apiService.deleteSubProduct(id).subscribe((res) => {
       if (res) {
         this.toastrService.success('Variação deletada com sucesso!', 'Sucesso!');
+        this.spinnerService.hide();
         return this.ngOnInit();
       }
+
+      this.spinnerService.hide();
       this.toastrService.error('Erro ao deletar variação.', 'Erro!');
     });
   }

@@ -13,6 +13,8 @@ import { CommentModel } from '../../../model/comment/comment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ValueModel, AdressModel } from 'src/app/model/shipping/shipping';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-list-one-product',
   templateUrl: './list-one-product.component.html',
@@ -61,10 +63,12 @@ export class ListOneProductComponent implements OnInit {
     private form: FormBuilder,
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.idProduct = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
 
     this.formulario = this.form.group({
@@ -115,30 +119,34 @@ export class ListOneProductComponent implements OnInit {
   getShipPrice(cepVal) {
     if (cepVal === true) { return this.shipBox === true; }
 
-    if (cepVal !== null) {
-      if (cepVal.value === undefined) {
-        this.currentCep = cepVal;
-      } else {
-        this.currentCep = cepVal.value;
-      }
+    const validacep = /\d{2}\.\d{3}\-\d{3}/;
+    this.currentCep = cepVal.value || cepVal;
 
+    if (this.currentCep.indexOf('-') > -1 === false) { this.currentCep = this.maskCEP(this.currentCep); }
 
-      const validacep = /\d{2}\.\d{3}\-\d{3}/;
-      if (validacep.test(this.currentCep)) {
-        const cep = this.currentCep.replace(/\D/g, '');
-        const obj = { cep: cep, value: 20 };
+    if (validacep.test(this.currentCep)) {
+      const cep = this.currentCep.replace(/\D/g, '');
+      const obj = { cep: cep, value: 20 };
 
-        this.shippingService.getShippingValue(obj).subscribe((res) => {
-          if (res) {
-            this.rowsShipping = res.totalValue;
-            this.adressInfo = res.adress;
-            this.shipBox = false;
-          }
-        });
-      } else {
-        this.toastrService.error('CEP inválido', 'Erro!');
-      }
+      this.shippingService.getShippingValue(obj).subscribe((res) => {
+        if (res) {
+          this.rowsShipping = res.totalValue;
+          this.adressInfo = res.adress;
+          this.shipBox = false;
+          this.spinnerService.hide();
+        }
+      });
+    } else {
+      this.toastrService.error('CEP inválido', 'Erro!');
     }
+  }
+
+
+  maskCEP(cep) {
+    cep = cep.replace(/\D/g, '');
+    cep = cep.replace(/^(\d{2})(\d)/, '$1.$2');
+    cep = cep.replace(/\.(\d{3})(\d)/, '.$1-$2');
+    return cep;
   }
 
   getUser() {

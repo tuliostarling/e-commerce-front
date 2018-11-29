@@ -27,6 +27,7 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "jsonwebtoken": "^8.3.0",
+    "ng4-loading-spinner": "^1.2.3",
     "ngx-countdown-timer": "^0.1.9",
     "ngx-toastr": "^9.1.1",
     "rxjs": "^6.0.0",

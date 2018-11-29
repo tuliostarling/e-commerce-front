@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ProductService } from '../../../service';
 import { ProductModel } from '../../../model/product/product';
@@ -20,10 +21,12 @@ export class WishListComponent implements OnInit {
   constructor(
     private router: Router,
     private apiService: ProductService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     const t = localStorage.getItem('token');
 
     if (t != null) {
@@ -38,6 +41,7 @@ export class WishListComponent implements OnInit {
     this.apiService.getProductsWishL(this.idWish).subscribe(res => {
       if (res != null) {
         this.productsWishLRows = res;
+        this.spinnerService.hide();
       }
     });
   }

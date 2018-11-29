@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 import { UserApiService } from '../../service';
 import { UserCreateModel } from '../../model/user/userCreate';
 
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-modal-register',
   templateUrl: './modal-register.component.html',
@@ -31,7 +33,8 @@ export class ModalRegisterComponent implements OnInit {
     private service: UserApiService,
     private modalService: NgbModal,
     private form: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
@@ -48,6 +51,7 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   onSubmit(form) {
+    this.spinnerService.show();
     this.createUserModel = form.value;
 
     this.service.createUser(this.createUserModel)
@@ -56,6 +60,7 @@ export class ModalRegisterComponent implements OnInit {
           return this.toastrService.error('Erro ao cadastrar', 'Erro!');
         } else {
           this.modalReference.close();
+          this.spinnerService.hide();
           return this.toastrService.success('Usuário cadastrado, link de confirmação enviado para seu email!', 'Sucesso!');
         }
       });
