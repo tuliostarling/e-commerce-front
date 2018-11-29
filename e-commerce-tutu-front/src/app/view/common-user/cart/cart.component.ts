@@ -106,8 +106,12 @@ export class CartComponent implements OnInit {
       adress: this.adressInfo
     };
 
+    this.spinnerService.show();
     this.paymentService.payCart(paymentObj).subscribe((res) => {
-      if (res != null) { window.location.href = res.redirect; }
+      if (res != null) {
+        window.location.href = res.redirect;
+        this.spinnerService.hide();
+      }
     });
   }
 
@@ -170,11 +174,14 @@ export class CartComponent implements OnInit {
   updateAmount(dados, selectValueAux, idItem) {
     dados.push({ amount: selectValueAux, id_item_cart: idItem });
 
+    this.spinnerService.show();
     this.apiService.updateAmount(dados).subscribe(res => {
       if (res == null) {
+        this.spinnerService.hide();
         this.toastrService.error('Erro ao atualizar quantidade', 'Erro!');
       }
 
+      this.spinnerService.hide();
       this.toastrService.success('Quantidade atualizada!', 'Sucesso!');
       return this.ngOnInit();
     });
@@ -185,11 +192,14 @@ export class CartComponent implements OnInit {
   }
 
   delete(id: number, content) {
+    this.spinnerService.show();
     this.apiService.removeFromCart(id).subscribe(res => {
       if (res == null) {
+        this.spinnerService.hide();
         this.toastrService.error('Erro ao remover do produto do carrinho', 'Erro!');
       }
 
+      this.spinnerService.hide();
       this.toastrService.success('Produto removido do carrinho!', 'Sucesso!');
       return this.ngOnInit();
     });

@@ -20,6 +20,8 @@ export class OrderDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
+
+    this.getPurchaseDetail();
   }
 
   getPurchaseDetail() {

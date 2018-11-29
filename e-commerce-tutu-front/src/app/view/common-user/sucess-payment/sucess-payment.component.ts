@@ -14,6 +14,7 @@ export class SucessPaymentComponent implements OnInit {
   decodedToken: any;
   idUser: number;
   idCart: number;
+  resAux: any;
 
   constructor(
     private router: Router,
@@ -36,8 +37,14 @@ export class SucessPaymentComponent implements OnInit {
     };
 
     this.paymentService.paymentSucess(payObj).subscribe((res) => {
-      if (res != null) return this.router.navigateByUrl(`/order_details/${res}`);
+      if (res != null) {
+        this.resAux = res;
+      }
     });
+  }
+
+  clickLink() {
+    this.router.navigateByUrl(`/order_details/${this.resAux}`);
   }
 
   getToken() {

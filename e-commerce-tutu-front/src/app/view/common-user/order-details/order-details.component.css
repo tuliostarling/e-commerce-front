@@ -1,28 +1,13 @@
-/* .container {
-    margin-top: 0.5%;
-  }
-  
-#form {
-  margin-top: 1%;
-  margin-bottom: 2%;
-  padding: 2%;
-  border-top: 1px solid #f2f2f2;
-  border-bottom: 2px solid #CCCCCC;
-  border-left: 2px solid #e1e1e1;
-  border-right: 2px solid #e1e1e1;
+.container {
+  margin-top: 0.7%;
 }
-  
-#secondary-container {
-  text-align: center;
-}
-  
+
 #container-product {
   padding: 1%;
   border-top: 2px solid #e1e1e1;
   border-bottom: 2px solid #e1e1e1;
 }
   
-#date-hour {
-  margin-top: 2%;
+.card {
+  margin-bottom: 3%;
 }
-   */

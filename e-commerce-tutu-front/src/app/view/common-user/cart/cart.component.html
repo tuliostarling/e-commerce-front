@@ -81,7 +81,7 @@
 
     </div>
 
-    <div class="col-sm-12 col-md-4" style="background-color:#f7f7f7">
+    <div class="col-sm-12 col-md-4" style="background-color:#f7f7f7; max-height: 360px">
       <h5 style="margin-top:5%">Resumo do pedido</h5>
 
       <div class="row" style="margin-top: 5%">
@@ -97,7 +97,7 @@
           <p style="font-size: 15px">Frete</p>
         </div>
         <div class="col-6">
-          <!-->p style="float: right; font-size: 15px">R$ {{freight}},00</p-->
+          <p *ngIf="rowsShipping != undefined" style="float: right; font-size: 15px">R$ {{rowsShipping[0].Valor}}</p>
         </div>
       </div>
       <hr>
@@ -122,7 +122,7 @@
           <p>R${{total}} por {{installments}}x de R${{division}}</p>
         </div>
         <div class="col-10" style="margin-top: 1%" *ngIf="installments == 1">
-          <p>R$ {{total}}. Pagamento a vista</p>
+          <p>R$ {{total}} - Pagamento a vista</p>
         </div>
       </div>
 
