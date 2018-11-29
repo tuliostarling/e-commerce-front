@@ -47,5 +47,12 @@ export class UserApiService {
         return this.http.post<any>(`${this.API_URL}getPurchase/`, id);
     }
 
+    verifyCoupon(coupon: string) {
+        return this.http.post<any>(`${this.API_URL}verifyCoupon/`, coupon);
+    }
+
+    getUserCoupon(id: number) {
+        return this.http.get<any>(`${this.API_URL}getUserCoupon/${id}`);
+    }
 
 }
