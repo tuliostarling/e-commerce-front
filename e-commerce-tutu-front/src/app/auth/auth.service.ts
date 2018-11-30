@@ -10,12 +10,15 @@ export class AuthService {
     }
 
     getTokenData() {
-        if (this.tokenData == null) {
-            const token = localStorage.getItem('token');
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace('-', '+').replace('_', '/');
-            const jsonObj: any = JSON.parse(atob(base64));
-            this.tokenData = <any>jsonObj;
+        const token = this.getToken();
+
+        if (token != null) {
+            if (this.tokenData == null) {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace('-', '+').replace('_', '/');
+                const jsonObj: any = JSON.parse(atob(base64));
+                this.tokenData = <any>jsonObj;
+            }
         }
 
         return this.tokenData;
