@@ -1,10 +1,6 @@
   .container {
     margin-top: 1%;
     margin-bottom: 2%;
-    border-top: 1px solid #f2f2f2;
-    border-bottom: 2px solid #CCCCCC;
-    border-left: 2px solid #e1e1e1;
-    border-right: 2px solid #e1e1e1;
   }
   
   .form-signin {
@@ -68,4 +64,11 @@
   margin-top: 2%; 
   margin-left: 1px; 
   margin-bottom: 2%
+}
+
+.hr-coupon {
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }

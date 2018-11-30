@@ -10,6 +10,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { CouponModel, RequestCouponModel } from '../../../model/discount-coupon/coupon';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,6 +22,7 @@ export class UserProfileComponent implements OnInit {
 
   formulario: FormGroup;
   formnewpass: FormGroup;
+  formCoupon: FormGroup;
   id: number;
   pass: string;
   name: string;
@@ -40,6 +42,19 @@ export class UserProfileComponent implements OnInit {
   decodedCep: string;
   decodedToken: any;
 
+  pageArr = [
+    {
+      active: 'active',
+      name: 'Minha conta'
+    },
+    {
+      active: '',
+      name: 'Cupons'
+    }
+  ];
+
+  namePageAux = 'Minha conta';
+
   constructor(
     public apiService: UserApiService,
     public apiServiceCEP: ShippingService,
@@ -52,6 +67,7 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   public rowsUser: UserCreateModel;
+  public rowsCoupom: RequestCouponModel;
 
   ngOnInit() {
     this.spinnerService.show();
@@ -104,6 +120,13 @@ export class UserProfileComponent implements OnInit {
       oldpass: [null, Validators.required],
       newpass: [null, Validators.required]
     });
+
+    this.formCoupon = this.form.group({
+      id: [this.id],
+      coupon: [null, Validators.required]
+    });
+
+    this.getUserCoupon();
   }
 
   jwtDecode(token) {
@@ -227,5 +250,38 @@ export class UserProfileComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  changePage(namePage: string) {
+    if (namePage === 'Minha conta') {
+      this.pageArr[1].active = '';
+      this.pageArr[0].active = 'active';
+      this.namePageAux = 'Minha conta';
+    } else {
+      this.pageArr[0].active = '';
+      this.pageArr[1].active = 'active';
+      this.namePageAux = 'Cupons';
+    }
+  }
+
+  getUserCoupon() {
+    this.apiService.getUserCoupon(this.id).subscribe((res) => {
+      this.rowsCoupom = res;
+    });
+  }
+
+  insertUserCoupon(form) {
+    this.apiService.verifyCoupon({coupon: form.value.coupon}).subscribe((data) => {
+      if (data !== null) {
+        this.apiService.insertUserCoupon(form.value).subscribe((res) => {
+          if (res == null) { return this.toastrService.error('Erro ao inserir cupom.', 'Erro!'); }
+
+          this.toastrService.success('Cupom inserido!', 'Sucesso!');
+          return this.ngOnInit();
+        });
+      } else {
+        this.toastrService.error('Cupom inválido', 'Erro!');
+      }
+    });
   }
 }

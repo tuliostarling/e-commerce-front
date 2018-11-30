@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AppSettings } from '../../app.settings';
 import { UserLoginModel } from '../../model/user/userLogin';
 import { UserCreateModel, UserChangePass } from '../../model/user/userCreate';
+import { RequestCouponModel, CouponModel } from '../../model/discount-coupon/coupon';
 
 @Injectable()
 export class UserApiService {
@@ -47,12 +48,16 @@ export class UserApiService {
         return this.http.post<any>(`${this.API_URL}getPurchase/`, id);
     }
 
-    verifyCoupon(coupon: string) {
+    insertUserCoupon(dadosForm: any) {
+        return this.http.post<any>(`${this.API_URL}addCoupon/`, dadosForm);
+    }
+
+    verifyCoupon(coupon: any) {
         return this.http.post<any>(`${this.API_URL}verifyCoupon/`, coupon);
     }
 
     getUserCoupon(id: number) {
-        return this.http.get<any>(`${this.API_URL}getUserCoupon/${id}`);
+        return this.http.get<RequestCouponModel>(`${this.API_URL}getUserCoupon/${id}`);
     }
 
 }
