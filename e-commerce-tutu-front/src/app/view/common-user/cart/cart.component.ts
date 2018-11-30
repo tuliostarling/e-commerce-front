@@ -80,8 +80,9 @@ export class CartComponent implements OnInit {
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
-        if (this.couponDiscount === null) this.total = this.finalValue;
-        else {
+        if (this.couponDiscount === null) {
+          this.total = this.finalValue;
+        } else {
           this.discountValue = this.finalValue * (this.couponDiscount.value / 100);
           this.finalValue = this.finalValue - this.discountValue;
           this.finalValue = parseFloat(this.finalValue.toFixed(2));
@@ -101,7 +102,7 @@ export class CartComponent implements OnInit {
           this.installments = 1;
         }
       } else {
-        this.emptyCart === true
+        this.emptyCart = true;
       }
     });
   }
@@ -109,9 +110,9 @@ export class CartComponent implements OnInit {
   finishPayment() {
     if (this.decodedToken.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`); }
 
-    if (this.couponDiscount != null) this.couponDiscount.price = -Math.abs(this.discountValue);
+    if (this.couponDiscount != null) { this.couponDiscount.price = -Math.abs(this.discountValue); }
 
-    let paymentObj = {
+    const paymentObj = {
       cartItem: this.cartRows,
       price: this.total,
       subTotal: this.finalValue,
@@ -119,7 +120,7 @@ export class CartComponent implements OnInit {
       idUser: this.decodedToken.id,
       adress: this.adressInfo,
       discount: this.couponDiscount
-    }
+    };
 
     this.spinnerService.show();
     this.paymentService.payCart(paymentObj).subscribe((res) => {
@@ -158,7 +159,7 @@ export class CartComponent implements OnInit {
   }
 
   verifyCoupon() {
-    let teste = 'teste';
+    const teste = 'teste';
     this.userService.verifyCoupon(teste).subscribe(res => {
 
     });
@@ -168,7 +169,7 @@ export class CartComponent implements OnInit {
     const id = this.decodedToken.id;
 
     this.userService.getUserCoupon(id).subscribe(res => {
-      if (res != null) this.couponDiscount = res;
+      if (res != null) { this.couponDiscount = res; }
     });
   }
 
