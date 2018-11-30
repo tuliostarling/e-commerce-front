@@ -41,7 +41,7 @@ export class SucessPaymentComponent implements OnInit {
 
     this.paymentService.paymentSucess(payObj).subscribe((res) => {
       if (res != null) {
-        this.resAux = res;
+        this.resAux = res.id;
       }
     });
   }
