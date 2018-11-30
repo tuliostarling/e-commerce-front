@@ -1,148 +1,207 @@
 <div class="container">
-    <div class="card">
-        <div class="card-header">
-            Seus dados
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-12 col-md-5 mb-3">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+    <form role="form" [formGroup]="formulario">
+        <div class="card">
+            <div class="card-header">
+                Entrega
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="delivery_status">Status entrega</label>
+                                <input type="text" class="form-control" formControlName="delivery_status" id="delivery_status" placeholder="Status entrega"
+                                    value="{{delivery_status}}" required readonly>
                             </div>
-                            <input type="text" class="form-control" formControlName="email" id="email" placeholder="Email" aria-describedby="inputGroupPrepend"
-                                value="{{email}}" readonly>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 mb-3">
+                            <div class="form-group" *ngIf="key != undefined">
+                                <label for="key">Chave para acompanhar a entrega</label>
+                                <input type="text" class="form-control" formControlName="key" id="key" placeholder="Chave" value="{{key}}" required readonly>
+                            </div>
+                            <div class="form-group" *ngIf="key == null">
+                                <label for="key" style="width: 150%">Chave para acompanhar a entrega</label>
+                                <input type="text" class="form-control" formControlName="key" id="key" placeholder="Chave" value="Pedido ainda não saiu para entrega" required readonly>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="col-sm-12 col-md-3 mb-3">
-                    <div class="form-group">
-                        <label for="first_name">Primeiro nome</label>
-                        <input type="text" class="form-control" formControlName="first_name" id="first_name" placeholder="Primeiro nome" value="{{first_name}}"
-                            required readonly>
-                    </div>
-                </div>
+        <div class="card">
+            <div class="card-header">
+                Seus dados
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5 mb-3">
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                    </div>
+                                    <input type="text" class="form-control" formControlName="email" id="email" placeholder="Email" aria-describedby="inputGroupPrepend"
+                                        value="{{email}}" readonly>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="col-sm-12 col-md-4 mb-3">
-                    <div class="form-group">
-                        <label for="first_name">Sobrenome</label>
-                        <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Sobrenome" value="{{last_name}}"
-                            required readonly>
+                        <div class="col-sm-12 col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="first_name">Primeiro nome</label>
+                                <input type="text" class="form-control" formControlName="first_name" id="first_name" placeholder="Primeiro nome" value="{{first_name}}"
+                                    required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="first_name">Sobrenome</label>
+                                <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Sobrenome" value="{{last_name}}"
+                                    required readonly>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card">
-        <div class="card-header">
-            Endereço
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-12 col-md-6 mb-3">
-                    <div class="form-group">
-                        <label for="line1">Endereço</label>
-                        <input type="text" class="form-control" formControlName="line1" id="line1" placeholder="Endereço" value="{{line1}}" required
-                            readonly>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-2 mb-3">
-                    <div class="form-group">
-                        <label for="state">Estado</label>
-                        <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" value="{{state}}" required
-                            readonly>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4 mb-3">
-                    <div class="form-group">
-                        <label for="city">Cidade</label>
-                        <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" value="{{city}}" required readonly>
-                    </div>
-                </div>
-
+        <div class="card">
+            <div class="card-header">
+                Endereço
             </div>
-        </div>
-    </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="cep">CEP</label>
+                                <input type="number" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required readonly>
+                            </div>
+                        </div>
 
-    <div class="card">
-        <div class="card-header">
-            Pagamento
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-12 col-md-3 mb-3">
-                    <div class="form-group">
-                        <label for="status">Status pagamento</label>
-                        <input type="text" class="form-control" formControlName="status" id="name" placeholder="Status" value="{{status}}" required
-                            readonly>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            <div class="form-group">
+                                <label for="state">Estado</label>
+                                <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" value="{{state}}" required
+                                    readonly>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="line1">Endereço</label>
+                                <input type="text" class="form-control" formControlName="line1" id="line1" placeholder="Endereço" value="{{adress}}" required
+                                    readonly>
+                            </div>
+                        </div>
 
-                <div class="col-sm-12 col-md-2 mb-3">
-                    <div class="form-group">
-                        <label for="total">Preço total</label>
-                        <input type="number" class="form-control" formControlName="total" id="total" placeholder="Total" value="{{total}}" required
-                            readonly>
-                    </div>
-                </div>
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="city">Cidade</label>
+                                <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" value="{{city}}" required readonly>
+                            </div>
+                        </div>
 
-                <div class="col-sm-12 col-md-2 mb-3">
-                    <div class="form-group">
-                        <label for="shipping">Frete</label>
-                        <input type="number" class="form-control" formControlName="shipping" id="shipping" placeholder="Frete" value="{{shipping}}"
-                            required readonly>
-                    </div>
-                </div>
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="neighborhood">Bairro</label>
+                                <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" value="{{neighborhood}}"
+                                    required readonly>
+                            </div>
+                        </div>
 
-                <div class="col-sm-12 col-md-3 mb-3">
-                    <div class="form-group">
-                        <label for="date">Data da compra</label>
-                        <input type="date" class="form-control" formControlName="date" id="date" placeholder="Data" value="{{date | date: 'dd/MM/yyyy'}}"
-                            required readonly>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-2 mb-3">
-                    <div class="form-group">
-                        <label for="hour">Hora</label>
-                        <input type="number" class="form-control" formControlName="hour" id="hour" placeholder="Hora" value="{{hour}}" required readonly>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="card" *ngIf="items != null">
-        <div class="card-header">
-            Itens da compra
-        </div>
-        <div class="card-body">
-            <div class="row" *ngFor="let i of items" id="container-product">
-                <div class="col-sm-12 col-md-4 mb-3">
-                    <div class="form-group">
-                        <label for="item_name">Nome do produto</label>
-                        <input type="text" class="form-control" formControlName="item_name" id="item_name" placeholder="Nome do item" value="{{i.name}}"
-                            required readonly>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4 mb-3">
-                    <div class="form-group">
-                        <label for="item_price">Preço</label>
-                        <input type="number" class="form-control" formControlName="item_price" id="item_price" placeholder="Preço" value="{{i.price}}"
-                            required readonly>
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-4 mb-3">
-                    <div class="form-group">
-                        <label for="item_quantity">Quantidade</label>
-                        <input type="number" class="form-control" formControlName="item_quantity" id="item_quantity" placeholder="Quantidade" value="{{i.quantity}}"
-                            required readonly>
+        <div class="card">
+            <div class="card-header">
+                Pagamento
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="status">Status pagamento</label>
+                                <input type="text" class="form-control" formControlName="status" id="name" placeholder="Status" value="{{status}}" required
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            <div class="form-group">
+                                <label for="total">Preço total</label>
+                                <input type="number" class="form-control" formControlName="total" id="total" placeholder="Total" value="{{total}}" required
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            <div class="form-group">
+                                <label for="shipping">Frete</label>
+                                <input type="number" class="form-control" formControlName="shipping" id="shipping" placeholder="Frete" value="{{shipping}}"
+                                    required readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-3 mb-3">
+                            <div class="form-group">
+                                <label for="date">Data da compra</label>
+                                <input type="date" class="form-control" formControlName="date" id="date" placeholder="Data" value="{{date_hour | date: 'dd/MM/yyyy'}}"
+                                    required readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-2 mb-3">
+                            <div class="form-group">
+                                <label for="hour">Hora</label>
+                                <input type="number" class="form-control" formControlName="hour" id="hour" placeholder="Hora" value="{{date_hour}}" required
+                                    readonly>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
+        <div class="card" *ngIf="items != null">
+            <div class="card-header">
+                Itens da compra
+            </div>
+            <div class="card-body">
+                <div class="container">
+                    <div class="row" *ngFor="let i of items" id="container-product">
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="item_name">Nome do produto</label>
+                                <input type="text" class="form-control" formControlName="item_name" id="item_name" placeholder="Nome do item" value="{{i.name}}"
+                                    required readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="item_price">Preço</label>
+                                <input type="number" class="form-control" formControlName="item_price" id="item_price" placeholder="Preço" value="{{i.price}}"
+                                    required readonly>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4 mb-3">
+                            <div class="form-group">
+                                <label for="item_quantity">Quantidade</label>
+                                <input type="number" class="form-control" formControlName="item_quantity" id="item_quantity" placeholder="Quantidade" value="{{i.quantity}}"
+                                    required readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
