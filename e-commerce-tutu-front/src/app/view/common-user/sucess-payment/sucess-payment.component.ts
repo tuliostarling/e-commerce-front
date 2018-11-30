@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { PaymentService } from '../../../service/payment/payment-api.service';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-sucess-payment',
@@ -11,7 +12,7 @@ import { PaymentService } from '../../../service/payment/payment-api.service';
 export class SucessPaymentComponent implements OnInit {
 
   paymentParams: any;
-  decodedToken: any;
+  token: any;
   idUser: number;
   idCart: number;
   resAux: any;
@@ -20,9 +21,11 @@ export class SucessPaymentComponent implements OnInit {
     private router: Router,
     private paymentService: PaymentService,
     private acRoute: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
+    this.token = this.authService.getTokenData();
     this.paymentParams = this.acRoute.snapshot.queryParams;
     this.getToken();
     this.executePayment();
@@ -48,19 +51,9 @@ export class SucessPaymentComponent implements OnInit {
   }
 
   getToken() {
-    const t = localStorage.getItem('token');
-
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
-      this.idUser = this.decodedToken.id;
-      this.idCart = this.decodedToken.cart;
+    if (this.token != null) {
+      this.idUser = this.token.id;
+      this.idCart = this.token.cart;
     }
   }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
-  }
-
 }

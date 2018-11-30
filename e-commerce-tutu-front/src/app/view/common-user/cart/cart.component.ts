@@ -10,6 +10,7 @@ import { UserApiService } from '../../../service/user/user-api.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +22,7 @@ export class CartComponent implements OnInit {
   idCart: number;
   idItem: number;
   cartRows: Array<CartModel>;
-  decodedToken: any;
+  token: any;
   selectValue: number;
   finalValue: number;
   qtdOpt = [];
@@ -50,16 +51,16 @@ export class CartComponent implements OnInit {
     private paymentService: PaymentService,
     private toastrService: ToastrService,
     private userService: UserApiService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.spinnerService.show();
-    const t = localStorage.getItem('token');
+    this.token = this.authService.getTokenData();
 
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
-      this.idCart = this.decodedToken.cart;
+    if (this.token != null) {
+      this.idCart = this.token.cart;
     }
 
     this.getUserCoupon();
@@ -108,7 +109,7 @@ export class CartComponent implements OnInit {
   }
 
   finishPayment() {
-    if (this.decodedToken.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.decodedToken.id}`); }
+    if (this.token.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.token.id}`); }
 
     if (this.couponDiscount != null) { this.couponDiscount.price = -Math.abs(this.discountValue); }
 
@@ -117,7 +118,7 @@ export class CartComponent implements OnInit {
       price: this.total,
       subTotal: this.finalValue,
       shipping: this.rowsShipping[0].Valor,
-      idUser: this.decodedToken.id,
+      idUser: this.token.id,
       adress: this.adressInfo,
       discount: this.couponDiscount
     };
@@ -166,7 +167,7 @@ export class CartComponent implements OnInit {
   }
 
   getUserCoupon() {
-    const id = this.decodedToken.id;
+    const id = this.token.id;
 
     this.userService.getUserCoupon(id).subscribe(res => {
       if (res != null) { this.couponDiscount = res; }
@@ -188,19 +189,12 @@ export class CartComponent implements OnInit {
     const t = localStorage.getItem('token');
 
     if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
-      if (this.decodedToken.cep == null) {
+      if (this.token.cep == null) {
         this.shipBox = true;
       } else {
-        this.getShipPrice(this.decodedToken.cep);
+        this.getShipPrice(this.token.cep);
       }
     }
-  }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
   }
 
   updateAmount(dados, selectValueAux, idItem) {

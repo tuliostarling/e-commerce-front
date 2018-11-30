@@ -14,6 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ValueModel, AdressModel } from 'src/app/model/shipping/shipping';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-list-one-product',
@@ -45,7 +46,7 @@ export class ListOneProductComponent implements OnInit {
   commentForm: CommentModel;
   formulario: FormGroup;
   showCommentBox = false;
-  decodedToken: any;
+  token: any;
   id_user: number;
 
   rowsShipping: Array<ValueModel>;
@@ -64,7 +65,8 @@ export class ListOneProductComponent implements OnInit {
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
     private toastrService: ToastrService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -173,7 +175,7 @@ export class ListOneProductComponent implements OnInit {
   }
 
   onSubmit(form: FormGroup) {
-    this.formulario.get('id_user').setValue(this.decodedToken.id);
+    this.formulario.get('id_user').setValue(this.token.id);
     this.formulario.get('id_subproduct').setValue(this.idProduct);
     this.commentForm = form.value;
     this.commentService.create(this.commentForm).subscribe((res) => {
@@ -185,21 +187,14 @@ export class ListOneProductComponent implements OnInit {
   }
 
   getToken() {
-    const t = localStorage.getItem('token');
+    this.token = this.authService.getTokenData();
 
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
-      this.id_user = this.decodedToken.id;
-      if (this.decodedToken.cep == null) {
+    if (this.token != null) {
+      this.id_user = this.token.id;
+      if (this.token.cep == null) {
         this.finishRegisterBool = true;
       } else { this.finishRegisterBool = false; }
     }
-  }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
   }
 
   changeImg(index: number) {

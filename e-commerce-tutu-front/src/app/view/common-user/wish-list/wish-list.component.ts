@@ -6,6 +6,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 import { ProductService } from '../../../service';
 import { ProductModel } from '../../../model/product/product';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-wish-list',
@@ -16,22 +17,22 @@ export class WishListComponent implements OnInit {
 
   productsWishLRows: ProductModel;
   idWish = null;
-  decodedToken: any;
+  token: any;
 
   constructor(
     private router: Router,
     private apiService: ProductService,
     private toastrService: ToastrService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.spinnerService.show();
-    const t = localStorage.getItem('token');
+    this.token = this.authService.getTokenData();
 
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
-      this.idWish = this.decodedToken.wishlist;
+    if (this.token != null) {
+      this.idWish = this.token.wishlist;
     }
 
     this.getProducts();
@@ -60,11 +61,4 @@ export class WishListComponent implements OnInit {
   listProduct(id: number) {
     this.router.navigateByUrl(`product/${id}`);
   }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
-  }
-
 }

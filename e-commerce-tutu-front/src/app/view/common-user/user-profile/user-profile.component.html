@@ -203,8 +203,6 @@
           <button class="btn btn-success" type="submit">Atualizar</button>
           <button class="btn btn-danger" type="button" (click)="change_pass()" style="margin-left: 1%">Cancelar</button>
         </form>
-
-        <button id="openModalEle" #openModalEle [hidden]="true" (click)="openModal(content)"></button>
       </div>
     </div>
 
@@ -244,8 +242,8 @@
     </div>
   </div>
 </div>
-
 <!-- /container -->
+<button id="openModalEle" #openModalEle [hidden]="true" (click)="openModal(content)"></button>
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">

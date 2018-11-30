@@ -24,6 +24,7 @@ import { PaymentService } from './service/payment/payment-api.service';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorError } from './auth/http.interceptor';
+import { AuthServicesModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { HttpInterceptorError } from './auth/http.interceptor';
     ViewModule,
     ComponentModule,
     CountdownTimerModule,
+    AuthServicesModule,
     Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [

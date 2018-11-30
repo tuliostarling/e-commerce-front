@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-product-category-list',
@@ -31,7 +32,7 @@ export class ProductCategoryListComponent implements OnInit {
   dadosWish = [];
   idCart: number;
   idWish: number;
-  decodedToken: any;
+  token: any;
 
   constructor(
     private router: Router,
@@ -39,22 +40,21 @@ export class ProductCategoryListComponent implements OnInit {
     private apiServiceCategory: CategoryService,
     private acRoute: ActivatedRoute,
     private toastrService: ToastrService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.acRoute.url
       .subscribe(_ => {
         this.spinnerService.show();
+        this.token = this.authService.getTokenData();
         this.idCategory = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
-        const t = localStorage.getItem('token');
-
-        if (t != null) {
-          this.decodedToken = this.jwtDecode(t);
-          this.idCart = this.decodedToken.cart;
-          this.idWish = this.decodedToken.wishlist;
+        if (this.token != null) {
+          this.idCart = this.token.cart;
+          this.idWish = this.token.wishlist;
         }
 
         this.getCategory();
@@ -140,7 +140,7 @@ export class ProductCategoryListComponent implements OnInit {
   }
 
   addProductToCart(id: number) {
-    if (this.decodedToken != null) {
+    if (this.token != null) {
       this.spinnerService.show();
       this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
       this.apiService.addToCart(this.dadosCart).subscribe(res => {
@@ -172,11 +172,5 @@ export class ProductCategoryListComponent implements OnInit {
 
   cart() {
     this.router.navigateByUrl('/cart');
-  }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
   }
 }

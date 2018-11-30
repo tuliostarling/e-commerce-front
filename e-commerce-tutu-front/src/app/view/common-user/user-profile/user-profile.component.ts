@@ -11,6 +11,7 @@ import { ShippingService } from '../../../service/shipping/shipping-api.service'
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { CouponModel, RequestCouponModel } from '../../../model/discount-coupon/coupon';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -40,7 +41,7 @@ export class UserProfileComponent implements OnInit {
   update = false;
 
   decodedCep: string;
-  decodedToken: any;
+  token: any;
 
   pageArr = [
     {
@@ -63,7 +64,8 @@ export class UserProfileComponent implements OnInit {
     private acRoute: ActivatedRoute,
     private modalService: NgbModal,
     private toastrService: ToastrService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   public rowsUser: UserCreateModel;
@@ -71,13 +73,11 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.spinnerService.show();
+    this.token = this.authService.getTokenData();
     this.id = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
 
-    const t = localStorage.getItem('token');
-
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
-      this.decodedCep = this.decodedToken.cep;
+    if (this.token != null) {
+      this.decodedCep = this.token.cep;
     }
 
     if (this.decodedCep === null) {
@@ -129,12 +129,6 @@ export class UserProfileComponent implements OnInit {
     this.getUserCoupon();
   }
 
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
-  }
-
   onSubmit(form) {
     this.spinnerService.show();
     this.attForm();
@@ -172,7 +166,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   finishRegister() {
-    this.router.navigateByUrl('/finish_register/' + this.decodedToken.id);
+    this.router.navigateByUrl('/finish_register/' + this.token.id);
   }
 
   updatePass(form) {

@@ -5,6 +5,7 @@ import { CategoryService } from '../../../service/category/category-api.service'
 import { CategoryListComponent } from '../../../view/admin-user/category/category-list/category-list.component';
 import { CategoryModel } from '../../../model/category/category';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -13,45 +14,41 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
   logged = false;
-  decodedToken: any;
+  token: any;
   admin = false;
   userName: string;
   userNameDecoded: string;
   categoryList: CategoryModel;
   newCategoryList: CategoryModel;
+  userId: number;
 
   constructor(
     public router: Router,
     private categoryService: CategoryService,
-    private location: Location
+    private location: Location,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    const t = localStorage.getItem('token');
+    this.token = this.authService.getTokenData();
 
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
+    if (this.token != null) {
       this.logged = true;
+      this.userId = this.token.id;
 
       // check if the name has more than 2 words
-      if (this.decodedToken.name.trim().indexOf(' ') !== -1) {
-        this.userName = this.decodedToken.name.split(' ').slice(0, 2).join(' ');
+      if (this.token.name.trim().indexOf(' ') !== -1) {
+        this.userName = this.token.name.split(' ').slice(0, 2).join(' ');
       } else {
-        this.userName = this.decodedToken.name;
+        this.userName = this.token.name;
       }
       this.userNameDecoded = decodeURIComponent(escape(this.userName));
 
-      if (this.decodedToken.admin === true) {
+      if (this.token.admin === true) {
         this.admin = true;
       }
     }
     this.getCategory();
-  }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
   }
 
   // getCategory() {
@@ -119,7 +116,7 @@ export class HeaderComponent implements OnInit {
   }
 
   profile() {
-    this.router.navigateByUrl('/profile/' + this.decodedToken.id);
+    this.router.navigateByUrl('/profile/' + this.userId);
   }
 
   dashboard() {

@@ -6,6 +6,7 @@ import { ProductModel } from '../../../model/product/product';
 import { ToastrService } from 'ngx-toastr';
 
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-promotions',
@@ -25,28 +26,29 @@ export class PromotionsComponent implements OnInit {
   dadosWish = [];
   idCart: number;
   idWish: number;
-  decodedToken: any;
+  token: any;
 
   constructor(
     private router: Router,
     private apiService: ProductService,
     private acRoute: ActivatedRoute,
     private toastrService: ToastrService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.spinnerService.show();
     this.acRoute.url
       .subscribe(_ => {
+        this.spinnerService.show();
+        this.token = this.authService.getTokenData();
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
         const t = localStorage.getItem('token');
 
-        if (t != null) {
-          this.decodedToken = this.jwtDecode(t);
-          this.idCart = this.decodedToken.cart;
-          this.idWish = this.decodedToken.wishlist;
+        if (this.token != null) {
+          this.idCart = this.token.cart;
+          this.idWish = this.token.wishlist;
         }
 
         this.getProducts();
@@ -132,11 +134,5 @@ export class PromotionsComponent implements OnInit {
         this.toastrService.success('Produto inserido na lista de desejos!', 'Sucesso!');
       }
     });
-  }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
   }
 }
