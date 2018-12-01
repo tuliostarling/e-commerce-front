@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { AppSettings } from '../../app.settings';
 import { SubProductModel } from '../../model/product/product';
-import { HomeModel, CarouselImagesModel } from '../../model/home/home';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +15,12 @@ export class HomeApiService {
     private http: HttpClient
   ) { }
 
-  getHomeTypes() {
-    return this.http.get<HomeModel>(`${this.API_URL}getHomeTypes/`);
+  getHomeProducts() {
+    return this.http.get<SubProductModel>(`${this.API_URL}getHomeProducts/`);
   }
 
-  createCarouselImage(dadosForm: CarouselImagesModel) {
-    return this.http.post<CarouselImagesModel>(`${this.API_URL}add/`, dadosForm);
+  getHomeImages() {
+    return this.http.get<any>(`${this.API_URL}getHomeImages/`);
   }
 
   addImage(dadosForm: FormData) {

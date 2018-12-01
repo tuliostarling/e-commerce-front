@@ -37,7 +37,6 @@ export class ProductRegisterComponent implements OnInit {
   rowsSubProducts: Array<SubProductModel>;
   rowsImagesObj: any;
 
-  removedImages = [];
   idProduct: number;
   mode: string;
 
