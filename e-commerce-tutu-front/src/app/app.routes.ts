@@ -23,9 +23,6 @@ import { PromotionsComponent } from './view/common-user/promotions/promotions.co
 import { ConfirmRegisterComponent } from './component/confirm-register/confirm-register.component';
 import { FinishUserRegisterComponent } from './view/common-user/finish-user-register/finish-user-register.component';
 import { HomeControllerListComponent } from './view/admin-user/home-controller/home-controller-list/home-controller-list.component';
-import {
-    HomeControllerRegisterComponent
-} from './view/admin-user/home-controller/home-controller-register/home-controller-register.component';
 
 import { SucessPaymentComponent } from './view/common-user/sucess-payment/sucess-payment.component';
 import { CancelPaymentComponent } from './view/common-user/cancel-payment/cancel-payment.component';
@@ -54,7 +51,6 @@ export const ROUTES: Routes = [
     { path: 'confirm/:hex', component: ConfirmRegisterComponent },
     { path: 'finish_register/:id', component: FinishUserRegisterComponent },
     { path: 'home_controller_list', component: HomeControllerListComponent },
-    { path: 'home_controller_edit/:id', component: HomeControllerRegisterComponent },
     { path: 'sucess_payment', component: SucessPaymentComponent },
     { path: 'cancel_payment', component: CancelPaymentComponent },
     { path: 'order_details/:hash', component: OrderDetailsComponent }

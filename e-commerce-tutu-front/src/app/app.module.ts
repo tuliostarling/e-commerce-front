@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ROUTES } from './app.routes';
@@ -11,6 +10,7 @@ import { CouponService } from './service/discount-coupon/coupon-api.service';
 import { ProductService } from './service/product/product-api.service';
 import { CommentService } from './service/comment/comment-api.service';
 import { ShippingService } from './service/shipping/shipping-api.service';
+import { HomeApiService } from './service/home/home-api.service';
 
 import { ViewModule } from './view/view.module';
 import { ComponentModule } from './component/component.module';
@@ -50,6 +50,7 @@ import { AuthServicesModule } from './auth/auth.module';
     CommentService,
     ShippingService,
     PaymentService,
+    HomeApiService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorError,
