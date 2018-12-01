@@ -17,7 +17,6 @@ import { ProductListComponent } from './product/product-list/product-list.compon
 import { ProductRegisterComponent } from './product/product-register/product-register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeControllerListComponent } from './home-controller/home-controller-list/home-controller-list.component';
-import { HomeControllerRegisterComponent } from './home-controller/home-controller-register/home-controller-register.component';
 
 @NgModule({
   imports: [
@@ -36,8 +35,7 @@ import { HomeControllerRegisterComponent } from './home-controller/home-controll
     ProductListComponent,
     ProductRegisterComponent,
     DashboardComponent,
-    HomeControllerListComponent,
-    HomeControllerRegisterComponent
+    HomeControllerListComponent
   ],
   exports: [
     CategoryRegisterComponent,
