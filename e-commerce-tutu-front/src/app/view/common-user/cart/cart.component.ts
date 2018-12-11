@@ -63,7 +63,6 @@ export class CartComponent implements OnInit {
       this.idCart = this.token.cart;
     }
 
-    this.getUserCoupon();
     this.getProducts();
     this.getToken();
   }
@@ -108,28 +107,8 @@ export class CartComponent implements OnInit {
     });
   }
 
-  finishPayment() {
-    if (this.token.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.token.id}`); }
-
-    if (this.couponDiscount != null) { this.couponDiscount.price = -Math.abs(this.discountValue); }
-
-    const paymentObj = {
-      cartItem: this.cartRows,
-      price: this.total,
-      subTotal: this.finalValue,
-      shipping: this.rowsShipping[0].Valor,
-      idUser: this.token.id,
-      adress: this.adressInfo,
-      discount: this.couponDiscount
-    };
-
-    this.spinnerService.show();
-    this.paymentService.payCart(paymentObj).subscribe((res) => {
-      if (res != null) {
-        window.location.href = res.redirect;
-        this.spinnerService.hide();
-      }
-    });
+  redirectFinishPurchase() {
+    this.router.navigateByUrl(`finish_purchase`);
   }
 
   getShipPrice(cepVal) {
@@ -166,14 +145,6 @@ export class CartComponent implements OnInit {
     });
   }
 
-  getUserCoupon() {
-    const id = this.token.id;
-
-    this.userService.getUserCoupon(id).subscribe(res => {
-      if (res != null) { this.couponDiscount = res; }
-    });
-  }
-
   maskCEP(cep) {
     cep = cep.replace(/\D/g, '');
     cep = cep.replace(/^(\d{2})(\d)/, '$1.$2');
@@ -186,9 +157,7 @@ export class CartComponent implements OnInit {
   }
 
   getToken() {
-    const t = localStorage.getItem('token');
-
-    if (t != null) {
+    if (this.token != null) {
       if (this.token.cep == null) {
         this.shipBox = true;
       } else {

@@ -20,6 +20,7 @@ import { CpfDirective } from '../../directives/cpf.directive';
 import { SucessPaymentComponent } from './sucess-payment/sucess-payment.component';
 import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
+import { FinishPurchaseComponent } from './finish-purchase/finish-purchase.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
     SucessPaymentComponent,
     CancelPaymentComponent,
     OrderDetailsComponent,
+    FinishPurchaseComponent,
   ],
   exports: [
     HomeComponent,

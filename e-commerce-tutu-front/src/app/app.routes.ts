@@ -27,6 +27,7 @@ import { HomeControllerListComponent } from './view/admin-user/home-controller/h
 import { SucessPaymentComponent } from './view/common-user/sucess-payment/sucess-payment.component';
 import { CancelPaymentComponent } from './view/common-user/cancel-payment/cancel-payment.component';
 import { OrderDetailsComponent } from './view/common-user/order-details/order-details.component';
+import { FinishPurchaseComponent } from './view/common-user/finish-purchase/finish-purchase.component';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'countdown', pathMatch: 'full' },
@@ -53,5 +54,6 @@ export const ROUTES: Routes = [
     { path: 'home_controller_list', component: HomeControllerListComponent },
     { path: 'sucess_payment', component: SucessPaymentComponent },
     { path: 'cancel_payment', component: CancelPaymentComponent },
-    { path: 'order_details/:hash', component: OrderDetailsComponent }
+    { path: 'order_details/:hash', component: OrderDetailsComponent },
+    { path: 'finish_purchase', component: FinishPurchaseComponent }
 ];
