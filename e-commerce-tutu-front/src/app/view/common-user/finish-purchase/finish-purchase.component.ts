@@ -34,6 +34,10 @@ export class FinishPurchaseComponent implements OnInit {
   shipBox = false;
   currentCep: string;
 
+
+  userAdress: Object;
+
+
   pageArr = [
     {
       active: 'active',
@@ -71,7 +75,6 @@ export class FinishPurchaseComponent implements OnInit {
     this.token = this.authService.getTokenData();
 
     this.formulario = this.form.group({
-      id: [null],
       cep: [null],
       state: [null],
       city: [null],
@@ -87,6 +90,14 @@ export class FinishPurchaseComponent implements OnInit {
 
     this.getToken();
     this.getUserCoupon();
+    this.getUserAdress();
+  }
+  getUserAdress() {
+    this.userService.getListOne(this.token.id).subscribe(res => {
+      if (res != null) {
+        this.userAdress = res;
+      }
+    });
   }
 
   finishPayment() {
