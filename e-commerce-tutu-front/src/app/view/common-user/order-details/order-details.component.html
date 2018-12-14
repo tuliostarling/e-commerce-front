@@ -22,7 +22,8 @@
                             </div>
                             <div class="form-group" *ngIf="key == null">
                                 <label for="key" style="width: 150%">Chave para acompanhar a entrega</label>
-                                <input type="text" class="form-control" formControlName="key" id="key" placeholder="Chave" value="Pedido ainda não saiu para entrega" required readonly>
+                                <input type="text" class="form-control" formControlName="key" id="key" placeholder="Chave" value="Pedido ainda não saiu para entrega"
+                                    required readonly>
                             </div>
                         </div>
                     </div>
@@ -37,7 +38,7 @@
             <div class="card-body">
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-12 col-md-5 mb-3">
+                        <div class="col-sm-12 col-md-6 mb-3">
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <div class="input-group">
@@ -50,19 +51,10 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-3 mb-3">
+                        <div class="col-sm-12 col-md-6 mb-3">
                             <div class="form-group">
-                                <label for="first_name">Primeiro nome</label>
-                                <input type="text" class="form-control" formControlName="first_name" id="first_name" placeholder="Primeiro nome" value="{{first_name}}"
-                                    required readonly>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-12 col-md-4 mb-3">
-                            <div class="form-group">
-                                <label for="first_name">Sobrenome</label>
-                                <input type="text" class="form-control" formControlName="last_name" id="last_name" placeholder="Sobrenome" value="{{last_name}}"
-                                    required readonly>
+                                <label for="first_name">Nome</label>
+                                <input type="text" class="form-control" formControlName="name" id="name" placeholder="Nome" value="{{name}}" required readonly>
                             </div>
                         </div>
                     </div>
@@ -155,14 +147,14 @@
                         <div class="col-sm-12 col-md-3 mb-3">
                             <div class="form-group">
                                 <label for="date">Data da compra</label>
-                                <input type="date" class="form-control" formControlName="date" id="date" placeholder="Data" value="{{date_hour | date: 'dd/MM/yyyy'}}"
+                                <input type="text" class="form-control" formControlName="date" id="date" placeholder="Data" value="{{date_hour | date: 'dd/MM/yyyy'}}"
                                     required readonly>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-2 mb-3">
                             <div class="form-group">
                                 <label for="hour">Hora</label>
-                                <input type="number" class="form-control" formControlName="hour" id="hour" placeholder="Hora" value="{{date_hour}}" required
+                                <input type="text" class="form-control" formControlName="hour" id="hour" placeholder="Hora" value="{{date_hour | date: 'hh:mm:ss a'}}" required
                                     readonly>
                             </div>
                         </div>

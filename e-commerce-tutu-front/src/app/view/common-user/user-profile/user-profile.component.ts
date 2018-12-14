@@ -51,6 +51,10 @@ export class UserProfileComponent implements OnInit {
     {
       active: '',
       name: 'Cupons'
+    },
+    {
+      active: '',
+      name: 'Minhas compras'
     }
   ];
 
@@ -70,6 +74,7 @@ export class UserProfileComponent implements OnInit {
 
   public rowsUser: UserCreateModel;
   public rowsCoupom: RequestCouponModel;
+  public rowsPurchases: any;
 
   ngOnInit() {
     this.spinnerService.show();
@@ -127,6 +132,7 @@ export class UserProfileComponent implements OnInit {
     });
 
     this.getUserCoupon();
+    this.getUserPurchases();
   }
 
   onSubmit(form) {
@@ -248,13 +254,20 @@ export class UserProfileComponent implements OnInit {
 
   changePage(namePage: string) {
     if (namePage === 'Minha conta') {
-      this.pageArr[1].active = '';
       this.pageArr[0].active = 'active';
+      this.pageArr[1].active = '';
+      this.pageArr[2].active = '';
       this.namePageAux = 'Minha conta';
-    } else {
+    } else if (namePage === 'Cupons') {
       this.pageArr[0].active = '';
       this.pageArr[1].active = 'active';
+      this.pageArr[2].active = '';
       this.namePageAux = 'Cupons';
+    } else {
+      this.pageArr[0].active = '';
+      this.pageArr[1].active = '';
+      this.pageArr[2].active = 'active';
+      this.namePageAux = 'Minhas compras';
     }
   }
 
@@ -264,8 +277,20 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  getUserPurchases() {
+    this.apiService.getUserPurchases(this.id).subscribe((res) => {
+      if (res != null) {
+        this.rowsPurchases = res;
+      }
+    });
+  }
+
+  getOnePurchase(id: number) {
+    this.router.navigateByUrl('order_details/' + id);
+  }
+
   insertUserCoupon(form) {
-    this.apiService.verifyCoupon({coupon: form.value.coupon}).subscribe((data) => {
+    this.apiService.verifyCoupon({ coupon: form.value.coupon }).subscribe((data) => {
       if (data !== null) {
         this.apiService.insertUserCoupon(form.value).subscribe((res) => {
           if (res == null) { return this.toastrService.error('Erro ao inserir cupom.', 'Erro!'); }

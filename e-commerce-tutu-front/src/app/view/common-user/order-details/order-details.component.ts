@@ -26,6 +26,8 @@ export class OrderDetailsComponent implements OnInit {
   date_hour: any;
   delivery_status: string;
   key: string;
+  name: string;
+  email: string;
 
   items = [];
 
@@ -52,8 +54,7 @@ export class OrderDetailsComponent implements OnInit {
       city: [null],
       cep: [null],
       email: [null],
-      first_name: [null],
-      last_name: [null],
+      name: [null],
       status: [null],
       hour: [null],
       date: [null],
@@ -69,7 +70,6 @@ export class OrderDetailsComponent implements OnInit {
 
   getPurchaseDetail() {
     this.userService.getUserPurchaseDetail(this.hashId[2]).subscribe(res => {
-      console.log(res);
       this.adress = res[0].adress.line1;
       this.neighborhood = res[0].adress.line2;
       this.state = res[0].adress.state;
@@ -80,7 +80,8 @@ export class OrderDetailsComponent implements OnInit {
       this.status = res[0].sale.state;
       this.date_hour = res[0].sale.create_time;
       this.delivery_status = res[0].status;
-      // this.key = res.;
+      this.name = res[0].name;
+      this.email = res[0].email;
 
       for (const i of Object.keys(res)) {
         this.items = res;

@@ -73,8 +73,8 @@ export class FinishUserRegisterComponent implements OnInit {
     } else {
       return this.toastrService.error('CPF inválido, por favor digite novamente', 'Erro!');
     }
-    
-    if (this.previousUrl === '/cart') return this.router.navigateByUrl('/cart');
+
+    if (this.previousUrl === '/cart') { return this.router.navigateByUrl('/cart'); }
 
     this.toastrService.success('Dados atualizados, por favor saia e entre da sua conta!', 'Sucesso!');
     return this.home();

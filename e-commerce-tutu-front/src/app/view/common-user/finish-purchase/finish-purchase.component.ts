@@ -5,7 +5,7 @@ import { PaymentService } from '../../../service/payment/payment-api.service';
 import { AuthService } from '../../../auth/auth.service';
 import { ValueModel, AdressModel } from '../../../model/shipping/shipping';
 import { CartModel } from '../../../model/cart/cart';
-import { UserApiService } from '../../../service';
+import { UserApiService, ProductService } from '../../../service';
 import { ToastrService } from 'ngx-toastr';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,6 +20,7 @@ export class FinishPurchaseComponent implements OnInit {
   formulario: FormGroup;
   formCoupon: FormGroup;
   idCart: number;
+  idUser: number;
   token: any;
   couponDiscount: any = null;
   discountValue: number;
@@ -27,12 +28,33 @@ export class FinishPurchaseComponent implements OnInit {
   finalValue: number;
 
   update = false;
+  shipBox = false;
+  currentCep: string;
+
+  cep: number;
+  street: string;
+  num: number;
+  comp: number;
+  state: string;
+  city: string;
+  neighborhood: string;
+
+  installments: number;
+  qtdOpt = [];
+  qtdItens = [];
+  sumQtdItems: number;
+  division: number;
+
+  sedex = 'checked';
+  pac = '';
+  discount = false;
+  couponId: number;
+  shipValue: number;
 
   rowsShipping: Array<ValueModel>;
   cartRows: Array<CartModel>;
   adressInfo: Array<AdressModel>;
-  shipBox = false;
-  currentCep: string;
+  rowsUser: any;
 
   pageArr = [
     {
@@ -48,7 +70,7 @@ export class FinishPurchaseComponent implements OnInit {
       name: 'Frete e Cupom'
     },
     {
-      active: 'disabled',
+      active: '',
       name: 'Finalizar compra'
     }
   ];
@@ -64,6 +86,7 @@ export class FinishPurchaseComponent implements OnInit {
     private spinnerService: Ng4LoadingSpinnerService,
     private authService: AuthService,
     private userService: UserApiService,
+    private productService: ProductService,
   ) { }
 
   ngOnInit() {
@@ -86,28 +109,35 @@ export class FinishPurchaseComponent implements OnInit {
     });
 
     this.getToken();
+    this.getUser();
     this.getUserCoupon();
+    this.getProducts();
   }
 
-  finishPayment() {
-    if (this.token.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.token.id}`); }
+  getToken() {
+    if (this.token != null) {
+      if (this.token.cep == null) {
+        this.shipBox = true;
+      } else {
+        this.getShipPrice(this.token.cep);
+      }
 
-    if (this.couponDiscount != null) { this.couponDiscount.price = -Math.abs(this.discountValue); }
+      this.idUser = this.token.id;
+      this.idCart = this.token.cart;
+    }
+  }
 
-    const paymentObj = {
-      cartItem: this.cartRows,
-      price: this.total,
-      subTotal: this.finalValue,
-      shipping: this.rowsShipping[0].Valor,
-      idUser: this.token.id,
-      adress: this.adressInfo,
-      discount: this.couponDiscount
-    };
-
-    this.spinnerService.show();
-    this.paymentService.payCart(paymentObj).subscribe((res) => {
+  getUser() {
+    this.userService.getListOne(this.idUser).subscribe((res) => {
+      this.rowsUser = res;
       if (res != null) {
-        window.location.href = res.redirect;
+        this.cep = this.rowsUser[0].cep;
+        this.num = this.rowsUser[0].num;
+        this.comp = this.rowsUser[0].comp;
+        this.state = this.rowsUser[0].state;
+        this.city = this.rowsUser[0].city;
+        this.street = this.rowsUser[0].street;
+        this.neighborhood = this.rowsUser[0].neighborhood;
         this.spinnerService.hide();
       }
     });
@@ -119,6 +149,102 @@ export class FinishPurchaseComponent implements OnInit {
     this.userService.getUserCoupon(id).subscribe(res => {
       if (res != null) {
         this.couponDiscount = res;
+      }
+    });
+  }
+
+  getProducts() {
+    this.productService.getProductsCart(this.idCart).subscribe(res => {
+      if (res != null) {
+        this.cartRows = res.rows;
+        this.finalValue = res.pricesObj.finalValue;
+        this.qtdOpt = res.qtdOptions;
+
+        for (const i of Object.keys(this.cartRows)) {
+          this.qtdItens.push(this.cartRows[i].qtd);
+        }
+        this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
+
+        this.total = this.finalValue;
+      }
+    });
+  }
+
+  sumItems(a, b) {
+    return a + b;
+  }
+
+  select(evt) {
+    this.couponId = evt;
+
+    let value;
+    this.couponDiscount.forEach(element => {
+      if (element.id.toString() === evt) {
+        value = element.value;
+      }
+    });
+
+    if (evt === 'null') {
+      this.discount = false;
+      this.discountValue = null;
+      this.total = this.finalValue;
+      this.total += this.shipValue;
+    } else {
+      this.discount = true;
+      this.discountValue = this.finalValue * (value / 100);
+      this.discountValue = parseFloat(this.discountValue.toFixed(2));
+
+      this.total -= this.discountValue;
+      this.total = parseFloat(this.total.toFixed(2));
+    }
+  }
+
+  radioButton(evt, name) {
+    this.total = this.finalValue;
+    this.shipValue = parseFloat(evt);
+    this.total += this.shipValue;
+
+    if (this.discount === true) {
+      this.total -= this.discountValue;
+    }
+
+    if (name === 'pac') {
+      this.sedex = '';
+      this.pac = 'checked';
+    } else {
+      this.pac = '';
+      this.sedex = 'checked';
+    }
+  }
+
+  finishPayment() {
+    if (this.token.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.token.id}`); }
+
+    if (this.discountValue != null) { this.couponDiscount.price = -Math.abs(this.discountValue); }
+
+    let discountUserObj;
+
+    this.couponDiscount.forEach(element => {
+      if (element.id.toString() === this.couponId) {
+        discountUserObj = element;
+      }
+    });
+
+    const paymentObj = {
+      cartItem: this.cartRows,
+      price: this.total,
+      subTotal: this.finalValue,
+      shipping: this.rowsShipping[0].Valor,
+      idUser: this.token.id,
+      adress: this.adressInfo,
+      discount: discountUserObj
+    };
+
+    this.spinnerService.show();
+    this.paymentService.payCart(paymentObj).subscribe((res) => {
+      if (res != null) {
+        window.location.href = res.redirect;
+        this.spinnerService.hide();
       }
     });
   }
@@ -141,6 +267,7 @@ export class FinishPurchaseComponent implements OnInit {
           this.adressInfo = res.adress;
           this.total = this.total + this.rowsShipping[0].Valor;
           this.total = parseFloat(this.total.toFixed(2));
+          this.shipValue = this.rowsShipping[0].Valor;
           this.shipBox = false;
           this.spinnerService.hide();
         }
@@ -157,28 +284,18 @@ export class FinishPurchaseComponent implements OnInit {
     return cep;
   }
 
-  getToken() {
-    if (this.token != null) {
-      if (this.token.cep == null) {
-        this.shipBox = true;
-      } else {
-        this.getShipPrice(this.token.cep);
-      }
-    }
-  }
-
-  changePage(namePage: string) {
+  changePage(evt, namePage: string) {
     if (namePage === 'Endereço entrega') {
       this.pageArr[0].active = 'active';
       this.pageArr[1].active = '';
       this.pageArr[2].active = '';
-      this.pageArr[3].active = 'disabled';
+      this.pageArr[3].active = '';
       this.namePageAux = 'Endereço entrega';
     } else if (namePage === 'Produtos') {
       this.pageArr[0].active = '';
       this.pageArr[1].active = 'active';
       this.pageArr[2].active = '';
-      this.pageArr[3].active = 'disabled';
+      this.pageArr[3].active = '';
       this.namePageAux = 'Produtos';
     } else if (namePage === 'Frete e Cupom') {
       this.pageArr[0].active = '';
@@ -192,6 +309,19 @@ export class FinishPurchaseComponent implements OnInit {
       this.pageArr[2].active = '';
       this.pageArr[3].active = 'active';
       this.namePageAux = 'Finalizar compra';
+
+      if (this.total >= 80 && this.total < 140) {
+        this.installments = 2;
+        this.division = Math.round(this.total / this.installments);
+      } else if (this.total >= 140 && this.total < 300) {
+        this.installments = 3;
+        this.division = Math.round(this.total / this.installments);
+      } else if (this.total >= 300) {
+        this.installments = 4;
+        this.division = Math.round(this.total / this.installments);
+      } else {
+        this.installments = 1;
+      }
     }
   }
 

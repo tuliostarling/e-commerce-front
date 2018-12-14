@@ -3,7 +3,9 @@
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item" *ngFor="let i of pageArr">
-          <a class="nav-link {{ i.active }}" href="javascript:void(0)" (click)="changePage(i.name)">{{ i.name }}</a>
+          <a class="nav-link {{ i.active }}" href="javascript:void(0)" (click)="changePage($event, i.name)" *ngIf="i.name != 'Finalizar compra'">{{ i.name }}</a>
+          <a class="nav-link {{ i.active }}" id="finish_order" href="javascript:void(0)" (click)="changePage($event, i.name)" (clickemitter)="$event.preventDefault()"
+            *ngIf="i.name == 'Finalizar compra'">{{ i.name }}</a>
         </li>
       </ul>
     </div>
@@ -16,27 +18,26 @@
             <div class="col-sm-12 col-md-2 mb-3">
               <div class="form-group">
                 <label for="cep">CEP</label>
-                <input appCep type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" maxlength="10"
-                  (blur)="onblur($event)" required>
+                <input appCep type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" maxlength="10" (blur)="onblur($event)"
+                  required>
               </div>
             </div>
             <div class="col-sm-12 col-md-3 mb-3">
               <div class="form-group">
                 <label for="city">Cidade</label>
-                <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" value="{{city}}" required>
+                <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" required>
               </div>
             </div>
             <div class="col-sm-12 col-md-4 mb-3">
               <div class="form-group">
                 <label for="street">Rua</label>
-                <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" value="{{street}}" required>
+                <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" required>
               </div>
             </div>
             <div class="col-sm-12 col-md-3 mb-3">
               <div class="form-group">
                 <label for="neighborhood">Bairro</label>
-                <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" value="{{neighborhood}}"
-                  required>
+                <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" required>
               </div>
             </div>
           </div>
@@ -45,19 +46,19 @@
             <div class="col-sm-12 col-md-2 mb-3">
               <div class="form-group">
                 <label for="state">Estado</label>
-                <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" value="{{state}}" required>
+                <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" required>
               </div>
             </div>
             <div class="col-sm-12 col-md-2 mb-3">
               <div class="form-group">
                 <label for="num">Número</label>
-                <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" value="{{num}}" required>
+                <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" required>
               </div>
             </div>
             <div class="col-sm-12 col-md-2 mb-3">
               <div class="form-group">
                 <label for="comp">Complemento</label>
-                <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" value="{{comp}}" required>
+                <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" required>
               </div>
             </div>
           </div>
@@ -130,7 +131,7 @@
 
     <div class="card-body" *ngIf="namePageAux === 'Produtos'">
       <div class="container">
-        <table id="table-list" class="table table-hover">
+        <table class="table">
           <thead>
             <tr>
               <th scope="col">Produto</th>
@@ -138,11 +139,18 @@
               <th scope="col">Preço</th>
             </tr>
           </thead>
-          <tbody *ngFor="let i of rowsProduct;">
-            <tr>
-              <td>{{i.name}}</td>
-              <td>{{i.amount}}</td>
-              <td>{{i.price}}</td>
+          <tbody>
+            <tr *ngFor="let i of cartRows">
+              <td scope="row">
+                <div id="leftsidemenu" (click)="listProduct(i.id)">
+                  <img src="{{i.location_aws}}" style="width: 80px; height: 80px;">
+                </div>
+                <div id="rigthsidemenu">
+                  <p>{{i.name}} - {{i.size}}</p>
+                </div>
+              </td>
+              <td>{{i.qtd}}</td>
+              <td>R$ {{i.price}}</td>
             </tr>
           </tbody>
         </table>
@@ -155,14 +163,14 @@
           <div class="col-sm-12 col-md-12 mb-3">
             <div class="form-group">
               <label for="coupon">Deseja atribuir algum cupom à essa compra?</label>
-              <select class="form-control" formControlName="coupon" id="coupon">
+              <select class="form-control" formControlName="coupon" id="coupon" (change)="select($event.target.value)">
+                <option value=null>--</option>
                 <ng-container *ngFor="let i of couponDiscount">
                   <option value="{{i.id}}">{{i.name}}</option>
                 </ng-container>
               </select>
             </div>
           </div>
-          <button class="btn btn-success" type="submit" style="margin-left: 1.5%;">Adicionar</button>
         </form>
 
         <hr class="hr-coupon">
@@ -188,12 +196,14 @@
           <div id="form-check" class="col-md-6">
             <h5>Escolha um frete</h5>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-              <label class="form-check-label" for="inlineRadio1">Sedex</label>
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sedex" type="radio" value="{{rowsShipping[0].Valor}}"
+                (click)="radioButton($event.target.value, $event.target.id)" checked="{{sedex}}">
+              <label class="form-check-label" for="sedex">Sedex</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-              <label class="form-check-label" for="inlineRadio2">PAC</label>
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pac" type="radio" value="{{rowsShipping[1].Valor}}"
+                (click)="radioButton($event.target.value, $event.target.id)" checked="{{pac}}">
+              <label class="form-check-label" for="pac">PAC</label>
             </div>
           </div>
         </div>
@@ -210,21 +220,34 @@
               <p id="subtotalText">Subtotal ({{sumQtdItems}} produto(s))</p>
             </div>
             <div class="col-6">
-              <p style="float: right; color: #949494; font-size: 15px">R$ {{finalValue}}</p>
+              <p style="float: right; color: #949494; font-size: 15px">R${{finalValue}}</p>
             </div>
           </div>
-          <div class="row" style="">
+          <div class="row">
             <div class="col-6">
               <p style="font-size: 15px">Frete</p>
             </div>
+            <div class="col-6" *ngIf="sedex == 'checked' && pac != 'checked'">
+              <p *ngIf="rowsShipping != undefined" style="float: right; font-size: 15px">R${{rowsShipping[0].Valor}}</p>
+            </div>
+
+            <div class="col-6" *ngIf="pac == 'checked' && sedex != 'checked'">
+              <p *ngIf="rowsShipping != undefined" style="float: right; font-size: 15px">R${{rowsShipping[1].Valor}}</p>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="discount == true">
             <div class="col-6">
-              <p *ngIf="rowsShipping != undefined" style="float: right; font-size: 15px">R$ {{rowsShipping[0].Valor}}</p>
+              <p style="font-size: 15px">Desconto</p>
+            </div>
+            <div class="col-6">
+              <p style="float: right; font-size: 15px; color: green">- R${{discountValue}}</p>
             </div>
           </div>
 
           <hr style="margin-top: -0.5%">
-          
-          <div class="row" style="">
+
+          <div class="row">
             <div class="col-6">
               <p style="font-size: 15px">
                 <b>Total</b>
@@ -254,7 +277,7 @@
           <hr style="margin-top: -0.1%">
 
           <div style="text-align: center">
-            <button class="btn btn-success" style="float: center" (click)="redirectFinishPurchase()">Comprar!</button>
+            <button class="btn btn-success" style="float: center" (click)="finishPayment()">Comprar!</button>
           </div>
         </div>
       </div>

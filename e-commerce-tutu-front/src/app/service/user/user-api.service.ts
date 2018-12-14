@@ -41,7 +41,7 @@ export class UserApiService {
     }
 
     getUserPurchases(id: number) {
-        return this.http.post<any>(`${this.API_URL}purchases/`, id);
+        return this.http.get<any>(`${this.API_URL}purchases/` + id);
     }
 
     getUserPurchaseDetail(id: number) {
