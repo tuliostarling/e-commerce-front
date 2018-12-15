@@ -9,6 +9,8 @@ import { UserApiService, ProductService } from '../../../service';
 import { ToastrService } from 'ngx-toastr';
 import { ShippingService } from '../../../service/shipping/shipping-api.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserCreateModel } from '../../../model/user/userCreate';
+import { UserLoginModel } from '../../../model/user/userLogin';
 
 @Component({
   selector: 'app-finish-purchase',
@@ -59,6 +61,7 @@ export class FinishPurchaseComponent implements OnInit {
 
   userAdress: Object;
 
+  newCep: number;
 
   pageArr = [
     {
@@ -80,6 +83,8 @@ export class FinishPurchaseComponent implements OnInit {
   ];
 
   namePageAux = 'Endereço entrega';
+  public rowsFormAddress: UserCreateModel;
+  public loginUserModel: UserLoginModel;
 
   constructor(
     private router: Router,
@@ -98,13 +103,14 @@ export class FinishPurchaseComponent implements OnInit {
     this.token = this.authService.getTokenData();
 
     this.formulario = this.form.group({
-      cep: [null],
-      state: [null],
-      city: [null],
-      street: [null],
-      neighborhood: [null],
-      num: [null],
-      comp: [null]
+      id: [null],
+      cep: [null, Validators.required],
+      state: [null, Validators.required],
+      city: [null, Validators.required],
+      street: [null, Validators.required],
+      neighborhood: [null, Validators.required],
+      num: [null, Validators.required],
+      comp: [null, Validators.required]
     });
 
     this.formCoupon = this.form.group({
@@ -117,16 +123,34 @@ export class FinishPurchaseComponent implements OnInit {
     this.getProducts();
   }
 
-  getToken() {
-    if (this.token != null) {
-      if (this.token.cep == null) {
-        this.shipBox = true;
-      } else {
-        this.getShipPrice(this.token.cep);
-      }
+  onSubmit(form) {
+    this.formulario.patchValue({ id: this.token.id });
+    this.rowsFormAddress = form.value;
 
-      this.idUser = this.token.id;
-      this.idCart = this.token.cart;
+    this.userService.updateAdresss(this.rowsFormAddress).subscribe((res) => {
+      if (res != null) {
+        this.newCep = this.rowsFormAddress.cep;
+        this.getToken();
+        this.update = false;
+        this.toastrService.success(`Endereço atualizado com sucesso!`, `Sucesso!`);
+      }
+    });
+  }
+
+  getToken() {
+    if (this.newCep == null) {
+      if (this.token != null) {
+        if (this.token.cep == null) {
+          this.shipBox = true;
+        } else {
+          this.getShipPrice(this.token.cep);
+        }
+
+        this.idUser = this.token.id;
+        this.idCart = this.token.cart;
+      }
+    } else {
+      this.getShipPrice(this.newCep);
     }
   }
 
@@ -223,8 +247,6 @@ export class FinishPurchaseComponent implements OnInit {
   finishPayment() {
     if (this.token.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.token.id}`); }
 
-    if (this.discountValue != null) { this.couponDiscount.price = -Math.abs(this.discountValue); }
-
     let discountUserObj;
 
     this.couponDiscount.forEach(element => {
@@ -232,6 +254,11 @@ export class FinishPurchaseComponent implements OnInit {
         discountUserObj = element;
       }
     });
+
+    if (this.discountValue != null) {
+      this.couponDiscount.price = -Math.abs(this.discountValue);
+      discountUserObj.value = this.couponDiscount.price;
+    }
 
     const paymentObj = {
       cartItem: this.cartRows,
