@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <div class="container">
-                    <div class="row">
+                    <div class="row" *ngIf="isAdmin == false">
                         <div class="col-sm-12 col-md-3 mb-3">
                             <div class="form-group">
                                 <label for="delivery_status">Status entrega</label>
@@ -27,13 +27,40 @@
                             </div>
                         </div>
                     </div>
+
+                    <form role="form" [formGroup]="formAdmin" (ngSubmit)="onSubmit(formAdmin)" *ngIf="isAdmin == true">
+                        <div class="row">
+                            <div class="col-sm-12 col-md-3 mb-3">
+                                <div class="form-group">
+                                    <label for="delivery_status">Status entrega</label>
+                                    <input type="text" class="form-control" formControlName="delivery_status" id="delivery_status" placeholder="Status entrega"
+                                        value="{{delivery_status}}" required>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-12 col-md-3 mb-3">
+                                <div class="form-group" *ngIf="key != undefined">
+                                    <label for="key">Chave para acompanhar a entrega</label>
+                                    <input type="text" class="form-control" formControlName="key" id="key" placeholder="Chave" value="{{key}}" required>
+                                </div>
+                                <div class="form-group" *ngIf="key == null">
+                                    <label for="key" style="width: 150%">Chave para acompanhar a entrega</label>
+                                    <input type="text" class="form-control" formControlName="key" id="key" placeholder="Chave" value="Pedido ainda não saiu para entrega"
+                                        required>
+                                </div>
+                            </div>
+
+                        </div>
+                        <button class="btn btn-success" type="submit">Atualizar</button>
+                        <button class="btn btn-danger" type="button" style="margin-left: 1%">Cancelar</button>
+                    </form>
                 </div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-header">
-                Seus dados
+                Dados pessoais
             </div>
             <div class="card-body">
                 <div class="container">
@@ -154,8 +181,8 @@
                         <div class="col-sm-12 col-md-2 mb-3">
                             <div class="form-group">
                                 <label for="hour">Hora</label>
-                                <input type="text" class="form-control" formControlName="hour" id="hour" placeholder="Hora" value="{{date_hour | date: 'hh:mm:ss a'}}" required
-                                    readonly>
+                                <input type="text" class="form-control" formControlName="hour" id="hour" placeholder="Hora" value="{{date_hour | date: 'hh:mm:ss a'}}"
+                                    required readonly>
                             </div>
                         </div>
                     </div>

@@ -1,3 +1,7 @@
+.container {
+    margin-bottom: 5%;
+}
+
 .h2-text {
     text-align: center;
     padding: 3%;
@@ -30,4 +34,18 @@
     width:100px;height:100px;
     background-size:cover;
     background-repeat:no-repeat;
+}
+
+.imagesUploaded {
+    width: 325px;
+    height: 150px;
+    max-width: 325px;
+    max-height: 150px;
+}
+
+#imgSubProduct {
+    width: 200px;
+    height: 120px;
+    max-width: 200px;
+    max-height: 120px;
 }

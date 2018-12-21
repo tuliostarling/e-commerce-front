@@ -14,15 +14,15 @@
 
     <div class="card-body" *ngIf="namePageAux === 'Banner Images'">
       <div class="container">
-        <div class="col-sm-12 col-md-6" *ngIf="LoadCurrentImg != null">
-          <div class="form-group">
-            <label for="type">Banner Atuais</label>
-            <br>
-            <div *ngFor="let i of imgSRC">
-              <img src="{{i}}" width="200" height="100" />
+        <ng-container *ngIf="LoadCurrentImg != null">
+          <label for="type">Banner Atuais</label>
+          <br>
+          <div class="row">
+            <div class="col-sm-12 col-md-4" *ngFor="let i of imgSRC">
+              <img src="{{i}}" class="imagesUploaded" />
             </div>
           </div>
-        </div>
+        </ng-container>
 
         <div class="row" *ngIf="LoadCurrentImg != null">
           <div class="col-12">
@@ -68,7 +68,7 @@
 
         <div class="row" *ngIf="LoadCurrentImg == null">
           <label for="type">Você não tem nenhum banner inserido ainda.</label>
-          
+
           <div class="row">
             <div class="col-12">
               <div class="form-group">
@@ -116,7 +116,7 @@
     <div class="card-body" *ngIf="namePageAux === 'Produtos mais Vendidos'">
       <div class="container">
 
-        
+
 
       </div>
     </div>

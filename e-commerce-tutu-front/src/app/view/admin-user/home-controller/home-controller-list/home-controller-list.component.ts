@@ -60,7 +60,7 @@ export class HomeControllerListComponent implements OnInit {
   }
 
   insertBannerImages() {
-    if (this.imagesToUpload === undefined || this.imagesToUpload.length == 0) {
+    if (this.imagesToUpload === undefined || this.imagesToUpload.length === 0) {
       return this.toastrService.warning('Insira imagens para cadastrar.', 'Atenção!');
     }
 
@@ -80,8 +80,9 @@ export class HomeControllerListComponent implements OnInit {
   }
 
   handleFileSelect(fileInput: any) {
-    if (fileInput.target.files.length > 3) { return this.toastrService.warning('Maximo de 3 imagens permitidas!', 'Atenção!'); }
-    else this.imagesToUpload = Array.from(fileInput.target.files);
+    if (fileInput.target.files.length > 3) {
+      return this.toastrService.warning('Maximo de 3 imagens permitidas!', 'Atenção!');
+    } else { this.imagesToUpload = Array.from(fileInput.target.files); }
   }
 
   removeFileInsert(index: number) {
@@ -89,7 +90,9 @@ export class HomeControllerListComponent implements OnInit {
   }
 
   updateBannerImages() {
-    if (this.rowsImagesObj.length < 3 || this.rowsImagesObj > 3) { return this.toastrService.warning('O banner deve conter 3 imagens!', 'Atenção!'); }
+    if (this.rowsImagesObj.length < 3 || this.rowsImagesObj > 3) {
+      return this.toastrService.warning('O banner deve conter 3 imagens!', 'Atenção!');
+    }
     this.homeService.putImage(this.formData).subscribe(res => {
       if (res != null) {
         this.toastrService.success('Banners Atualizados.', 'Sucesso!');
@@ -101,9 +104,11 @@ export class HomeControllerListComponent implements OnInit {
   handleUpdateFile(fileInput: any) {
     const totalImgInput = fileInput.target.files.length;
 
-    if (this.rowsImagesObj != undefined) {
-      let totalImgs = this.rowsImagesObj.length;
-      if (totalImgs + totalImgInput > 3 || totalImgs + totalImgInput < 3) { return this.toastrService.warning('O banner deve conter 3 imagens!', 'Atenção!'); }
+    if (this.rowsImagesObj !== undefined) {
+      const totalImgs = this.rowsImagesObj.length;
+      if (totalImgs + totalImgInput > 3 || totalImgs + totalImgInput < 3) {
+        return this.toastrService.warning('O banner deve conter 3 imagens!', 'Atenção!');
+      }
     }
 
     if (totalImgInput > 3) { return this.toastrService.warning('Maximo de 3 imagens permitidas!', 'Atenção!'); }
@@ -149,7 +154,6 @@ export class HomeControllerListComponent implements OnInit {
   }
 
   removeFile(index: number, file) {
-    console.log(file);
     if (index !== -1) {
       const size = this.rowsImagesObj.splice(index, 1);
       size.forEach(x => this.formData.append('key', file.key_aws), this.formData.append('id', file.id));

@@ -120,7 +120,7 @@ export class HeaderComponent implements OnInit {
   }
 
   dashboard() {
-    this.router.navigateByUrl('/dashboard');
+    this.router.navigateByUrl('/dashboard/0');
   }
 
   wishList() {

@@ -1,20 +1,20 @@
-.first {
-    text-align: center;
-    border-radius: 5px;
-    padding: 6%;
-    border-top: 1px solid #f2f2f2;
-    border-bottom: 2px solid #CCCCCC;
-    border-left: 2px solid #e1e1e1;
-    border-right: 2px solid #e1e1e1;
-    margin-bottom: 5%;
+.container {
+    margin-top: 1%;
+    margin-bottom: 3%;
 }
 
-.first:hover{
-    background-color: #FE980F;
-    cursor:pointer;
-    color: #fff;
-    border-top: 1px solid #feb95b;
-    border-bottom: 2px solid #f28b01;
-    border-left: 2px solid #fea328;
-    border-right: 2px solid #fea328;
- }
+.card-body h3 {
+    margin-top: 1%;
+}
+
+.middle-card {
+    margin-top: 3%;
+}
+
+.products {
+    margin-top: 3%;
+}
+
+.table-purchases:hover {
+    cursor: pointer;
+}
