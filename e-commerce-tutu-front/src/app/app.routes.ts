@@ -45,7 +45,7 @@ export const ROUTES: Routes = [
     { path: 'cart', component: CartComponent },
     { path: 'countdown', component: CountdownComponent },
     { path: 'product/:id', component: ListOneProductComponent },
-    { path: 'dashboard', component: DashboardComponent },
+    { path: 'dashboard/:page', component: DashboardComponent },
     { path: 'profile/:id', component: UserProfileComponent },
     { path: 'wish_list', component: WishListComponent },
     { path: 'promotions/:page', component: PromotionsComponent },

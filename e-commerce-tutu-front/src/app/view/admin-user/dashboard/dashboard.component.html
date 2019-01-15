@@ -1,3 +1,117 @@
 <div class="container">
-  <p>Em breve...</p>
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item" *ngFor="let i of pageArr">
+          <a class="nav-link {{ i.active }}" href="javascript:void(0)" (click)="changePage(i.name)">{{ i.name }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Lucro'">
+      <div class="container">
+
+        <form role="form" [formGroup]="formTotal" (ngSubmit)="onSubmit(formulario)">
+          <h3>Escolha uma data para calcular seu lucro</h3>
+          <div class="row middle-card">
+            <div class="form-group">
+
+              <div class="col-sm-12 col-md-12">
+                <label for="date">Data: </label>
+                <input type="date" class="form-control" formControlName="date" id="date" data-date="" data-date-format="DD MMMM YYYY"
+                  placeholder="Digite o dia">
+                <small id="emailHelp" class="form-text text-muted">O lucro será calculado da data que você escolher para trás.</small>
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Despesas'">
+      <div class="container">
+
+        <form role="form" [formGroup]="formFee" (ngSubmit)="onSubmit(formulario)">
+          <h3>Escolha uma data para calcular sua despesa</h3>
+          <div class="row middle-card">
+
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="initialDate">Data início: </label>
+                <input type="date" class="form-control" formControlName="initialDate" id="initialDate" data-date="" data-date-format="DD MMMM YYYY"
+                  placeholder="Digite o dia">
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="finalDate">Data fim: </label>
+                <input type="date" class="form-control" formControlName="finalDate" id="finalDate" data-date="" data-date-format="DD MMMM YYYY"
+                  placeholder="Digite o dia">
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Quantidade'">
+      <div class="container">
+
+        <form role="form" [formGroup]="formQuantity" (ngSubmit)="onSubmit(formulario)">
+          <h3>Escolha uma data para calcular quantos produtos foram vendidos</h3>
+          <div class="row middle-card">
+
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="initialDate">Data início: </label>
+                <input type="date" class="form-control" formControlName="initialDate" id="initialDate" data-date="" data-date-format="DD MMMM YYYY"
+                  placeholder="Digite o dia">
+              </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label for="finalDate">Data fim: </label>
+                <input type="date" class="form-control" formControlName="finalDate" id="finalDate" data-date="" data-date-format="DD MMMM YYYY"
+                  placeholder="Digite o dia">
+              </div>
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="card products">
+    <div class="card-header">
+      Produtos vendidos
+    </div>
+    <div class="card-body">
+      <div class="container">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Status</th>
+              <th scope="col">Data</th>
+              <th scope="col">Hora</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-purchases" *ngFor="let i of rowsPurchases" (click)="getOnePurchase(i.id)">
+              <td>{{i.status}}</td>
+              <td>{{i.created_at | date: 'dd/MM/yyyy'}}</td>
+              <td>{{i.created_at | date: 'hh:mm:ss a'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </div>

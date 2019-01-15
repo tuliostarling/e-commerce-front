@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { UserApiService } from '../../../service/user/user-api.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../../auth/auth.service';
+import { DashboardApiService } from '../../../service/dashboard/dashboard-api.service';
+import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 
 @Component({
@@ -12,8 +16,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class OrderDetailsComponent implements OnInit {
   id: number;
   hashId: any;
+  idPurchase: number;
 
   formulario: FormGroup;
+  formAdmin: FormGroup;
 
   adress: string;
   neighborhood: string;
@@ -31,11 +37,18 @@ export class OrderDetailsComponent implements OnInit {
 
   items = [];
 
+  token: any;
+  isAdmin: boolean;
+
   constructor(
     private router: Router,
     private form: FormBuilder,
     private userService: UserApiService,
-    private acRoute: ActivatedRoute
+    private acRoute: ActivatedRoute,
+    public authService: AuthService,
+    public dashboardService: DashboardApiService,
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) {
     router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
@@ -45,6 +58,9 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.token = this.authService.getTokenData();
+    this.isAdmin = this.token.admin;
+
     this.getPurchaseDetail();
 
     this.formulario = this.form.group({
@@ -66,6 +82,13 @@ export class OrderDetailsComponent implements OnInit {
       delivery_status: [null],
       key: [null]
     });
+
+    this.formAdmin = this.form.group({
+      id_user: [null],
+      id_purchase: [null],
+      delivery_status: [null, Validators.required],
+      key: [null, Validators.required]
+    });
   }
 
   getPurchaseDetail() {
@@ -86,6 +109,23 @@ export class OrderDetailsComponent implements OnInit {
       for (const i of Object.keys(res)) {
         this.items = res;
       }
+    });
+  }
+
+  onSubmit(form) {
+    this.spinnerService.show();
+    this.formAdmin.patchValue({
+      id_user: this.token.id,
+      id_purchase: parseInt(this.hashId[2], 10)
+    });
+
+    this.dashboardService.sendUserCode(form.value).subscribe((res) => {
+      if (res != null) {
+        this.toastrService.success('Status alterado!', 'Sucesso!');
+        this.spinnerService.hide();
+      }
+
+      this.toastrService.error('Erro ao alterar o status!', 'Erro!');
     });
   }
 

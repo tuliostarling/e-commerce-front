@@ -31,8 +31,7 @@ export class HomeComponent implements OnInit {
 
   getHomeBanners() {
     this.homeService.getHomeImages().subscribe(res => {
-      if(res != null) this.carouselImages = res.map(x => x.location_aws);
-      console.log(this.carouselImages);
+      if (res != null) { this.carouselImages = res.map(x => x.location_aws); }
     });
   }
 
