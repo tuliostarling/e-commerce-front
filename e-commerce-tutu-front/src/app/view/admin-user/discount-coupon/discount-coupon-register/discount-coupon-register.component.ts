@@ -9,6 +9,9 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
+import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 import { CouponService } from '../../../../service/discount-coupon/coupon-api.service';
 import { CouponModel } from '../../../../model/discount-coupon/coupon';
 
@@ -28,13 +31,16 @@ export class DiscountCouponRegisterComponent implements OnInit {
     private apiService: CouponService,
     private form: FormBuilder,
     public acRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
     this.acRoute.params
       .subscribe((params: any) => {
         if (params.hasOwnProperty('id')) {
+          this.spinnerService.show();
           this.idCoupon = params.id;
           this.mode = 'Editar';
           this.recoverRegistry();
@@ -55,7 +61,6 @@ export class DiscountCouponRegisterComponent implements OnInit {
     if (this.idCoupon !== undefined) {
       this.apiService.getListOne(this.idCoupon).subscribe((data) => {
         if (data) {
-
           const formattedDate = new DatePipe('en-US').transform(data[0].expire_at, 'yyyy-MM-dd');
           this.formulario = this.form.group({
             id: [data[0].id],
@@ -64,36 +69,45 @@ export class DiscountCouponRegisterComponent implements OnInit {
             expire_at: [formattedDate, Validators.required],
             valid: [data[0].valid]
           });
+
+          this.spinnerService.hide();
         } else {
-          alert('erro');
+          this.spinnerService.hide();
+          this.toastrService.error('Erro ao carregar', 'Erro!');
         }
       });
     }
   }
 
   navToListCoup() {
-    this.router.navigateByUrl('coupon_list');
+    this.router.navigateByUrl('/coupon_list/0');
   }
 
   onSubmit(form) {
+    this.spinnerService.show();
     this.createCouponModel = form.value;
 
     if (this.idCoupon === undefined) {
       this.apiService.create(this.createCouponModel).subscribe(res => {
-        if (res === null) { return alert('Erro ao cadastrar'); }
+        if (res === null) {
+          this.spinnerService.hide();
+          return this.toastrService.error('Erro ao cadastrar', 'Erro!');
+        }
 
+        this.toastrService.success('Cumpom cadastrado!', 'Sucesso!');
         this.navToListCoup();
+        this.spinnerService.hide();
       });
     } else {
       this.apiService.update(this.createCouponModel).subscribe((res) => {
-        if (res === null) { return alert('Erro ao cadastrar'); }
+        if (res === null) {
+          this.spinnerService.hide();
+          return this.toastrService.error('Erro ao cadastrar', 'Erro!');
+        }
 
+        this.spinnerService.hide();
         this.navToListCoup();
       });
     }
-  }
-
-  list() {
-    this.router.navigateByUrl('/coupon_list');
   }
 }

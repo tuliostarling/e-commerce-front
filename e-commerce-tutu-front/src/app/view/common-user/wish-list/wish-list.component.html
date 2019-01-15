@@ -1,39 +1,41 @@
 <div class="container">
   <div class="content" style="margin-top: 2%">
-    <p>Meus produtos favoritos</p>
-    <hr style="border-bottom-width: 50px;">
+    <p id="title">Meus produtos favoritos</p>
+    <hr id="line">
   </div>
 
   <div class="row" style="margin-top: 5%; margin-bottom: 2%">
     <div class="col-md-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Produto</th>
-            <th scope="col">Nome/Tamanho</th>
-            <th scope="col">Preço</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let i of productsWishLRows">
-            <td scope="row">
-              <div id="leftsidemenu" (click)="listProduct(i.id)">
-                <img src="{{i.location_aws}}" style="width: 80px; height: 80px;">
-              </div>
-            </td>
-            <td>
-              <p>{{i.name}} - {{i.size}}</p>
-            </td>
-            <td>R$ {{i.price}}</td>
-            <td>
-              <button class="btn btn-danger btn-sm" (click)="delete(i.id)">
-                <i class="fa fa-trash"></i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Produto</th>
+              <th scope="col">Nome/Tamanho</th>
+              <th scope="col">Preço</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of productsWishLRows">
+              <td scope="row">
+                <div id="leftsidemenu" (click)="listProduct(i.id)">
+                  <img src="{{i.location_aws}}" style="width: 80px; height: 80px;">
+                </div>
+              </td>
+              <td>
+                <p>{{i.name}} - {{i.size}}</p>
+              </td>
+              <td>R$ {{i.price}}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="delete(i.id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

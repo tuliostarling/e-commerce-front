@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
+import { HomeApiService } from '../../../service/home/home-api.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,13 @@ import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';
 export class HomeComponent implements OnInit {
   // Imagens width: 1150px; height: 600px;
 
-  constructor(config: NgbCarouselConfig) {
+  carouselImages: any;
+
+
+  constructor(
+    config: NgbCarouselConfig,
+    private homeService: HomeApiService
+  ) {
     config.interval = 3000;
     config.wrap = true;
     config.keyboard = false;
@@ -19,6 +26,14 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getHomeBanners();
+  }
+
+  getHomeBanners() {
+    this.homeService.getHomeImages().subscribe(res => {
+      if(res != null) this.carouselImages = res.map(x => x.location_aws);
+      console.log(this.carouselImages);
+    });
   }
 
 }

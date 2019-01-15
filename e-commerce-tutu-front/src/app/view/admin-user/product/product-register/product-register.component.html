@@ -15,13 +15,13 @@
   <div class="container">
     <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
       <div class="row">
-        <div class="col-3">
+        <div class="col-sm-12 col-md-3">
           <div class="form-group">
             <label for="name">Nome</label>
             <input type="text" class="form-control" formControlName="name" id="name" placeholder="Digite o nome">
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-sm-12 col-md-3">
           <div class="form-group">
             <label for="id_category">Categoria</label>
             <select class="form-control" formControlName="id_category" id="category">
@@ -31,13 +31,13 @@
             </select>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-sm-12 col-md-3">
           <div class="form-group">
             <label for="model">Modelo</label>
             <input type="text" class="form-control" formControlName="model" id="model" placeholder="Digite o modelo">
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-sm-12 col-md-3">
           <div class="form-group">
             <label for="type">Tipo</label>
             <input type="text" class="form-control" formControlName="type" id="type" placeholder="Digite o tipo">
@@ -66,38 +66,38 @@
           <ngb-panel title="Adicionar novo">
             <ng-template ngbPanelContent>
               <div class="row">
-                <div class="col-2">
+                <div class="col-sm-12 col-md-2">
                   <div class="form-group">
                     <label for="size">Tamanho</label>
                     <input type="number" class="form-control" formControlName="size" id="size" placeholder="Tamanho">
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-12 col-md-2">
                   <div class="form-group">
                     <label for="amount">Quatidade</label>
                     <input type="number" class="form-control" formControlName="amount" id="amount" placeholder="Quantidade">
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-sm-12 col-md-2">
                   <div class="form-group">
                     <label for="color">Cor</label>
                     <input type="text" class="form-control" formControlName="color" id="color" placeholder="Cor">
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-12 col-md-2">
                   <div class="form-group">
                     <label for="price">Preço</label>
                     <input type="number" class="form-control" formControlName="price" id="price" placeholder="Preço">
                   </div>
                 </div>
-                <div class="col-2">
+                <div class="col-sm-12 col-md-2">
                   <div class="form-group">
                     <label for="old_price">Preço Antigo</label>
                     <input type="number" class="form-control" formControlName="old_price" id="old_price" placeholder="Preço">
                   </div>
                 </div>
 
-                <div class="col-2">
+                <div class="col-sm-12 col-md-2">
                   <div class="form-group">
                     <label for="material">Material</label>
                     <input type="text" class="form-control" formControlName="material" id="material" placeholder="Material">
@@ -105,13 +105,13 @@
                 </div>
               </div>
 
-              <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
-                <div>
+              <div class="row" id="chk-ctn">
+                <div class="col-sm-6 col-md-2">
                   <input type="checkbox" class="form-check-input" id="discount" (change)="changeDiscount($event.target)">
                   <label class="form-check-label" for="discount">Desconto</label>
                 </div>
 
-                <div style="margin-left: 3%;">
+                <div class="col-sm-6 col-md-1">
                   <input type="checkbox" class="form-check-input" id="promotion" (change)="changePromotionProduct($event.target)">
                   <label class="form-check-label" for="promotion">Promoção</label>
                 </div>
@@ -140,7 +140,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of imagesToUpload;let i=index">
+                        <tr *ngFor="let item of imagesToUpload;let i=index;trackBy: trackByFn">
                           <td>
                             <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
                               <div class="previewIcon" [ngfBackground]="item"></div>
@@ -177,37 +177,37 @@
                     <i class="fa fa-trash"></i>
                   </button>
                   <div class="row">
-                    <div class="col-2">
+                    <div class="col-sm-12 col-md-2">
                       <div class="form-group">
                         <label for="size">Tamanho</label>
                         <input type="number" class="form-control" id="size" placeholder="Tamanho" formControlName="size">
                       </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-sm-12 col-md-2">
                       <div class="form-group">
                         <label for="amount">Quatidade</label>
                         <input type="number" class="form-control" id="amount" placeholder="Quantidade" formControlName="amount">
                       </div>
                     </div>
-                    <div class="col-3">
+                    <div class="col-sm-12 col-md-3">
                       <div class="form-group">
                         <label for="color">Cor</label>
                         <input type="text" class="form-control" id="color" placeholder="Cor" formControlName="color">
                       </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-sm-12 col-md-2">
                       <div class="form-group">
                         <label for="price">Preço</label>
                         <input type="number" class="form-control" id="price" placeholder="Preço" formControlName="price">
                       </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-sm-12 col-md-2">
                       <div class="form-group">
                         <label for="old_price">Preço Antigo</label>
                         <input type="number" class="form-control" id="old_price" placeholder="nulo" formControlName="old_price">
                       </div>
                     </div>
-                    <div class="col-2">
+                    <div class="col-sm-12 col-md-2">
                       <div class="form-group">
                         <label for="material">Material</label>
                         <input type="text" class="form-control" id="material" placeholder="Material" formControlName="material">
@@ -215,13 +215,13 @@
                     </div>
                   </div>
 
-                  <div class="row" style="margin-left: 2.3%; margin-bottom: 2%">
-                    <div>
+                  <div class="row" id="chk-ctn">
+                    <div class="col-sm-6 col-md-2">
                       <input type="checkbox" class="form-check-input" id="discount" checked="changeDiscount({{item.discount}})" (change)="changeDiscount($event.target)">
                       <label class="form-check-label" for="discount">Desconto</label>
                     </div>
 
-                    <div style="margin-left: 3%;">
+                    <div class="col-sm-6 col-md-1">
                       <input type="checkbox" class="form-check-input" id="promotion" checked="changeDiscount({{item.promotion}})" (change)="changePromotionProduct($event.target)">
                       <label class="form-check-label" for="promotion">Promoção</label>
                     </div>
@@ -250,7 +250,7 @@
                           </thead>
                           <tbody>
                             <tr>
-                              <div *ngFor="let file of currentImageNode(i);let j=index;">
+                              <div *ngFor="let file of currentImageNode(i);let j=index;trackBy: trackByFn">
                                 <td>
                                   <img class="form-control" id="imgSubProduct" alt="" [src]="file.url">
                                 </td>
@@ -277,6 +277,43 @@
           </div>
         </div>
       </div>
+
+      <nav aria-label="navigation">
+          <ul class="pagination justify-content-center">
+            <li *ngIf="this.page == 0" class="page-item disabled">
+              <a class="page-link" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Anterior</span>
+              </a>
+            </li>
+            <li *ngIf="this.page != 0" class="page-item">
+              <a class="page-link" (click)="btnClickPrevious()" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Anterior</span>
+              </a>
+            </li>
+            <ng-container *ngFor="let i of arrLink">
+              <li *ngIf="this.page == i.value" class="page-item active">
+                <a class="page-link" (click)="changePage(i.value)">{{i.num}}</a>
+              </li>
+              <li *ngIf="this.page != i.value" class="page-item">
+                <a class="page-link" (click)="changePage(i.value)">{{i.num}}</a>
+              </li>
+            </ng-container>
+            <li *ngIf="this.page != this.lastItenArr" class="page-item">
+              <a class="page-link" (click)="btnClickNext()" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Próximo</span>
+              </a>
+            </li>
+            <li *ngIf="this.page == this.lastItenArr" class="page-item disabled">
+              <a class="page-link" (click)="btnClickNext()" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Próximo</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
 
     </form>
   </div>

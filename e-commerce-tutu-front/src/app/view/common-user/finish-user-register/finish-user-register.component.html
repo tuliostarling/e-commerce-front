@@ -1,0 +1,58 @@
+<div class="container">
+  <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" id="form">
+    <div class="form-row">
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input appCpf type="text" class="form-control" formControlName="cpf" id="cpf" placeholder="CPF" maxlength="14" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-3 mb-3">
+        <div class="form-group">
+          <label for="cep">CEP</label>
+          <input appCep type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" maxlength="10" required (blur)="onblur($event)">
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="state">Estado</label>
+          <input type="text" class="form-control" formControlName="state" id="state" value="{{state}}" placeholder="Estado" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="city">Cidade</label>
+          <input type="text" class="form-control" formControlName="city" id="city" value="{{city}}" placeholder="Cidade" required>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="street">Rua</label>
+          <input type="text" class="form-control" formControlName="street" id="street" value="{{street}}" placeholder="Rua" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-4 mb-3">
+        <div class="form-group">
+          <label for="neighborhood">Bairro</label>
+          <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" value="{{neighborhood}}" placeholder="Bairro" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="num">Número</label>
+          <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" required>
+        </div>
+      </div>
+      <div class="col-sm-12 col-md-2 mb-3">
+        <div class="form-group">
+          <label for="comp">Complemento</label>
+          <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" required>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-success" type="submit">Cadastrar</button>
+    <button class="btn btn-danger" type="button" (click)="home()" style="margin-left: 1%">Cancelar</button>
+  </form>
+</div>

@@ -1,0 +1,125 @@
+<div class="container">
+  <div class="jumbotron">
+    <h2 class="h2-text">Home Controller</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item" *ngFor="let i of pageArr">
+          <a class="nav-link {{ i.active }}" href="javascript:void(0)" (click)="changePage(i.name)">{{ i.name }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Banner Images'">
+      <div class="container">
+        <div class="col-sm-12 col-md-6" *ngIf="LoadCurrentImg != null">
+          <div class="form-group">
+            <label for="type">Banner Atuais</label>
+            <br>
+            <div *ngFor="let i of imgSRC">
+              <img src="{{i}}" width="200" height="100" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="LoadCurrentImg != null">
+          <div class="col-12">
+            <div class="form-group">
+              <div class="inline-block">
+                <input #fileInput type="file" class="form-control-file" id="exampleFormControlFile1" (change)="handleUpdateFile($event)"
+                  multiple />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="LoadCurrentImg != null">
+          <div class="col-12">
+
+            <div style="margin-bottom: 40px">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Images</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <div *ngFor="let file of rowsImagesObj;let j=index;trackBy: trackByFn">
+                      <td>
+                        <img class="form-control" id="imgSubProduct" alt="" [src]="file.url || file.location_aws">
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(j,file)">
+                          <span class="fa fa-trash"></span>
+                        </button>
+                      </td>
+                    </div>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <button id="add" type="submit" class="btn btn-success" (click)="updateBannerImages()">Cadastrar</button>
+        </div>
+
+
+        <div class="row" *ngIf="LoadCurrentImg == null">
+          <label for="type">Você não tem nenhum banner inserido ainda.</label>
+          
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <div class="inline-block">
+                  <input #fileInput type="file" class="form-control-file " id="exampleFormControlFile1" (change)="handleFileSelect($event)"
+                    multiple />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div style="margin-bottom: 40px">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Nome</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of imagesToUpload;let i=index;trackBy: trackByFn">
+                    <td>
+                      <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+                        <div class="previewIcon" [ngfBackground]="item"></div>
+                      </div>
+                      <strong>{{ item.name }}</strong>
+                    </td>
+                    <td nowrap>
+                      <button type="button" class="btn btn-danger btn-xs" (click)="removeFileInsert(i)">
+                        <span class="fa fa-trash"></span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <button id="add" type="submit" class="btn btn-success" (click)="insertBannerImages()">Cadastrar</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Produtos mais Vendidos'">
+      <div class="container">
+
+        
+
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CategoryModel } from '../../model/category/category';
 import { CategoryService } from '../../service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-footer',
@@ -12,20 +13,22 @@ import { CategoryService } from '../../service';
 export class FooterComponent implements OnInit {
 
   logged = false;
-  decodedToken: any;
+  token: any;
   categoryList: CategoryModel;
   newCategoryList: CategoryModel;
+  userId: number;
 
   constructor(
     private router: Router,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    const t = localStorage.getItem('token');
+    this.token = this.authService.getTokenData();
 
-    if (t != null) {
-      this.decodedToken = this.jwtDecode(t);
+    if (this.token != null) {
+      this.userId = this.token.id;
       this.logged = true;
     }
 
@@ -54,18 +57,11 @@ export class FooterComponent implements OnInit {
       });
   }
 
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
-  }
-
   profile() {
-    this.router.navigateByUrl('/profile/' + this.decodedToken.id);
+    this.router.navigateByUrl('/profile/' + this.userId);
   }
 
   categoryListLoad(category_id: number) {
     this.router.navigateByUrl('/category_list/' + category_id + '/0');
-    location.reload();
   }
 }

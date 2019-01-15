@@ -6,11 +6,26 @@
     </button>
   </div>
 
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-6 col-sm-6 col-md-6">
+        <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-6">
+        <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
+      </div>
+    </div>
+    <div class="login-or">
+      <hr class="hr-or">
+      <span class="span-or">ou</span>
+    </div>
+  </div>
+
   <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
     <div class="modal-body">
       <div class="form-group">
         <label for="name">Nome</label>
-        <input type="name" class="form-control" formControlName="name" id="name" placeholder="Digite seu nome">
+        <input type="name" class="form-control" formControlName="name" id="name" placeholder="Digite seu nome" maxlength="30">
       </div>
       <div class="form-group">
         <label for="email">Email</label>
@@ -23,10 +38,10 @@
     </div>
 
     <div class="modal-footer">
-      <button type="button" class="btn btn-danger" (click)="c('Close click')">Cancelar</button>
-      <button type="submit" class="btn btn-success">Cadastrar</button>
+      <button type="button" id="principal_btn" class="btn" (click)="c('Close click')">Cancelar</button>
+      <button type="submit" id="principal-btn" class="btn">Cadastrar</button>
     </div>
   </form>
 </ng-template>
 
-<button id="principal-btn" class="btn btn-success" (click)="openModal(content)">Cadastrar</button>
+<button id="principal-btn" class="{{classes}}" (click)="openModal(content)">Cadastrar</button>

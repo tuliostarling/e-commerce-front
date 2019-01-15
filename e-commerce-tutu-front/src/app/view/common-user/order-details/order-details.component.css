@@ -1,0 +1,13 @@
+.container {
+  margin-top: 0.7%;
+}
+
+#container-product {
+  padding: 1%;
+  margin-bottom: 2%;
+  border-bottom: 2px solid #e1e1e1;
+}
+  
+.card {
+  margin-bottom: 3%;
+}

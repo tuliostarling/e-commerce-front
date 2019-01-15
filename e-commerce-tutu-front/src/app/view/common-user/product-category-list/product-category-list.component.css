@@ -1,14 +1,11 @@
 * {
     list-style: none;
-    text-decoration: none;
-    letter-spacing: 1px;
-    box-sizing: border-box;
 }
 .block {
     margin: 35px;
     border-radius: 4px;
     width: 200px;
-    min-height: 350px;
+    max-height: 350px;
     background: #fff;
     padding: 23px;
     display: -webkit-box;
@@ -105,17 +102,43 @@ img {
   background-size: cover;
   background-position: center center;
   color: #fff;
-  height: 450px;
   padding-top: 50px;
+}
+
+.responsive {
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .bg-overlay p {
   text-align: center;
-  margin-top: 15%;
+  margin-top: 10%;
+  padding-bottom: 15%;
   color: #FE980F;
   font-size: 50px;
 }
 
 .middle:hover, .bottom:hover {
   cursor:pointer;
+}
+
+#container {
+  margin-top: 0.8%;
+}
+
+@media only screen and (max-width: 768px) {
+  #product {
+    width: 150px;
+    margin-bottom: -6%;
+  }
+
+  .block {
+    width: 130px;
+    min-height: 280px;
+    max-height: 300px;
+  }
+
+  .bg-overlay p {
+    margin-top: 2%;
+  }
 }

@@ -21,7 +21,13 @@ import { UserProfileComponent } from './view/common-user/user-profile/user-profi
 import { WishListComponent } from './view/common-user/wish-list/wish-list.component';
 import { PromotionsComponent } from './view/common-user/promotions/promotions.component';
 import { ConfirmRegisterComponent } from './component/confirm-register/confirm-register.component';
+import { FinishUserRegisterComponent } from './view/common-user/finish-user-register/finish-user-register.component';
+import { HomeControllerListComponent } from './view/admin-user/home-controller/home-controller-list/home-controller-list.component';
 
+import { SucessPaymentComponent } from './view/common-user/sucess-payment/sucess-payment.component';
+import { CancelPaymentComponent } from './view/common-user/cancel-payment/cancel-payment.component';
+import { OrderDetailsComponent } from './view/common-user/order-details/order-details.component';
+import { FinishPurchaseComponent } from './view/common-user/finish-purchase/finish-purchase.component';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'countdown', pathMatch: 'full' },
@@ -29,12 +35,12 @@ export const ROUTES: Routes = [
     { path: 'category_list', component: CategoryListComponent },
     { path: 'category_register', component: CategoryRegisterComponent },
     { path: 'category_edit/:id', component: CategoryRegisterComponent },
-    { path: 'coupon_list', component: DiscountCouponListComponent },
+    { path: 'coupon_list/:page', component: DiscountCouponListComponent },
     { path: 'coupon_register', component: DiscountCouponRegisterComponent },
     { path: 'coupon_edit/:id', component: DiscountCouponRegisterComponent },
-    { path: 'product_list', component: ProductListComponent },
-    { path: 'product_register', component: ProductRegisterComponent },
-    { path: 'product_register/:id', component: ProductRegisterComponent },
+    { path: 'product_list/:page', component: ProductListComponent },
+    { path: 'product_register/new', component: ProductRegisterComponent },
+    { path: 'product_register/:id/:page', component: ProductRegisterComponent },
     { path: 'category_list/:id/:page', component: ProductCategoryListComponent },
     { path: 'cart', component: CartComponent },
     { path: 'countdown', component: CountdownComponent },
@@ -43,5 +49,11 @@ export const ROUTES: Routes = [
     { path: 'profile/:id', component: UserProfileComponent },
     { path: 'wish_list', component: WishListComponent },
     { path: 'promotions/:page', component: PromotionsComponent },
-    { path: 'confirm/:hex', component: ConfirmRegisterComponent }
+    { path: 'confirm/:hex', component: ConfirmRegisterComponent },
+    { path: 'finish_register/:id', component: FinishUserRegisterComponent },
+    { path: 'home_controller_list', component: HomeControllerListComponent },
+    { path: 'sucess_payment', component: SucessPaymentComponent },
+    { path: 'cancel_payment', component: CancelPaymentComponent },
+    { path: 'order_details/:hash', component: OrderDetailsComponent },
+    { path: 'finish_purchase', component: FinishPurchaseComponent }
 ];

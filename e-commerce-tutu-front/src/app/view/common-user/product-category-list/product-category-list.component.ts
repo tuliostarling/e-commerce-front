@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductModel } from '../../../model/product/product';
 import { ProductService, CategoryService } from '../../../service';
 import { FormBuilder } from '@angular/forms';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+import { ToastrService } from 'ngx-toastr';
+
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-product-category-list',
@@ -28,28 +32,29 @@ export class ProductCategoryListComponent implements OnInit {
   dadosWish = [];
   idCart: number;
   idWish: number;
-  decodedToken: any;
+  token: any;
 
   constructor(
     private router: Router,
     private apiService: ProductService,
     private apiServiceCategory: CategoryService,
     private acRoute: ActivatedRoute,
-    private modalService: NgbModal
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
     this.acRoute.url
       .subscribe(_ => {
+        this.spinnerService.show();
+        this.token = this.authService.getTokenData();
         this.idCategory = parseInt(this.acRoute.snapshot.paramMap.get('id'), 10);
         this.page = parseInt(this.acRoute.snapshot.paramMap.get('page'), 10);
 
-        const t = localStorage.getItem('token');
-
-        if (t != null) {
-          this.decodedToken = this.jwtDecode(t);
-          this.idCart = this.decodedToken.cart;
-          this.idWish = this.decodedToken.wishlist;
+        if (this.token != null) {
+          this.idCart = this.token.cart;
+          this.idWish = this.token.wishlist;
         }
 
         this.getCategory();
@@ -64,12 +69,15 @@ export class ProductCategoryListComponent implements OnInit {
 
         this.categoryName = res[0].category;
 
-        category.setAttribute('style', `background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${res[0].location_aws});`);
+        category.setAttribute('style', `background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(${res[0].location_aws})
+                                center; background-size: cover; background-position: center center; background-repeat: no-repeat;`);
       }
     });
   }
 
   getProducts() {
+    this.rowsProduct = [];
+
     this.apiService.getAllByCategory(this.idCategory, this.page).subscribe(res => {
       if (res != null) {
         this.rowsProduct = res.rows;
@@ -77,6 +85,7 @@ export class ProductCategoryListComponent implements OnInit {
         // this.oldPrice = this.rowsProduct.oldPrice;
 
         this.makeArrNavLinks();
+        this.spinnerService.hide();
       }
     });
   }
@@ -100,6 +109,7 @@ export class ProductCategoryListComponent implements OnInit {
       }
     }
 
+    this.arrLink = [];
     // Checks whether the array exists and is empty
     if (typeof this.arrLink !== 'undefined' && this.arrLink.length <= 0) {
       for (let i = 0; i < this.navLinks; i++) {
@@ -129,33 +139,38 @@ export class ProductCategoryListComponent implements OnInit {
     this.router.navigateByUrl(`/category_list/${this.idCategory}/${num}`);
   }
 
-  addProductToCart(id: number, content) {
-    this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
-
-    this.apiService.addToCart(this.dadosCart).subscribe(res => {
-      if (res != null) {
-        this.modalService.open(content, { centered: true });
-      }
-    });
+  addProductToCart(id: number) {
+    if (this.token != null) {
+      this.spinnerService.show();
+      this.dadosCart.push({ id_cart: this.idCart, id_subproduct: id, amount: 1 });
+      this.apiService.addToCart(this.dadosCart).subscribe(res => {
+        this.dadosCart = [];
+        if (res.sucess === true) {
+          this.spinnerService.hide();
+          return this.toastrService.success('Produto inserido no carrinho!', 'Sucesso!');
+        } else if (res.error) {
+          this.spinnerService.hide();
+          return this.toastrService.warning('Produto ja está no carrinho', 'Aviso!');
+        }
+      });
+    } else {
+      return this.toastrService.warning('Favor criar uma conta para ter seu carrinho !', 'Aviso!');
+    }
   }
 
-  addProductToWishList(id: number, content) {
-    this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id, amount: 1 });
+  addProductToWishList(id: number) {
+    this.spinnerService.show();
+    this.dadosWish.push({ id_wishlist: this.idWish, id_subproduct: id });
 
     this.apiService.addToWishList(this.dadosWish).subscribe(res => {
-      if (res != null) {
-        this.modalService.open(content, { centered: true });
+      if (res !== null) {
+        this.spinnerService.hide();
+        this.toastrService.success('Produto inserido na lista de desejos!', 'Sucesso!');
       }
     });
   }
 
   cart() {
     this.router.navigateByUrl('/cart');
-  }
-
-  jwtDecode(token) {
-    const base64Url = token.split('.')[1];
-    const base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(window.atob(base64));
   }
 }

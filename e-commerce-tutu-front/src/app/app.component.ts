@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 export class AppComponent {
   title = 'app';
   urlCheck = true;
+  
   production = environment.production;
 
   constructor(router: Router) {

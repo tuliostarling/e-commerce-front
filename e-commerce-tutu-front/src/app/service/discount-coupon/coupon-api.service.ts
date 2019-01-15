@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { AppSettings } from '../../app.settings';
-import { CouponModel } from '../../model/discount-coupon/coupon';
+import { CouponModel, RequestCouponModel } from '../../model/discount-coupon/coupon';
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +15,8 @@ export class CouponService {
         private http: HttpClient
     ) { }
 
-    getListAll() {
-        return this.http.get<CouponModel>(`${this.API_URL}getall/`);
+    getListAll(page: number) {
+        return this.http.get<RequestCouponModel>(`${this.API_URL}getall/${page}`);
     }
 
     getListOne(id: number) {

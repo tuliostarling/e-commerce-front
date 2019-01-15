@@ -1,36 +1,36 @@
-<div class="container">
+<div class="container" id="container">
   <div class="content">
-    <div id="category" class="bg-overlay img-fluid" style="background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(http://www.q8copy.com/wp-content/uploads/2014/11/shopping-bags-1.jpg);">
+    <div id="category" class="responsive bg-overlay" style="background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)), url(http://www.q8copy.com/wp-content/uploads/2014/11/shopping-bags-1.jpg) center; background-size: cover; background-position: center center; background-repeat: no-repeat;">
       <p>Promoções</p>
     </div>
   </div>
 
   <div class="row">
-    <div *ngFor="let i of rowsProduct" class="col-md-3">
+    <div *ngFor="let i of rowsProduct" id="product" class="col-sm-2 col-md-3">
       <div class="block">
 
         <div class="top">
           <ul>
             <li>
-              <a href="#">
-                <i class="fa fa-star-o" aria-hidden="true"></i>
+              <a href="javascript:void(0);">
+                <i class="fa fa-star-o" aria-hidden="true" (click)="addProductToWishList(i.id_subproduct)"></i>
               </a>
             </li>
 
             <li>
-              <a href="#">
-                <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+              <a href="javascript:void(0);">
+                <i class="fa fa-shopping-bag" aria-hidden="true" (click)="addProductToCart(i.id_subproduct);"></i>
               </a>
             </li>
           </ul>
         </div>
 
         <div class="middle">
-          <img src="{{i.location_aws}}" alt="pic" (click)="listOneProduct(1)" />
+          <img src="{{i.location_aws}}" alt="pic" (click)="listProduct(i.id_subproduct)" />
         </div>
 
         <div class="bottom">
-          <div class="heading" (click)="listOneProduct(1)">
+          <div class="heading" (click)="listProduct(i.id_subproduct)">
             <a href="javascript:void(0);">{{ i.name }}</a>
           </div>
           <div class="info">Teste</div>

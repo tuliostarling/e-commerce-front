@@ -1,0 +1,31 @@
+.container {
+    margin-top: 0.7%;
+    margin-bottom: 2%;
+}
+
+#end1 {
+    margin-top: 1%;
+    margin-bottom: 2%;
+    padding: 2%;
+    border-top: 1px solid #f2f2f2;
+    border-bottom: 2px solid #CCCCCC;
+    border-left: 2px solid #e1e1e1;
+    border-right: 2px solid #e1e1e1;
+}
+
+#form-check {
+    margin-top: 6%;
+}
+
+#iconCredit {
+    color: #FE980F;
+}
+
+#line {
+    border-bottom-width: 50px;
+}
+
+#subtotalText {
+    color: #949494;
+    font-size: 15px;
+}

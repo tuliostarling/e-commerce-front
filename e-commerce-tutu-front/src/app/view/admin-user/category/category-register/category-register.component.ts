@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { ToastrService } from 'ngx-toastr';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 import { CategoryModel } from '../../../../model/category/category';
 import { CategoryService } from '../../../../service/category/category-api.service';
 
@@ -32,10 +35,13 @@ export class CategoryRegisterComponent implements OnInit {
     private apiService: CategoryService,
     private form: FormBuilder,
     public acRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
+    this.spinnerService.show();
     this.acRoute.params
       .subscribe((params: any) => {
         if (params.hasOwnProperty('id')) {
@@ -67,20 +73,26 @@ export class CategoryRegisterComponent implements OnInit {
             location_aws: [data[0].location_aws, Validators.required],
             key_aws: [data[0].key_aws, Validators.required]
           });
+          this.spinnerService.hide();
         } else {
-          alert('DOOT ERRO');
+          this.spinnerService.hide();
+          this.toastrService.error('Erro ao carregar dados', 'Erro!');
         }
       });
     }
   }
 
-
   handleFileSelect(fileInput: any) {
-    this.imagesToUpload = <any>fileInput.target.files;
+    this.imagesToUpload = Array.from(fileInput.target.files);
+
   }
 
-  removeFile(indexe) {
-    delete this.imagesToUpload[indexe];
+  trackByFn(index) {
+    return index;
+  }
+
+  removeFile(indexe, item) {
+    this.imagesToUpload.splice(indexe, 1);
   }
 
   navToListCat() {
@@ -88,6 +100,7 @@ export class CategoryRegisterComponent implements OnInit {
   }
 
   onSubmit(form) {
+    this.spinnerService.show();
     this.createCategoryModel = form.value;
     const formImage = new FormData();
     const files: Array<File> = this.imagesToUpload;
@@ -97,42 +110,63 @@ export class CategoryRegisterComponent implements OnInit {
     }
 
     if (this.idCategory === undefined) {
-      if (files.length > 1) { return alert('O Banner aceita apenas uma imagem.'); }
+      if (files.length > 1) {
+        this.spinnerService.hide();
+        return this.toastrService.warning('O Banner aceita apenas uma imagem.', 'Anteção!');
+      }
 
       this.insertCategoryImage(formImage).then(resImg => {
-        if (resImg == null) { return alert('Erro ao cadastrar Imagem'); }
+        if (resImg == null) {
+          this.spinnerService.hide();
+          return this.toastrService.error('Erro ao cadastrar imagem', 'Erro!');
+        }
         this.createCategoryModel.location_aws = resImg[0].Location;
         this.createCategoryModel.key_aws = resImg[0].Key;
 
         this.apiService.create(this.createCategoryModel).subscribe((res) => {
           if (res != null) {
-            alert('Sucesso ao cadastrar Imagem');
+            this.toastrService.success('Categoria cadastrada!', 'Sucesso!');
+            this.spinnerService.hide();
             return this.navToListCat();
           }
-          return alert('Erro ao cadastrar Imagem');
+          this.toastrService.error('Erro ao cadastrar categoria', 'Erro!');
         });
       });
 
     } else {
 
       if (formImage != null) {
-        if (files.length > 1) { return alert('O Banner aceita apenas uma imagem.'); }
+        if (files.length > 1) {
+          this.spinnerService.hide();
+          return this.toastrService.warning('O Banner aceita apenas uma imagem.', 'Anteção!');
+        }
 
         formImage.append('key_aws', this.createCategoryModel.key_aws);
         this.updateCategoryImage(formImage).then(resImg => {
-          if (resImg == null) { return alert('Erro ao atualizar Imagem'); }
+          if (resImg == null) {
+            this.spinnerService.hide();
+            return this.toastrService.error('Erro ao atualizar imagem', 'Erro!');
+          }
           this.createCategoryModel.location_aws = resImg[0].Location;
           this.createCategoryModel.key_aws = resImg[0].Key;
 
           this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
-            if (res == null) { return alert('Erro Ao Atualizar a Categoria'); }
+            if (res == null) {
+              this.spinnerService.hide();
+              return this.toastrService.error('Erro ao atualizar a categoria', 'Erro!');
+            }
+            this.spinnerService.hide();
             return this.navToListCat();
           });
         });
 
       } else {
         this.apiService.update(this.createCategoryModel, this.idCategory).subscribe((res) => {
-          if (res == null) { return alert('Erro ao cadastrar'); }
+          if (res == null) {
+            this.spinnerService.hide();
+            return this.toastrService.error('Erro ao atualizar a categoria', 'Erro!');
+          }
+          this.spinnerService.hide();
           return this.navToListCat();
         });
       }

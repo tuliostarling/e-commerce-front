@@ -1,7 +1,7 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-5">
+    <div class="col-sm-12 col-md-5" *ngIf="ArrImg.length > 0">
       <div class="images" *ngIf="changeImgBool == false">
         <img id="img-product" src="{{ArrImg[0].img}}" class="img-fluid" style="margin-left: 22%; margin-top: 15%; width: 250px; height: 250px;"
         />
@@ -15,7 +15,7 @@
       </ng-container>
     </div>
 
-    <div class="col-7">
+    <div class="col-sm-12 col-md-7">
       <div class="content">
         <div class="buy">
           <div class="row">
@@ -24,11 +24,83 @@
             </div>
             <div class="col-6" style="text-align: right">
               <a>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i> (1)
+                <div *ngIf="avgRating == 0">
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 0.5">
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 1">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 1.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 2">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 2.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 3">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 3.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 4">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 4.5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i> ({{totalComment}})
+                </div>
+                <div *ngIf="avgRating == 5">
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i> ({{totalComment}})
+                </div>
               </a>
             </div>
           </div>
@@ -36,7 +108,7 @@
           <hr style="margin-top: 3%; margin-bottom: 5%">
 
           <div class="row">
-            <div class="col-6" style="text-align: center; margin-top: 1%;">
+            <div class="col-6" id="product-price" style="text-align: center; margin-top: 2%;">
               <h5>
                 <b>R$ {{productPrice}}</b>
               </h5>
@@ -47,34 +119,119 @@
             </div>
           </div>
 
-          <hr style="margin-top: 5%">
+          <hr style="margin-top: 4%">
 
           <div class="row" style="margin-bottom: -4%">
-            <div class="col-1">
+            <div class="col-xs-2 col-sm-2 col-md-1">
               <i id="iconCredit" class="fa fa-credit-card fa-2x"></i>
             </div>
-            <div class="col-11" style="margin-top: 1%" *ngIf="installments != 1">
-              <p>R$ {{productPrice}},00 em até {{installments}}x de R$ {{division}},00</p>
+            <div class="col-xs-10 col-sm-10 col-md-11" id="price" *ngIf="installments != 1">
+              <p id="price-text">R$ {{productPrice}},00 em até {{installments}}x de R$ {{division}},00</p>
             </div>
-            <div class="col-11" style="margin-top: 1%" *ngIf="installments == 1">
-              <p>R$ {{productPrice}},00. Pagamento a vista</p>
+            <div class="col-xs-10 col-sm-10 col-md-11" id="price" *ngIf="installments == 1">
+              <p id="price-text">R$ {{productPrice}},00. Pagamento a vista</p>
             </div>
           </div>
         </div>
 
         <div class="end">
-          <div class="row">
-            <div class="col-12" style="margin-top: 1%;">
-              <p>Frete para:
-                <b>Rua Cristina, 99, Anchieta - Belo Horizonte</b>
+          <div class="row" class="col-sm-12">
+            <div *ngIf='shipBox === false && finishRegisterBool == false && adressInfo != undefined' class="col-12" style="margin-top: 1%;">
+              <p>Endereço:
+                <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
               </p>
               <p>CEP:
-                <b>30310-692</b>
+                <b>{{currentCep}}</b>
               </p>
-              <a href="#"> Escolher outro endereço </a>
+              <p>Valor Sedex:
+                <b>R${{rowsShipping[0].Valor}}</b>
+              </p>
+              <p>Valor PAC:
+                <b>R${{rowsShipping[1].Valor}}</b>
+              </p>
+              <!--a class="btn">
+                <i (click)="getShipPrice(true)"></i> Escolher outro endereço
+              </a-->
+
+              <div class="row" style="margin-top: 3%;" *ngIf="isLogged == true ">
+                <form class="form-inline">
+                  <div class="col-xs-6 col-sm-6 col-md-6" id="inputLabelCEP">
+                    <div class="form-group">
+                      <label id="labelCEP" for="cep">Calcule frete: </label>
+                      <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-md-2" id="btnCEP">
+                    <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
+                  </div>
+                </form>
+              </div>
+
             </div>
+
+            <div *ngIf='finishRegisterBool == true && isLogged == true'>
+              <div *ngIf='shipBox == false' class="col-12" style="margin-top: 1%;">
+
+                <p>Endereço:
+                  <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
+                </p>
+                <p>CEP:
+                  <b>{{currentCep}}</b>
+                </p>
+                <p>Valor Sedex:
+                  <b>R${{rowsShipping[0].Valor}}</b>
+                </p>
+                <p>Valor PAC:
+                  <b>R${{rowsShipping[1].Valor}}</b>
+                </p>
+                <!--a class="btn">
+                    <i (click)="getShipPrice(true)"></i> Escolher outro endereço
+                  </a-->
+
+              </div>
+
+              <div class="row" style="margin-top: 3%;">
+                <form class="form-inline">
+                  <div class="col-xs-6 col-sm-6 col-md-6" id="inputLabelCEP">
+                    <div class="form-group">
+                      <label id="labelCEP" for="cep">Calcule frete: </label>
+                      <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
+                    </div>
+                  </div>
+                  <div class="col-sm-2 col-md-2" id="btnCEP">
+                    <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
+                  </div>
+                </form>
+              </div>
+
+              <p style="margin-top: 3%">Seu cadastro está incompleto. Clique
+                <a id="complete-register" (click)="finishRegister()"> aqui </a>e complete-o</p>
+            </div>
+
+            <div *ngIf="isLogged == false">
+              <div class="row" style="margin-top: 3%;">
+                <form class="form-inline">
+                  <div class="col-xs-6 col-sm-2 col-md-6" id="inputLabelCEP">
+                    <div class="form-group">
+                      <label id="labelCEP" for="cep">Calcule frete: </label>
+                      <input type="cep" class="form-control" id="cep" aria-describedby="cepHelp" placeholder="CEP" #cep>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-2" id="btnCEP">
+                    <button (click)="getShipPrice(cep)" class="btn btn-success">OK</button>
+                  </div>
+                </form>
+              </div>
+
+              <p style="margin-top: 3%">Faça seu cadastro clicando
+                <a id="complete-register">aqui.</a>
+              </p>
+            </div>
+
           </div>
         </div>
+
+
       </div>
     </div>
   </div>
@@ -140,24 +297,14 @@
       <div id="aval" class="aval">
         <div class="row">
           <div class="col-12">
-            <h4>Avaliações</h4>
+            <h4 id="avalTitle">Avaliações</h4>
           </div>
         </div>
 
         <hr>
 
         <div class="row" style="margin-top: 3%">
-          <div class="col-1" style="text-align:right">
-            <h4>4.0</h4>
-          </div>
-          <div class="col-3" style="margin-top: 0.3%">
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i> (1)
-          </div>
-          <div class="col-5">
+          <div class="col-sm-5 col-md-6" id="drop-down">
             <div class="form-group">
               <select class="form-control">
                 <option selected>Avaliações mais recentes</option>
@@ -167,27 +314,137 @@
               </select>
             </div>
           </div>
-          <div class="col-3" style="text-align: right">
-            <button class="btn btn-primary">Avaliar</button>
+          <div class="col-sm-3 col-md-6" id="btn-aval" style="text-align: right">
+            <button *ngIf='showCommentBox === false' class="btn btn-primary" id="commentBtn" (click)="showBox();">Avaliar</button>
           </div>
         </div>
 
-        <hr style="margin-top: 1%; margin-bottom: 3%">
+        <hr id="hrComment">
 
-        <div class="row">
-          <div class="col-6" style="margin-top: 1%;">
-            <h5>
-              Muito bom
-            </h5>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star-o"></i>
-            <p>Produto de muita qualidade!</p>
+        <div class="row" style="margin-bottom: 3%;">
+          <div class="container" *ngIf='showCommentBox === true'>
+            <form role="form" [formGroup]="formulario" #form="ngForm" (ngSubmit)="onSubmit(formulario)">
+              <div class="form-group">
+                <div class="float-right">
+                  <fieldset class="rating">
+                    <input type="radio" id="star5" formControlName="rating" name="rating" value="5" />
+                    <label class="full" for="star5"></label>
+                    <input type="radio" id="star4half" formControlName="rating" name="rating" value="4.5" />
+                    <label class="half" for="star4half"></label>
+                    <input type="radio" id="star4" formControlName="rating" name="rating" value="4" />
+                    <label class="full" for="star4"></label>
+                    <input type="radio" id="star3half" formControlName="rating" name="rating" value="3.5" />
+                    <label class="half" for="star3half"></label>
+                    <input type="radio" id="star3" formControlName="rating" name="rating" value="3" />
+                    <label class="full" for="star3"></label>
+                    <input type="radio" id="star2half" formControlName="rating" name="rating" value="2.5" />
+                    <label class="half" for="star2half"></label>
+                    <input type="radio" id="star2" formControlName="rating" name="rating" value="2" />
+                    <label class="full" for="star2"></label>
+                    <input type="radio" id="star1half" formControlName="rating" name="rating" value="1.5" />
+                    <label class="half" for="star1half"></label>
+                    <input type="radio" id="star1" formControlName="rating" name="rating" value="1" />
+                    <label class="full" for="star1"></label>
+                    <input type="radio" id="starhalf" formControlName="rating" name="rating" value="0.5" />
+                    <label class="half" for="starhalf"></label>
+                  </fieldset>
+                </div>
+
+                <label for="comment" style="margin-top: 1%">Avaliação</label>
+                <textarea class="form-control" id="comment" formControlName="comment" rows="3"></textarea>
+              </div>
+              <button class="btn btn-danger float-right" (click)="showBox(); form.reset()" style="margin-left: 1%">Cancelar</button>
+              <button type="submit" class="btn btn-success float-right">Enviar</button>
+            </form>
           </div>
-          <div class="col-6" style="text-align: right; margin-top: 1%;">
-            <p>01/08/2018</p>
+        </div>
+
+        <div class="container">
+          <div class="row" *ngFor='let i of rowsComment' id="commentBox">
+            <div class="col-md-6" style="margin-top: 1%;">
+              <h5 id="nameComment">{{i.name}}</h5>
+            </div>
+            <div class="col-md-5" id="starsComment">
+              <div *ngIf="i.rating == 0.5">
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 1">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 1.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 2">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 2.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 3">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 3.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 4">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+              <div *ngIf="i.rating == 4.5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-half-o"></i>
+              </div>
+              <div *ngIf="i.rating == 5">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <p id="dateComment">{{i.created_at | date: "dd/MM/yyyy"}}</p>
+            </div>
+
+            <div id="avaliationComment" class="row">
+              <div class="col-md-12">
+                <p>{{i.comment}}</p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -205,7 +462,7 @@
 
     <div class="modal-body">
       <button type="button" class="btn btn-primary float-right" (click)="cart(); c('Close click')">Finalizar compra</button>
-      <button type="button" class="btn btn-success" (click)="productList(); c('Close click')">Continuar comprando</button>
+      <button type="button" class="btn btn-success" (click)="c('Close click')">Continuar comprando</button>
     </div>
 
   </ng-template>

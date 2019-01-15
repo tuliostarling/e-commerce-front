@@ -1,3 +1,8 @@
+  .container {
+    margin-top: 1%;
+    margin-bottom: 2%;
+  }
+  
   .form-signin {
     max-width: 330px;
     padding: 15px;
@@ -52,11 +57,22 @@
 
 #forgot_pass:hover {
   color: #FE980F;
-  cursor: pointer
+  cursor: pointer;
 }
 
 #form {
-  margin-top: 8%; 
+  margin-top: 2%; 
   margin-left: 1px; 
-  margin-bottom: 8%
+  margin-bottom: 2%
+}
+
+.hr-coupon {
+  background-color: #cdcdcd;
+  height: 1px;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+.card-body:hover {
+  cursor: pointer;
 }

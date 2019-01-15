@@ -1,0 +1,25 @@
+.container {
+  margin-top: 0.5%;
+}
+
+.row {
+  margin-bottom: 6%;
+}
+
+#secondary-container {
+  text-align: center;
+  margin-top: 5%;
+}
+
+#icon {
+  color: green;
+}
+
+#link {
+    text-decoration: none;
+    color: #FE980F;
+}
+
+#link:hover {
+    color: #333;
+}

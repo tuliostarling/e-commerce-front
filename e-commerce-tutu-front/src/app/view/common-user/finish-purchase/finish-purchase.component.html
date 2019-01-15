@@ -1,0 +1,286 @@
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+        <li class="nav-item" *ngFor="let i of pageArr">
+          <a class="nav-link {{ i.active }}" href="javascript:void(0)" (click)="changePage($event, i.name)" *ngIf="i.name != 'Finalizar compra'">{{ i.name }}</a>
+          <a class="nav-link {{ i.active }}" id="finish_order" href="javascript:void(0)" (click)="changePage($event, i.name)" (clickemitter)="$event.preventDefault()"
+            *ngIf="i.name == 'Finalizar compra'">{{ i.name }}</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body" *ngIf="namePageAux === 'Endereço entrega'">
+      <div class="container">
+
+        <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" *ngIf="update == true"
+          id="form">
+          <div class="form-row">
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="cep">CEP</label>
+                <input appCep type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" maxlength="10" (blur)="onblur($event)"
+                  required>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+              <div class="form-group">
+                <label for="city">Cidade</label>
+                <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" required>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+              <div class="form-group">
+                <label for="street">Rua</label>
+                <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" required>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+              <div class="form-group">
+                <label for="neighborhood">Bairro</label>
+                <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="state">Estado</label>
+                <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" required>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="num">Número</label>
+                <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" required>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="comp">Complemento</label>
+                <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" required>
+              </div>
+            </div>
+          </div>
+          <button class="btn btn-success" type="submit">Atualizar</button>
+          <button class="btn btn-danger" type="button" (click)="clickUpdate()" style="margin-left: 1%">Cancelar</button>
+        </form>
+
+        <form class="needs-validation" role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)" *ngIf="update == false"
+          id="form">
+          <div class="form-row">
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="cep">CEP</label>
+                <input type="text" class="form-control" formControlName="cep" id="cep" placeholder="CEP" value="{{cep}}" required readonly>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+              <div class="form-group">
+                <label for="city">Cidade</label>
+                <input type="text" class="form-control" formControlName="city" id="city" placeholder="Cidade" value="{{city}}" required readonly>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-4 mb-3">
+              <div class="form-group">
+                <label for="street">Rua</label>
+                <input type="text" class="form-control" formControlName="street" id="street" placeholder="Rua" value="{{street}}" required
+                  readonly>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-3 mb-3">
+              <div class="form-group">
+                <label for="neighborhood">Bairro</label>
+                <input type="text" class="form-control" formControlName="neighborhood" id="neighborhood" placeholder="Bairro" value="{{neighborhood}}"
+                  required readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="state">Estado</label>
+                <input type="text" class="form-control" formControlName="state" id="state" placeholder="Estado" value="{{state}}" required
+                  readonly>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="num">Número</label>
+                <input type="number" class="form-control" formControlName="num" id="num" placeholder="Número" value="{{num}}" required readonly>
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-2 mb-3">
+              <div class="form-group">
+                <label for="comp">Complemento</label>
+                <input type="number" class="form-control" formControlName="comp" id="comp" placeholder="Complemento" value="{{comp}}" required
+                  readonly>
+              </div>
+            </div>
+          </div>
+          <div class="row" id="form">
+            <div class="col-sm-12 col-md-2 mb-3" style="margin-top: 2.8%; margin-right: 1%;">
+              <button class="btn btn-primary" type="button" (click)="clickUpdate()">Mudar endereço de entrega</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Produtos'">
+      <div class="container">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Produto</th>
+              <th scope="col">Quantidade</th>
+              <th scope="col">Preço</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let i of cartRows">
+              <td scope="row">
+                <div id="leftsidemenu" (click)="listProduct(i.id)">
+                  <img src="{{i.location_aws}}" style="width: 80px; height: 80px;">
+                </div>
+                <div id="rigthsidemenu">
+                  <p>{{i.name}} - {{i.size}}</p>
+                </div>
+              </td>
+              <td>{{i.qtd}}</td>
+              <td>R$ {{i.price}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Frete e Cupom'">
+      <div class="container">
+        <form class="needs-validation" role="form" [formGroup]="formCoupon" (ngSubmit)="insertCoupon(formCoupon)" id="form">
+          <div class="col-sm-12 col-md-12 mb-3">
+            <div class="form-group">
+              <label for="coupon">Deseja atribuir algum cupom à essa compra?</label>
+              <select class="form-control" formControlName="coupon" id="coupon" (change)="select($event.target.value)">
+                <option value=null>--</option>
+                <ng-container *ngFor="let i of couponDiscount">
+                  <option value="{{i.id}}">{{i.name}}</option>
+                </ng-container>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <hr class="hr-coupon">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div id="end1" *ngIf='shipBox === false' style="margin-top: 1%;">
+              <p>Frete para:
+                <b>{{adressInfo.street}}, 99, {{adressInfo.neighborhood}} - {{adressInfo.city}}</b>
+              </p>
+              <p>CEP:
+                <b>{{currentCep}}</b>
+              </p>
+              <p>Valor Sedex:
+                <b>R${{rowsShipping[0].Valor}}</b>
+              </p>
+              <p>Valor PAC:
+                <b>R${{rowsShipping[1].Valor}}</b>
+              </p>
+            </div>
+          </div>
+
+          <div id="form-check" class="col-md-6">
+            <h5>Escolha um frete</h5>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="sedex" type="radio" value="{{rowsShipping[0].Valor}}"
+                (click)="radioButton($event.target.value, $event.target.id)" checked="{{sedex}}">
+              <label class="form-check-label" for="sedex">Sedex</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="pac" type="radio" value="{{rowsShipping[1].Valor}}"
+                (click)="radioButton($event.target.value, $event.target.id)" checked="{{pac}}">
+              <label class="form-check-label" for="pac">PAC</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body" *ngIf="namePageAux === 'Finalizar compra'">
+      <div class="container">
+        <div class="col-sm-12 col-md-12" style="background-color:#f7f7f7; max-height: 360px; padding: 2%">
+          <h5>Resumo do pedido</h5>
+
+          <div class="row" style="margin-top: 3%;">
+            <div class="col-6">
+              <p id="subtotalText">Subtotal ({{sumQtdItems}} produto(s))</p>
+            </div>
+            <div class="col-6">
+              <p style="float: right; color: #949494; font-size: 15px">R${{finalValue}}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <p style="font-size: 15px">Frete</p>
+            </div>
+            <div class="col-6" *ngIf="sedex == 'checked' && pac != 'checked'">
+              <p *ngIf="rowsShipping != undefined" style="float: right; font-size: 15px">R${{rowsShipping[0].Valor}}</p>
+            </div>
+
+            <div class="col-6" *ngIf="pac == 'checked' && sedex != 'checked'">
+              <p *ngIf="rowsShipping != undefined" style="float: right; font-size: 15px">R${{rowsShipping[1].Valor}}</p>
+            </div>
+          </div>
+
+          <div class="row" *ngIf="discount == true">
+            <div class="col-6">
+              <p style="font-size: 15px">Desconto</p>
+            </div>
+            <div class="col-6">
+              <p style="float: right; font-size: 15px; color: green">- R${{discountValue}}</p>
+            </div>
+          </div>
+
+          <hr style="margin-top: -0.5%">
+
+          <div class="row">
+            <div class="col-6">
+              <p style="font-size: 15px">
+                <b>Total</b>
+              </p>
+            </div>
+            <div class="col-6">
+              <p style="float: right; font-size: 15px">
+                <b>R$ {{total}}</b>
+              </p>
+            </div>
+          </div>
+
+          <hr style="margin-top: -0.2%">
+
+          <div class="row" style="margin-top: -0.5%;">
+            <div class="col-1">
+              <i id="iconCredit" class="fa fa-credit-card fa-2x"></i>
+            </div>
+            <div class="col-11 float-right" style="margin-top: 0.4%;" *ngIf="installments != 1">
+              <p>R${{total}} por {{installments}}x de R${{division}}</p>
+            </div>
+            <div class="col-11" style="margin-top: 0.4%" *ngIf="installments == 1">
+              <p>R$ {{total}} - Pagamento a vista</p>
+            </div>
+          </div>
+
+          <hr style="margin-top: -0.1%">
+
+          <div style="text-align: center">
+            <button class="btn btn-success" style="float: center" (click)="finishPayment()">Comprar!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

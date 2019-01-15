@@ -15,6 +15,7 @@
 #btn_nav {
     text-decoration: none;
     color: #333;
+    font-size: 18px;
 }
 
 #btn_nav:hover {
@@ -24,9 +25,27 @@
 #dropdown-btn {
     border-color: #FE980F;
     color: #FE980F;
+    background-color: #FFF;
 }
 
 #dropdown-btn:hover {
     background-color: #FE980F;
     color: #fff;
+}
+
+@media only screen and (max-width: 768px) {
+    #buttons-header {
+        margin-right: 25%;
+        margin-top: 5%
+    }
+    .logo {
+        margin-left: -2%;
+    }
+    #icon-header {
+        margin-bottom: 20%
+    }
+    .nav-item {
+        margin-bottom:3%;
+        margin-right: -15%;
+    }
 }
