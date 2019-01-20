@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { HomeApiService } from '../../../../service/home/home-api.service';
-import { SubProductModel } from '../../../../model/product/product';
+import { SubProductModel, ProductModel } from '../../../../model/product/product';
 import { ToastrService } from 'ngx-toastr';
 import { IfStmt } from '@angular/compiler';
+import { ProductService } from '../../../../service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-home-controller-list',
@@ -25,6 +27,8 @@ export class HomeControllerListComponent implements OnInit {
   formData: FormData = new FormData();
   imagesToUpload: any;
   rowsImagesObj: any;
+  rowsProduct: Array<ProductModel>;
+  actulProducts = [];
 
   pageArr = [
     {
@@ -46,17 +50,14 @@ export class HomeControllerListComponent implements OnInit {
     public acRoute: ActivatedRoute,
     private form: FormBuilder,
     public homeService: HomeApiService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private productService: ProductService,
+    private spinnerService: Ng4LoadingSpinnerService
   ) { }
 
   ngOnInit() {
-
-    if (this.namePageAux === 'Produtos mais Vendidos') {
-      this.getAllSubProducts();
-    } else {
-      this.getAllBannerImages();
-    }
-
+    this.getProductsInPromotion();
+    this.getAllBannerImages();
   }
 
   insertBannerImages() {
@@ -135,14 +136,6 @@ export class HomeControllerListComponent implements OnInit {
     return index;
   }
 
-  getAllSubProducts() {
-    this.homeService.getAllSubProducts().subscribe((res) => {
-      if (res != null) {
-        this.subProducts = res;
-      }
-    });
-  }
-
   getAllBannerImages() {
     this.homeService.getHomeImages().subscribe((res) => {
       if (res != null) {
@@ -170,5 +163,21 @@ export class HomeControllerListComponent implements OnInit {
       this.pageArr[1].active = 'active';
       this.namePageAux = 'Produtos mais Vendidos';
     }
+  }
+
+  getProductsInPromotion() {
+    this.productService.getAllByPromotions(0).subscribe(res => {
+      if (res != null) {
+        this.rowsProduct = res.rows;
+
+        for (let i = 0; i <= this.rowsProduct.length; i++) {
+          if (i <= 3) {
+            this.actulProducts.push(this.rowsProduct[i]);
+          }
+        }
+
+        this.spinnerService.hide();
+      }
+    });
   }
 }

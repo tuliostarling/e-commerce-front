@@ -49,7 +49,7 @@
                   <tr>
                     <div *ngFor="let file of rowsImagesObj;let j=index;trackBy: trackByFn">
                       <td>
-                        <img class="form-control" id="imgSubProduct" alt="" [src]="file.url || file.location_aws">
+                        <img class="form-control imagesUploaded" alt="" [src]="file.url || file.location_aws">
                       </td>
                       <td>
                         <button type="button" class="btn btn-danger btn-xs" (click)="removeFile(j,file)">
@@ -115,9 +115,43 @@
 
     <div class="card-body" *ngIf="namePageAux === 'Produtos mais Vendidos'">
       <div class="container">
+        <div class="row">
+          <div class="col-sm-12 col-md-12">
+            <div class="container">
+              <label for="type">Produtos Atuais</label>
+              <br>
+              <div class="row">
+                <div class="col-sm-12 col-md-3" *ngFor="let i of actulProducts">
+                  <img src="{{i.location_aws}}" class="form-control" id="imgSubProductUploaded" />
+                  <p style="text-align: center"><b>Produto: {{i.name}}</b></p>
+                  <p style="text-align: center"><b>Preço: {{i.price}}</b></p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-
-
+          <div class="col-sm-12 col-md-12">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col">Imagem</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Preço</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-purchases" id="col-sub-product" *ngFor="let i of rowsProduct" (click)="getOnePurchase(i.id)">
+                  <td>
+                    <img class="form-control" id="imgSubProduct" src="{{i.location_aws}}">
+                  </td>
+                  <td>{{i.name}}</td>
+                  <td>{{i.price}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button id="add" type="submit" class="btn btn-success" (click)="insertBannerImages()">Cadastrar</button>
+        </div>
       </div>
     </div>
 

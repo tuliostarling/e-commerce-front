@@ -64,4 +64,12 @@ export class FooterComponent implements OnInit {
   categoryListLoad(category_id: number) {
     this.router.navigateByUrl('/category_list/' + category_id + '/0');
   }
+
+  about() {
+    this.router.navigateByUrl('/about');
+  }
+
+  contactUs() {
+    this.router.navigateByUrl('/contact_us');
+  }
 }

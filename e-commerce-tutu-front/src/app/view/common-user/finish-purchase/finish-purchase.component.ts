@@ -248,12 +248,13 @@ export class FinishPurchaseComponent implements OnInit {
     if (this.token.cep == null) { return this.router.navigateByUrl(`/finish_register/${this.token.id}`); }
 
     let discountUserObj;
-
-    this.couponDiscount.forEach(element => {
-      if (element.id.toString() === this.couponId) {
-        discountUserObj = element;
-      }
-    });
+    if (this.couponDiscount != null) {
+      this.couponDiscount.forEach(element => {
+        if (element.id.toString() === this.couponId) {
+          discountUserObj = element;
+        }
+      });
+    }
 
     if (this.discountValue != null) {
       this.couponDiscount.price = -Math.abs(this.discountValue);

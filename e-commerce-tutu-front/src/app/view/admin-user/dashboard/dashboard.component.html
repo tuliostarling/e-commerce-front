@@ -11,16 +11,22 @@
     <div class="card-body" *ngIf="namePageAux === 'Lucro'">
       <div class="container">
 
-        <form role="form" [formGroup]="formTotal" (ngSubmit)="onSubmit(formulario)">
+        <form role="form" [formGroup]="formTotal" (ngSubmit)="onSubmitTotal(formTotal)">
           <h3>Escolha uma data para calcular seu lucro</h3>
           <div class="row middle-card">
             <div class="form-group">
 
               <div class="col-sm-12 col-md-12">
                 <label for="date">Data: </label>
-                <input type="date" class="form-control" formControlName="date" id="date" data-date="" data-date-format="DD MMMM YYYY"
-                  placeholder="Digite o dia">
+                <input type="date" class="form-control" formControlName="date" id="date" data-date="" data-date-format="DD MMMM YYYY" placeholder="Digite o dia">
                 <small id="emailHelp" class="form-text text-muted">O lucro será calculado da data que você escolher para trás.</small>
+              </div>
+              <button id="send" type="submit" class="btn btn-success">Enviar</button>
+
+              <div class="container" *ngIf="resultTotal != null">
+                <hr class="hr-separator"> Total:
+
+                <p class="resultTotal"> R$ {{resultTotal}}</p>
               </div>
 
             </div>
@@ -33,7 +39,7 @@
     <div class="card-body" *ngIf="namePageAux === 'Despesas'">
       <div class="container">
 
-        <form role="form" [formGroup]="formFee" (ngSubmit)="onSubmit(formulario)">
+        <form role="form" [formGroup]="formFee" (ngSubmit)="onSubmitFee(formFee)">
           <h3>Escolha uma data para calcular sua despesa</h3>
           <div class="row middle-card">
 
@@ -52,6 +58,13 @@
                   placeholder="Digite o dia">
               </div>
             </div>
+            <button id="send1" type="submit" class="btn btn-success">Enviar</button>
+
+            <div class="container" *ngIf="resultFee != null">
+              <hr class="hr-separator"> Despesas:
+
+              <p class="resultFee"> R$ {{resultFee}}</p>
+            </div>
 
           </div>
         </form>
@@ -62,7 +75,7 @@
     <div class="card-body" *ngIf="namePageAux === 'Quantidade'">
       <div class="container">
 
-        <form role="form" [formGroup]="formQuantity" (ngSubmit)="onSubmit(formulario)">
+        <form role="form" [formGroup]="formQuantity" (ngSubmit)="onSubmitQuantity(formQuantity)">
           <h3>Escolha uma data para calcular quantos produtos foram vendidos</h3>
           <div class="row middle-card">
 
@@ -80,6 +93,27 @@
                 <input type="date" class="form-control" formControlName="finalDate" id="finalDate" data-date="" data-date-format="DD MMMM YYYY"
                   placeholder="Digite o dia">
               </div>
+            </div>
+            <button id="send1" type="submit" class="btn btn-success">Enviar</button>
+
+            <div class="container" *ngIf="rowsQuantity != undefined">
+              <hr class="hr-separator">
+
+              <table class="table table-hover" style="margin-top: 25px;">
+                <thead>
+                  <tr>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Quantidade</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-purchases" *ngFor="let i of rowsQuantity">
+                    <td>{{i.name}}</td>
+                    <td>{{i.sum}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
             </div>
 
           </div>

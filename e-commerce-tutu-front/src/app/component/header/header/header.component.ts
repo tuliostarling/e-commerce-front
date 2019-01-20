@@ -134,4 +134,12 @@ export class HeaderComponent implements OnInit {
   home_controller() {
     this.router.navigateByUrl('/home_controller_list');
   }
+
+  about() {
+    this.router.navigateByUrl('/about');
+  }
+
+  contactUs() {
+    this.router.navigateByUrl('/contact_us');
+  }
 }

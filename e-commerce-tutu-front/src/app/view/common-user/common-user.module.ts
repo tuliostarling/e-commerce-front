@@ -21,6 +21,8 @@ import { SucessPaymentComponent } from './sucess-payment/sucess-payment.componen
 import { CancelPaymentComponent } from './cancel-payment/cancel-payment.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { FinishPurchaseComponent } from './finish-purchase/finish-purchase.component';
+import { AboutComponent } from './about/about.component';
+import { ContactUsComponent } from './contact-us/contact-us.component';
 
 @NgModule({
   imports: [
@@ -45,6 +47,8 @@ import { FinishPurchaseComponent } from './finish-purchase/finish-purchase.compo
     CancelPaymentComponent,
     OrderDetailsComponent,
     FinishPurchaseComponent,
+    AboutComponent,
+    ContactUsComponent,
   ],
   exports: [
     HomeComponent,

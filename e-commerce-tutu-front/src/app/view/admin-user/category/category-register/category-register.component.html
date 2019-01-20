@@ -21,8 +21,8 @@
             <input type="category" class="form-control" formControlName="category" id="category" placeholder="Digite a categoria">
           </div>
         </div>
-        <div class="col-sm-12 col-md-6" *ngIf="LoadCurrentImg != null">
-          <div class="form-group">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group" *ngIf="LoadCurrentImg != null && mode != 'Cadastrar'">
             <label for="type">Banner Atual</label>
             <br>
             <img src="{{imgSRC}}" width="200" height="100" />

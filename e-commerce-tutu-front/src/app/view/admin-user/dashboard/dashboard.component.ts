@@ -43,6 +43,9 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   rowsPurchases: any;
+  resultTotal: any;
+  resultFee: any;
+  rowsQuantity: any;
 
   ngOnInit() {
     this.acRoute.url
@@ -65,6 +68,40 @@ export class DashboardComponent implements OnInit {
     this.formQuantity = this.form.group({
       initialDate: [null, Validators.required],
       finalDate: [null, Validators.required]
+    });
+  }
+
+  onSubmitTotal(form) {
+    this.spinnerService.show();
+    this.dashboardService.getTotalProfit(form.value).subscribe((res) => {
+      if (res != null) {
+        this.resultTotal = res[0].sum;
+        this.spinnerService.hide();
+      }
+      this.spinnerService.hide();
+    });
+  }
+
+  onSubmitFee(form) {
+    this.spinnerService.show();
+    this.dashboardService.getFee(form.value).subscribe((res) => {
+      if (res != null) {
+        this.resultFee = res[0].sum;
+        this.spinnerService.hide();
+      }
+      this.spinnerService.hide();
+    });
+  }
+
+  onSubmitQuantity(form) {
+    this.spinnerService.show();
+    this.dashboardService.getTotalSold(form.value).subscribe((res) => {
+      if (res != null) {
+        console.log(res);
+        this.rowsQuantity = res;
+        this.spinnerService.hide();
+      }
+      this.spinnerService.hide();
     });
   }
 

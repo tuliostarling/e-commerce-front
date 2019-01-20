@@ -31,9 +31,9 @@ export class OrderDetailsComponent implements OnInit {
   status: string;
   date_hour: any;
   delivery_status: string;
-  key: string;
   name: string;
   email: string;
+  tracking_code: string;
 
   items = [];
 
@@ -80,14 +80,14 @@ export class OrderDetailsComponent implements OnInit {
       item_price: [null],
       item_quantity: [null],
       delivery_status: [null],
-      key: [null]
+      tracking_code: [null]
     });
 
     this.formAdmin = this.form.group({
       id_user: [null],
       id_purchase: [null],
-      delivery_status: [null, Validators.required],
-      key: [null, Validators.required]
+      status: [null, Validators.required],
+      tracking_code: [null, Validators.required]
     });
   }
 
@@ -105,6 +105,7 @@ export class OrderDetailsComponent implements OnInit {
       this.delivery_status = res[0].status;
       this.name = res[0].name;
       this.email = res[0].email;
+      this.tracking_code = res[0].tracking_code;
 
       for (const i of Object.keys(res)) {
         this.items = res;
@@ -116,7 +117,8 @@ export class OrderDetailsComponent implements OnInit {
     this.spinnerService.show();
     this.formAdmin.patchValue({
       id_user: this.token.id,
-      id_purchase: parseInt(this.hashId[2], 10)
+      id_purchase: parseInt(this.hashId[2], 10),
+      status: 'A caminho'
     });
 
     this.dashboardService.sendUserCode(form.value).subscribe((res) => {
