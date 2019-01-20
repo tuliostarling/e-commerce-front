@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { DashboardApiService } from '../../../service/dashboard/dashboard-api.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,7 +40,8 @@ export class DashboardComponent implements OnInit {
     private form: FormBuilder,
     private acRoute: ActivatedRoute,
     public dashboardService: DashboardApiService,
-    private spinnerService: Ng4LoadingSpinnerService
+    private spinnerService: Ng4LoadingSpinnerService,
+    private toastrService: ToastrService
   ) { }
 
   rowsPurchases: any;
@@ -77,8 +79,11 @@ export class DashboardComponent implements OnInit {
       if (res != null) {
         this.resultTotal = res[0].sum;
         this.spinnerService.hide();
+        return this.toastrService.success('Consulta executada!', 'Sucesso!');
+      } else {
+        this.spinnerService.hide();
+        return this.toastrService.error('Algo deu errado!', 'Erro!');
       }
-      this.spinnerService.hide();
     });
   }
 
@@ -88,8 +93,11 @@ export class DashboardComponent implements OnInit {
       if (res != null) {
         this.resultFee = res[0].sum;
         this.spinnerService.hide();
+        return this.toastrService.success('Consulta executada!', 'Sucesso!');
+      } else {
+        this.spinnerService.hide();
+        return this.toastrService.error('Algo deu errado!', 'Erro!');
       }
-      this.spinnerService.hide();
     });
   }
 
@@ -97,11 +105,13 @@ export class DashboardComponent implements OnInit {
     this.spinnerService.show();
     this.dashboardService.getTotalSold(form.value).subscribe((res) => {
       if (res != null) {
-        console.log(res);
         this.rowsQuantity = res;
         this.spinnerService.hide();
+        return this.toastrService.success('Consulta executada!', 'Sucesso!');
+      } else {
+        this.spinnerService.hide();
+        return this.toastrService.error('Algo deu errado!', 'Erro!');
       }
-      this.spinnerService.hide();
     });
   }
 
@@ -109,8 +119,11 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.getSellOut(this.page).subscribe((res) => {
       if (res != null) {
         this.rowsPurchases = res;
-
         this.spinnerService.hide();
+        return this.toastrService.success('Consulta executada!', 'Sucesso!');
+      } else {
+        this.spinnerService.hide();
+        return this.toastrService.error('Algo deu errado!', 'Erro!');
       }
     });
   }

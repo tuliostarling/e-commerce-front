@@ -11,7 +11,7 @@ export class UserApiService {
 
     API_URL: string = AppSettings.API_ENDPOINT + 'user/';
     API_AUTH_URL: string = AppSettings.API_ENDPOINT + 'auth/';
-
+    
     constructor(
         private http: HttpClient
     ) { }
@@ -64,4 +64,7 @@ export class UserApiService {
         return this.http.get<RequestCouponModel>(`${this.API_URL}getUserCoupon/${id}`);
     }
 
+    contactUs(dadosForm: any) {
+        return this.http.post<any>(`${AppSettings.API_ENDPOINT}contactUs/`, dadosForm);
+    }
 }
