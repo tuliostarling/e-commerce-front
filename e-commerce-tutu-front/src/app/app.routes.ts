@@ -30,6 +30,8 @@ import { OrderDetailsComponent } from './view/common-user/order-details/order-de
 import { FinishPurchaseComponent } from './view/common-user/finish-purchase/finish-purchase.component';
 import { AboutComponent } from './view/common-user/about/about.component';
 import { ContactUsComponent } from './view/common-user/contact-us/contact-us.component';
+import { PrivacyPolicyComponent } from './view/common-user/privacy-policy/privacy-policy.component';
+import { TermsOfUseComponent } from './view/common-user/terms-of-use/terms-of-use.component';
 
 export const ROUTES: Routes = [
     { path: '', redirectTo: 'countdown', pathMatch: 'full' },
@@ -59,5 +61,7 @@ export const ROUTES: Routes = [
     { path: 'order_details/:hash', component: OrderDetailsComponent },
     { path: 'finish_purchase', component: FinishPurchaseComponent },
     { path: 'about', component: AboutComponent },
-    { path: 'contact_us', component: ContactUsComponent }
+    { path: 'contact_us', component: ContactUsComponent },
+    { path: 'privacy_policy', component: PrivacyPolicyComponent },
+    { path: 'terms_of_use', component: TermsOfUseComponent }
 ];

@@ -72,4 +72,12 @@ export class FooterComponent implements OnInit {
   contactUs() {
     this.router.navigateByUrl('/contact_us');
   }
+
+  privacyPolicy() {
+    this.router.navigateByUrl('/privacy_policy');
+  }
+
+  termsOfUse() {
+    this.router.navigateByUrl('/terms_of_use');
+  }
 }

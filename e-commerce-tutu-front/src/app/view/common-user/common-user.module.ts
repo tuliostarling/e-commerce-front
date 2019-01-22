@@ -23,6 +23,8 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
 import { FinishPurchaseComponent } from './finish-purchase/finish-purchase.component';
 import { AboutComponent } from './about/about.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { TermsOfUseComponent } from './terms-of-use/terms-of-use.component';
 
 @NgModule({
   imports: [
@@ -49,6 +51,8 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
     FinishPurchaseComponent,
     AboutComponent,
     ContactUsComponent,
+    PrivacyPolicyComponent,
+    TermsOfUseComponent,
   ],
   exports: [
     HomeComponent,

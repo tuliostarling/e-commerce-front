@@ -1,0 +1,12 @@
+.container {
+    margin-top: 0.8%;
+    margin-bottom: 3%;
+}
+
+h2 {
+    margin: 3% 0 3% 0;
+}
+
+.content > h3 {
+    margin: 3% 0 1% 0;
+}
