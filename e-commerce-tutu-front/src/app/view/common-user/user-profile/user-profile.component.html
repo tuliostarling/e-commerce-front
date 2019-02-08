@@ -222,27 +222,29 @@
 
         <h5 class="card-title" style="margin-top: 2%;">Meus cupons</h5>
 
-        <table id="table-list" class="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Cupom</th>
-              <th scope="col">Valor</th>
-              <th scope="col">Expira</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let i of rowsCoupom;">
-            <tr>
-              <td>{{i.name}}</td>
-              <td>{{i.value}}%</td>
-              <td>{{i.expire_at | date: 'dd/MM/yyyy'}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table id="table-list" class="table table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Cupom</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Expira</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let i of rowsCoupom;">
+              <tr>
+                <td>{{i.name}}</td>
+                <td>{{i.value}}%</td>
+                <td>{{i.expire_at | date: 'dd/MM/yyyy'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
     <div class="card-body" *ngIf="namePageAux === 'Minhas compras'">
-      <div class="container">
+      <div class="container table-responsive">
         <table class="table table-hover">
           <thead>
             <tr>
@@ -262,8 +264,40 @@
       </div>
     </div>
 
+    <div class="card-body" *ngIf="namePageAux === 'Usuários'">
+      <div class="container table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Email</th>
+              <th scope="col">Admin?</th>
+              <th scope="col">Tornar usuário ADM</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="table-purchases" *ngFor="let i of rowsUsers">
+              <td>{{i.name}}</td>
+              <td>{{i.email}}</td>
+              <td>{{i.admin}}</td>
+              <td>
+                <button type="button" class="btn btn-success btn-md btn-icon" (click)="updateUserToADM(i.id)">
+                  <i class="fa fa-graduation-cap"></i>
+                </button>
+
+                <button type="button" class="btn btn-danger btn-md" (click)="updateUserToNormal(i.id)">
+                  <i class="fa fa-graduation-cap"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
+
 <!-- /container -->
 <button id="openModalEle" #openModalEle [hidden]="true" (click)="openModal(content)"></button>
 

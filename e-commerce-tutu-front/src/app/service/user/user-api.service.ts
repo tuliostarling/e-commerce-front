@@ -11,13 +11,25 @@ export class UserApiService {
 
     API_URL: string = AppSettings.API_ENDPOINT + 'user/';
     API_AUTH_URL: string = AppSettings.API_ENDPOINT + 'auth/';
-    
+
     constructor(
         private http: HttpClient
     ) { }
 
     getListOne(id: number) {
         return this.http.get<UserCreateModel>(`${this.API_URL}listone/${id}`);
+    }
+
+    getAll() {
+        return this.http.get<UserCreateModel>(`${this.API_URL}getAllUsers/`);
+    }
+
+    updateUserToADM(dadosForm: any) {
+        return this.http.put<any>(`${this.API_URL}putUserToADM/`, dadosForm);
+    }
+
+    updateUserToNormal(dadosForm: any) {
+        return this.http.put<any>(`${this.API_URL}putUserToNormal/`, dadosForm);
     }
 
     loginUser(dadosForm: UserLoginModel) {

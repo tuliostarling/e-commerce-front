@@ -51,13 +51,13 @@
     max-height: 120px;
 }
 
-#col-sub-product :hover {
-    cursor: pointer;
-}
-
 #imgSubProductUploaded {
     width: 230px;
     height: 230px;
     max-width: 230px;
     max-height: 230px;
+}
+
+.btn-update-home-product-left {
+    margin-right: 3%;
 }

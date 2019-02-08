@@ -19,6 +19,18 @@ export class HomeApiService {
     return this.http.get<SubProductModel>(`${this.API_URL}getHomeProducts/`);
   }
 
+  addHomeProduct(dadosForm: any) {
+    return this.http.post(`${this.API_URL}addHomeProducts/`, dadosForm);
+  }
+
+  updatePositionHomeProduct(dadosForm: any) {
+    return this.http.post(`${this.API_URL}updatePosition/`, dadosForm);
+  }
+
+  deleteHomeProduct(id: number) {
+    return this.http.delete<any>(`${this.API_URL}removeHomeProducts/${id}`);
+  }
+
   getHomeImages() {
     return this.http.get<any>(`${this.API_URL}getHomeImages/`);
   }

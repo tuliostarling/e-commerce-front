@@ -1,105 +1,28 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<div class="row">
+<div class="row blog">
   <div class="col-md-12">
     <h2>Produtos
       <b>mais vendidos</b>
     </h2>
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
-      <!-- Carousel indicators -->
+
+    <div id="top-selling-products-carousel" class="carousel slide" data-ride="carousel" *ngIf="actualProductsOrdered != undefined">
       <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li *ngIf="first4positions.length > 0" data-target="#top-selling-products-carousel" data-slide-to="0" class="active"></li>
+        <li *ngIf="second4positions.length > 0" data-target="#top-selling-products-carousel" data-slide-to="1"></li>
+        <li *ngIf="third4positions.length > 0" data-target="#top-selling-products-carousel" data-slide-to="2"></li>
       </ol>
-      <!-- Wrapper for carousel items -->
       <div class="carousel-inner">
-        <div class="item carousel-item active">
+        <div class="carousel-item active" *ngIf="first4positions.length > 0">
           <div class="row">
-            <div class="col-sm-3">
+            <div class="col-md-3" *ngFor="let j of first4positions">
               <div class="thumb-wrapper">
-                <span class="wish-icon">
-                  <i class="fa fa-heart-o"></i>
+                <span class="wish-icon" (click)="addProductToWishList(j.id_subproduct)">
+                  <i class="fa fa-star-o"></i>
                 </span>
                 <div class="img-box">
-                  <img src="../../../assets/images/04(3)" class="img-responsive img-fluid" alt="">
+                  <img src="{{j.location_aws}}" class="img-responsive img-fluid img-product" alt="">
                 </div>
                 <div class="thumb-content">
-                  <h4>Salto alto</h4>
-                  <div class="star-rating">
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star-o"></i>
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="item-price">
-                    <s>R$400.00</s>
-                    <b>R$369.00</b>
-                  </p>
-                  <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="thumb-wrapper">
-                <span class="wish-icon">
-                  <i class="fa fa-heart-o"></i>
-                </span>
-                <div class="img-box">
-                  <img src="../../../assets/images/04(3)" class="img-responsive img-fluid" alt="">
-                </div>
-                <div class="thumb-content">
-                  <h4>Salto alto</h4>
-                  <div class="star-rating">
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star"></i>
-                      </li>
-                      <li class="list-inline-item">
-                        <i class="fa fa-star-o"></i>
-                      </li>
-                    </ul>
-                  </div>
-                  <p class="item-price">
-                    <s>R$25.00</s>
-                    <b>R$23.99</b>
-                  </p>
-                  <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-3">
-              <div class="thumb-wrapper">
-                <span class="wish-icon">
-                  <i class="fa fa-heart-o"></i>
-                </span>
-                <div class="img-box">
-                  <img src="../../../assets/images/04(3)" class="img-responsive img-fluid" alt="">
-                </div>
-                <div class="thumb-content">
-                  <h4>Salto alto</h4>
+                  <h4>{{j.name}}</h4>
                   <div class="star-rating">
                     <ul class="list-inline">
                       <li class="list-inline-item">
@@ -121,22 +44,27 @@
                   </div>
                   <p class="item-price">
                     <s>R$899.00</s>
-                    <b>R$649.00</b>
+                    <b>R${{j.price}}.00</b>
                   </p>
-                  <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
+                  <a class="btn btn-primary" (click)="addProductToCart(j.id_subproduct);">Adicionar ao Carrinho</a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-3">
+          </div>
+        </div>
+
+        <div class="carousel-item" *ngIf="second4positions.length > 0">
+          <div class="row">
+            <div class="col-md-3" *ngFor="let i of second4positions">
               <div class="thumb-wrapper">
                 <span class="wish-icon">
-                  <i class="fa fa-heart-o"></i>
+                  <i class="fa fa-star-o" (click)="addProductToWishList(i.id_subproduct)"></i>
                 </span>
                 <div class="img-box">
-                  <img src="../../../assets/images/04(3)" class="img-responsive img-fluid" alt="">
+                  <img src="{{i.location_aws}}" class="img-responsive img-fluid img-product" alt="">
                 </div>
                 <div class="thumb-content">
-                  <h4>Salto alto</h4>
+                  <h4>{{i.name}}</h4>
                   <div class="star-rating">
                     <ul class="list-inline">
                       <li class="list-inline-item">
@@ -149,29 +77,71 @@
                         <i class="fa fa-star"></i>
                       </li>
                       <li class="list-inline-item">
-                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star"></i>
                       </li>
                       <li class="list-inline-item">
-                        <i class="fa fa-star-o"></i>
+                        <i class="fa fa-star-half-o"></i>
                       </li>
                     </ul>
                   </div>
                   <p class="item-price">
-                    <s>R$315.00</s>
-                    <b>R$250.00</b>
+                    <s>R$899.00</s>
+                    <b>R${{i.price}}.00</b>
                   </p>
-                  <a href="#" class="btn btn-primary">Adicionar ao Carrinho</a>
+                  <a class="btn btn-primary" (click)="addProductToCart(i.id_subproduct);">Adicionar ao Carrinho</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="carousel-item" *ngIf="third4positions.length > 0">
+          <div class="row">
+            <div class="col-md-3" *ngFor="let k of third4positions">
+              <div class="thumb-wrapper">
+                <span class="wish-icon">
+                  <i class="fa fa-star-o" (click)="addProductToWishList(k.id_subproduct)"></i>
+                </span>
+                <div class="img-box">
+                  <img src="{{k.location_aws}}" class="img-responsive img-fluid img-product" alt="">
+                </div>
+                <div class="thumb-content">
+                  <h4>{{k.name}}</h4>
+                  <div class="star-rating">
+                    <ul class="list-inline">
+                      <li class="list-inline-item">
+                        <i class="fa fa-star"></i>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-star"></i>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-star"></i>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-star"></i>
+                      </li>
+                      <li class="list-inline-item">
+                        <i class="fa fa-star-half-o"></i>
+                      </li>
+                    </ul>
+                  </div>
+                  <p class="item-price">
+                    <s>R$899.00</s>
+                    <b>R${{k.price}}.00</b>
+                  </p>
+                  <a class="btn btn-primary" (click)="addProductToCart(k.id_subproduct);">Adicionar ao Carrinho</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <!-- Carousel controls -->
-      <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+
+      <a class="carousel-control left carousel-control-prev" data-target="#top-selling-products-carousel" data-slide="prev">
         <i class="fa fa-angle-left"></i>
       </a>
-      <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+      <a class="carousel-control right carousel-control-next" data-target="#top-selling-products-carousel" data-slide="next">
         <i class="fa fa-angle-right"></i>
       </a>
     </div>

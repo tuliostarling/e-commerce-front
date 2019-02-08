@@ -43,20 +43,7 @@ export class UserProfileComponent implements OnInit {
   decodedCep: string;
   token: any;
 
-  pageArr = [
-    {
-      active: 'active',
-      name: 'Minha conta'
-    },
-    {
-      active: '',
-      name: 'Cupons'
-    },
-    {
-      active: '',
-      name: 'Minhas compras'
-    }
-  ];
+  pageArr = [];
 
   namePageAux = 'Minha conta';
 
@@ -75,6 +62,7 @@ export class UserProfileComponent implements OnInit {
   public rowsUser: UserCreateModel;
   public rowsCoupom: RequestCouponModel;
   public rowsPurchases: any;
+  public rowsUsers: any;
 
   ngOnInit() {
     this.spinnerService.show();
@@ -133,6 +121,8 @@ export class UserProfileComponent implements OnInit {
 
     this.getUserCoupon();
     this.getUserPurchases();
+    this.makeArrPage();
+    this.getAllUsers();
   }
 
   onSubmit(form) {
@@ -252,22 +242,59 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
+  makeArrPage() {
+    this.pageArr = [];
+
+    this.pageArr.push(
+      {
+        active: 'active',
+        name: 'Minha conta'
+      },
+      {
+        active: '',
+        name: 'Cupons'
+      },
+      {
+        active: '',
+        name: 'Minhas compras'
+      },
+    );
+
+    if (this.token.admin === true) {
+      this.pageArr.push(
+        {
+          active: '',
+          name: 'Usuários'
+        }
+      );
+    }
+  }
+
   changePage(namePage: string) {
     if (namePage === 'Minha conta') {
       this.pageArr[0].active = 'active';
       this.pageArr[1].active = '';
       this.pageArr[2].active = '';
+      this.pageArr[3].active = '';
       this.namePageAux = 'Minha conta';
     } else if (namePage === 'Cupons') {
       this.pageArr[0].active = '';
       this.pageArr[1].active = 'active';
       this.pageArr[2].active = '';
+      this.pageArr[3].active = '';
       this.namePageAux = 'Cupons';
-    } else {
+    } else if (namePage === 'Minhas compras') {
       this.pageArr[0].active = '';
       this.pageArr[1].active = '';
       this.pageArr[2].active = 'active';
+      this.pageArr[3].active = '';
       this.namePageAux = 'Minhas compras';
+    } else {
+      this.pageArr[0].active = '';
+      this.pageArr[1].active = '';
+      this.pageArr[2].active = '';
+      this.pageArr[3].active = 'active';
+      this.namePageAux = 'Usuários';
     }
   }
 
@@ -301,6 +328,40 @@ export class UserProfileComponent implements OnInit {
       } else {
         this.toastrService.error('Cupom inválido', 'Erro!');
       }
+    });
+  }
+
+  getAllUsers() {
+    this.apiService.getAll().subscribe((res) => {
+      if (res != null) {
+        this.rowsUsers = res;
+      }
+    });
+  }
+
+  updateUserToADM(userID: number) {
+    const userIDObj = { id: userID };
+
+    this.apiService.updateUserToADM(userIDObj).subscribe((res) => {
+      if (res != null) {
+        this.ngOnInit();
+        return this.toastrService.success('Usuário tornado ADM!', 'Sucesso!');
+      }
+
+      return this.toastrService.error('Não foi possível tornar o usuário ADM', 'Erro!');
+    });
+  }
+
+  updateUserToNormal(userID: number) {
+    const userIDObj = { id: userID };
+
+    this.apiService.updateUserToNormal(userIDObj).subscribe((res) => {
+      if (res != null) {
+        this.ngOnInit();
+        return this.toastrService.success('Usuário tornado comum novamente!', 'Sucesso!');
+      }
+
+      return this.toastrService.error('Não foi possível tornar o usuário comum', 'Erro!');
     });
   }
 }

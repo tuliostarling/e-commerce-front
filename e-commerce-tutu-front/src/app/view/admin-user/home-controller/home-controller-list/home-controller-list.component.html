@@ -117,40 +117,80 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12 col-md-12">
-            <div class="container">
-              <label for="type">Produtos Atuais</label>
-              <br>
-              <div class="row">
-                <div class="col-sm-12 col-md-3" *ngFor="let i of actulProducts">
-                  <img src="{{i.location_aws}}" class="form-control" id="imgSubProductUploaded" />
-                  <p style="text-align: center"><b>Produto: {{i.name}}</b></p>
-                  <p style="text-align: center"><b>Preço: {{i.price}}</b></p>
-                </div>
-              </div>
-            </div>
+            <h3>Produtos selecionados para aparecerem na página inicial</h3>
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Imagem</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Preço</th>
+                  <th scope="col">Tamanho</th>
+                  <th scope="col">Material</th>
+                  <th scope="col">Posição</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-purchases" id="col-sub-product" *ngFor="let i of actualProducts">
+                  <td>
+                    <img class="form-control" id="imgSubProduct" src="{{i.location_aws}}">
+                  </td>
+                  <td>{{i.name}}</td>
+                  <td>{{i.price}}</td>
+                  <td>{{i.size}}</td>
+                  <td>{{i.material}}</td>
+                  <td>
+                    <input type="number" class="form-control" id="position" placeholder="{{i.position}}" (blur)="position($event)">
+                  </td>
+                  <td class="action">
+                    <button type="button" class="btn btn-success btn-md btn-update-home-product-left" (click)="updatePositionHomeProduct(i.id)">
+                      <i class="fa fa-pencil-square-o"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger btn-md" (click)="removeHomeProduct(i.id)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
-          <div class="col-sm-12 col-md-12">
+          <div class="col-sm-12 col-md-12" style="margin-top: 3%">
+            <h3>Produtos que podem ser selecionados para aparecerem na página inicial</h3>
+
             <table class="table table-hover">
               <thead>
                 <tr>
                   <th scope="col">Imagem</th>
                   <th scope="col">Nome</th>
                   <th scope="col">Preço</th>
+                  <th scope="col">Posição</th>
+                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="table-purchases" id="col-sub-product" *ngFor="let i of rowsProduct" (click)="getOnePurchase(i.id)">
-                  <td>
-                    <img class="form-control" id="imgSubProduct" src="{{i.location_aws}}">
-                  </td>
-                  <td>{{i.name}}</td>
-                  <td>{{i.price}}</td>
-                </tr>
+                <ng-container *ngFor="let i of rowsProduct">
+                  <tr class="table-purchases" id="col-sub-product">
+                    <td>
+                      <img class="form-control" id="imgSubProduct" src="{{i.location_aws}}">
+                    </td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.price}}</td>
+                    <td>
+                      <input #positionInput type="number" class="form-control" id="position" placeholder="Digite a posição" (keypress)="position($event.key)">
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-success btn-md" (click)="makeFormHomeProducts(i.id_subproduct)">
+                        <i class="fa fa-plus"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </ng-container>
               </tbody>
             </table>
           </div>
-          <button id="add" type="submit" class="btn btn-success" (click)="insertBannerImages()">Cadastrar</button>
+          <button id="add" type="submit" class="btn btn-success" (click)="insertHomeProduct()">Cadastrar</button>
         </div>
       </div>
     </div>
