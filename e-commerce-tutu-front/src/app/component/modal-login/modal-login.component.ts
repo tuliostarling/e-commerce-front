@@ -13,6 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { UserApiService } from '../../service';
 import { UserLoginModel } from '../../model/user/userLogin';
+import { PassportService } from '../../service/passport/passport-api.service';
+
 
 @Component({
   selector: 'app-modal-login',
@@ -31,13 +33,25 @@ export class ModalLoginComponent implements OnInit {
     private modalService: NgbModal,
     private form: FormBuilder,
     private location: Location,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private passportService: PassportService
   ) { }
 
   ngOnInit() {
     this.formulario = this.form.group({
       email: [null],
       password: [null]
+    });
+  }
+
+  googleLogin() {
+    this.passportService.getGoogleLogin().subscribe(res => {
+      console.log(res)
+      if (res.token != null) {
+        localStorage.setItem('token', res.token);
+        const t = this.jwtDecode(res.token);
+        if (t != null) { location.reload(); }
+      }
     });
   }
 
