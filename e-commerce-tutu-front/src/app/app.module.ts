@@ -11,6 +11,7 @@ import { ProductService } from './service/product/product-api.service';
 import { CommentService } from './service/comment/comment-api.service';
 import { ShippingService } from './service/shipping/shipping-api.service';
 import { HomeApiService } from './service/home/home-api.service';
+import { PassportService } from './service/passport/passport-api.service';
 
 import { ViewModule } from './view/view.module';
 import { ComponentModule } from './component/component.module';
@@ -51,6 +52,7 @@ import { AuthServicesModule } from './auth/auth.module';
     ShippingService,
     PaymentService,
     HomeApiService,
+    PassportService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorError,

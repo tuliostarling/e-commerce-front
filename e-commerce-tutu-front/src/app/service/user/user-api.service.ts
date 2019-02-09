@@ -53,7 +53,7 @@ export class UserApiService {
     }
 
     confirmAccount(hash: String) {
-        return this.http.get<any>(`${AppSettings.API_ENDPOINT}confirm/${hash}`);
+        return this.http.get<any>(`${AppSettings.API_ENDPOINT}noauth/confirm/${hash}`);
     }
 
     getUserPurchases(id: number) {
@@ -77,6 +77,6 @@ export class UserApiService {
     }
 
     contactUs(dadosForm: any) {
-        return this.http.post<any>(`${AppSettings.API_ENDPOINT}contactUs/`, dadosForm);
+        return this.http.post<any>(`${AppSettings.API_ENDPOINT}noauth/contactUs/`, dadosForm);
     }
 }

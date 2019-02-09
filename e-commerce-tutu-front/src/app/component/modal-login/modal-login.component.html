@@ -9,23 +9,24 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6">
-        <a href="#" class="btn btn-lg btn-primary btn-block">Facebook</a>
+        <a href="http://tutuguerra.com.br:3000/api/passport/auth/facebook" class="fa fa-facebook">Facebook</a>
       </div>
       <div class="col-xs-6 col-sm-6 col-md-6">
-        <a href="#" class="btn btn-lg btn-info btn-block">Google</a>
+        <a href="http://tutuguerra.com.br:3000/api/passport/auth/google" class="fa fa-google-plus">Google</a>
       </div>
     </div>
-    <div class="login-or">
-      <hr class="hr-or">
-      <span class="span-or">ou</span>
-    </div>
+  </div>
+  <div class="login-or">
+    <hr class="hr-or">
+    <span class="span-or">ou</span>
   </div>
 
   <form role="form" [formGroup]="formulario" (ngSubmit)="onSubmit(formulario)">
     <div class="modal-body">
       <div class="form-group">
         <label for="email1">Email</label>
-        <input type="email" class="form-control" formControlName="email" id="email" aria-describedby="emailHelp" placeholder="">
+        <input type="email" class="form-control" formControlName="email" id="email" aria-describedby="emailHelp"
+          placeholder="">
       </div>
       <div class="form-group">
         <label for="password">Senha</label>
