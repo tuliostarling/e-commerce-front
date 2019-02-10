@@ -82,8 +82,7 @@ export class ProductCategoryListComponent implements OnInit {
       if (res != null) {
         this.rowsProduct = res.rows;
         this.totalSubProducts = res.total[0].count;
-        // this.oldPrice = this.rowsProduct.oldPrice;
-
+        
         this.makeArrNavLinks();
         this.spinnerService.hide();
       }

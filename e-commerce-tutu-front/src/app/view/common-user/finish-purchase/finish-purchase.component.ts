@@ -83,6 +83,7 @@ export class FinishPurchaseComponent implements OnInit {
   ];
 
   namePageAux = 'Endereço entrega';
+  debug = false;
   public rowsFormAddress: UserCreateModel;
   public loginUserModel: UserLoginModel;
 
@@ -140,16 +141,14 @@ export class FinishPurchaseComponent implements OnInit {
   getToken() {
     if (this.newCep == null) {
       if (this.token != null) {
-        if (this.token.cep == null) {
-          this.shipBox = true;
-        } else {
-          this.getShipPrice(this.token.cep);
-        }
-
         this.idUser = this.token.id;
         this.idCart = this.token.cart;
+      } else {
+        this.router.navigateByUrl('/home');
       }
     } else {
+      this.idUser = this.token.id;
+      this.idCart = this.token.cart;
       this.getShipPrice(this.newCep);
     }
   }
@@ -186,13 +185,17 @@ export class FinishPurchaseComponent implements OnInit {
         this.cartRows = res.rows;
         this.finalValue = res.pricesObj.finalValue;
         this.qtdOpt = res.qtdOptions;
-
         for (const i of Object.keys(this.cartRows)) {
           this.qtdItens.push(this.cartRows[i].qtd);
         }
         this.sumQtdItems = this.qtdItens.reduce(this.sumItems, 0);
 
         this.total = this.finalValue;
+        if (this.token.cep == null) {
+          this.shipBox = true;
+        } else {
+          this.getShipPrice(this.token.cep);
+        }
       }
     });
   }
@@ -265,7 +268,7 @@ export class FinishPurchaseComponent implements OnInit {
       cartItem: this.cartRows,
       price: this.total,
       subTotal: this.finalValue,
-      shipping: this.rowsShipping[0].Valor,
+      shipping: this.debug ? this.rowsShipping[0].Valor : 0,
       idUser: this.token.id,
       adress: this.adressInfo,
       discount: discountUserObj
@@ -281,30 +284,32 @@ export class FinishPurchaseComponent implements OnInit {
   }
 
   getShipPrice(cepVal) {
-    if (cepVal === true) { return this.shipBox === true; }
+    if (this.debug) {
+      if (cepVal === true) { return this.shipBox === true; }
 
-    const validacep = /\d{2}\.\d{3}\-\d{3}/;
-    this.currentCep = cepVal.value || cepVal;
+      const validacep = /\d{2}\.\d{3}\-\d{3}/;
+      this.currentCep = cepVal.value || cepVal;
 
-    if (this.currentCep.indexOf('-') > -1 === false) { this.currentCep = this.maskCEP(this.currentCep); }
+      if (this.currentCep.indexOf('-') > -1 === false) { this.currentCep = this.maskCEP(this.currentCep); }
 
-    if (validacep.test(this.currentCep)) {
-      const cep = this.currentCep.replace(/\D/g, '');
-      const obj = { cep: cep, value: this.finalValue };
+      if (validacep.test(this.currentCep)) {
+        const cep = this.currentCep.replace(/\D/g, '');
+        const obj = { cep: cep, value: this.finalValue };
 
-      this.shipService.getShippingValue(obj).subscribe((res) => {
-        if (res) {
-          this.rowsShipping = res.totalValue;
-          this.adressInfo = res.adress;
-          this.total = this.total + this.rowsShipping[0].Valor;
-          this.total = parseFloat(this.total.toFixed(2));
-          this.shipValue = this.rowsShipping[0].Valor;
-          this.shipBox = false;
-          this.spinnerService.hide();
-        }
-      });
-    } else {
-      this.toastrService.error('CEP inválido', 'Erro!');
+        this.shipService.getShippingValue(obj).subscribe((res) => {
+          if (res) {
+            this.rowsShipping = res.totalValue;
+            this.adressInfo = res.adress;
+            this.total = this.total + this.rowsShipping[0].Valor;
+            this.total = parseFloat(this.total.toFixed(2));
+            this.shipValue = this.rowsShipping[0].Valor;
+            this.shipBox = false;
+            this.spinnerService.hide();
+          }
+        });
+      } else {
+        this.toastrService.error('CEP inválido', 'Erro!');
+      }
     }
   }
 
